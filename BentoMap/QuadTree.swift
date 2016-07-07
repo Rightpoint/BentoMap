@@ -85,18 +85,10 @@ public extension QuadTree {
             subdivide()
         }
 
-        if ordinalNodes?.northWest.insertNode(node) == true {
-            return true
-        }
-        else if ordinalNodes?.northEast.insertNode(node) == true {
-            return true
-        }
-        else if ordinalNodes?.southWest.insertNode(node) == true {
-            return true
-        }
-        else {
-            return ordinalNodes?.southEast.insertNode(node) == true ?? false
-        }
+        return ordinalNodes?.northWest.insertNode(node) ||?
+            ordinalNodes?.northEast.insertNode(node) ||?
+            ordinalNodes?.southWest.insertNode(node) ||?
+            ordinalNodes?.southEast.insertNode(node)
     }
 
 }

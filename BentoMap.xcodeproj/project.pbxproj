@@ -26,6 +26,8 @@
 		723753481D2D9E80002A1BC2 /* BentoMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 723753041D2D9D6D002A1BC2 /* BentoMap.framework */; };
 		723753491D2D9E80002A1BC2 /* BentoMap.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 723753041D2D9D6D002A1BC2 /* BentoMap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7237534E1D2DA0CF002A1BC2 /* SampleMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237534D1D2DA0CF002A1BC2 /* SampleMapData.swift */; };
+		72383AB51D2ECAD00071EDE2 /* OptionalOr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */; };
+		72383AB71D2ECAF70071EDE2 /* OptionalOrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		723753421D2D9E75002A1BC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		723753441D2D9E75002A1BC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7237534D1D2DA0CF002A1BC2 /* SampleMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleMapData.swift; sourceTree = "<group>"; };
+		72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalOr.swift; sourceTree = "<group>"; };
+		72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalOrTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 				723753231D2D9DA2002A1BC2 /* QuadTreeNode.swift */,
 				723753241D2D9DA2002A1BC2 /* QuadTreeResult.swift */,
 				723753211D2D9DA2002A1BC2 /* QuadrantWrapper.swift */,
+				72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */,
 			);
 			path = BentoMap;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 				723E20731D2EC00400CF44FA /* Resources */,
 				7237532C1D2D9DB5002A1BC2 /* BoundingBoxTests.swift */,
 				7237532D1D2D9DB5002A1BC2 /* QuadTreeTests.swift */,
+				72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */,
 			);
 			path = BentoMapTests;
 			sourceTree = "<group>";
@@ -395,6 +401,7 @@
 			files = (
 				7237532A1D2D9DA2002A1BC2 /* QuadTreeNode.swift in Sources */,
 				7237532B1D2D9DA2002A1BC2 /* QuadTreeResult.swift in Sources */,
+				72383AB51D2ECAD00071EDE2 /* OptionalOr.swift in Sources */,
 				723753251D2D9DA2002A1BC2 /* BoundingBox.swift in Sources */,
 				723753281D2D9DA2002A1BC2 /* QuadrantWrapper.swift in Sources */,
 				723753291D2D9DA2002A1BC2 /* QuadTree.swift in Sources */,
@@ -408,6 +415,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7237532E1D2D9DB5002A1BC2 /* BoundingBoxTests.swift in Sources */,
+				72383AB71D2ECAF70071EDE2 /* OptionalOrTests.swift in Sources */,
 				7237532F1D2D9DB5002A1BC2 /* QuadTreeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
