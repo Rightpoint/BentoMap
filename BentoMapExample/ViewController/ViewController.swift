@@ -77,18 +77,20 @@ private extension ViewController {
         let newAnnotations = activeAnnotations
         let oldAnnotations = mapView.annotations
 
-        let toRemove = oldAnnotations.filter { annotation in
-            return !newAnnotations.contains { newAnnotation in
-                return annotation == newAnnotation
+        let annotationComparator = { (annotation: MKAnnotation) -> ((comparedTo: MKAnnotation) -> Bool) in
+            return { (comparedTo: MKAnnotation) -> Bool in
+                return comparedTo == annotation
             }
+        }
+
+        let toRemove = oldAnnotations.filter { annotation in
+            return !newAnnotations.contains(annotationComparator(annotation))
         }
 
         mapView.removeAnnotations(toRemove)
 
         let toAdd = newAnnotations.filter { annotation in
-            return !oldAnnotations.contains { oldAnnotation in
-                return annotation == oldAnnotation
-            }
+            return !oldAnnotations.contains(annotationComparator(annotation))
         }
 
         mapView.addAnnotations(toAdd)
@@ -104,4 +106,14 @@ private extension ViewController {
         }
         return annotation
     }
+}
+
+private func == (lhs: MKAnnotation, rhs: MKAnnotation) -> Bool {
+    if let lSingle = lhs as? SingleAnnotation, rSingle = rhs as? SingleAnnotation {
+        return lSingle.annotationNumber == rSingle.annotationNumber
+    }
+    else if let lMulti = lhs as? ClusterAnnotation, rMulti = rhs as? ClusterAnnotation {
+        return lMulti.annotationNumbers == rMulti.annotationNumbers
+    }
+    return false
 }
