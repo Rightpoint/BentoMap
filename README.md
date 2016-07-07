@@ -5,7 +5,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/BentoMap.svg?style=flat)](http://cocoapods.org/pods/BentoMap)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-Bentomap is an implementation of [quadtrees](https://en.wikipedia.org/wiki/Quadtree) for map annotation clustering and storage written in Swift. The library intends to require minimal code in-app to get clustered annotations on screen, the example target included in BentoMap.xcodeproj contains the bare code required dynamically update the map with clusters whenever the map view's bounds changes.
+BentoMap is an implementation of [quadtrees](https://en.wikipedia.org/wiki/Quadtree) for map annotation clustering and storage written in Swift. The library intends to require minimal code in-app to get clustered annotations on screen, the example target included in BentoMap.xcodeproj contains the bare code required dynamically update the map with clusters whenever the map view's bounds changes.
 
 ## Installation with CocoaPods
 
