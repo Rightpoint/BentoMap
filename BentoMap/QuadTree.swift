@@ -130,8 +130,8 @@ private extension QuadTree {
 }
 
 private extension MKMapRect {
-    func createStep(stepSize: Int, edgeFunction: ((MKMapRect) -> Double),
-                    roundingFunction: ((Double) -> Double)) -> Int {
+    func createStep(stepSize: Int, edgeFunction: (MKMapRect -> Double),
+                    roundingFunction: (Double -> Double)) -> Int {
         return Int(roundingFunction(edgeFunction(self))) - (Int(roundingFunction(edgeFunction(self))) % stepSize)
     }
 }

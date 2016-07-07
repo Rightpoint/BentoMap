@@ -10,8 +10,10 @@ import Foundation
 
 struct OrdinalNodes<NodeData> {
 
+    private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData>>
+
     // Recursive structs require boxes
-    private var quadrants: Box<QuadrantWrapper<QuadTree<NodeData>>>
+    private var quadrants: Box<QuadTreeWrapper>
 
     var northWest: QuadTree<NodeData> {
         get {
