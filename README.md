@@ -16,12 +16,6 @@ it, simply add the following line to your Podfile:
 pod 'BentoMap'
 ```
 
-If you want to use the [UIKit Utilities](#uikit-utilities), add:
-
-```ruby
-pod 'BentoMap/UIKit'
-```
-
 ## Installation with Carthage
 
 BentoMap is also compatible with [Carthage](https://github.com/Carthage/Carthage). To install it, simply add the following line to your Cartfile:
