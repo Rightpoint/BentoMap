@@ -25,7 +25,7 @@
 		723753431D2D9E75002A1BC2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 723753411D2D9E75002A1BC2 /* LaunchScreen.storyboard */; };
 		723753481D2D9E80002A1BC2 /* BentoMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 723753041D2D9D6D002A1BC2 /* BentoMap.framework */; };
 		723753491D2D9E80002A1BC2 /* BentoMap.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 723753041D2D9D6D002A1BC2 /* BentoMap.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		7237534E1D2DA0CF002A1BC2 /* SampleMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237534D1D2DA0CF002A1BC2 /* SampleMapData.swift */; };
+		7237534E1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */; };
 		72383AB51D2ECAD00071EDE2 /* OptionalOr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */; };
 		72383AB71D2ECAF70071EDE2 /* OptionalOrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */; };
 /* End PBXBuildFile section */
@@ -83,7 +83,7 @@
 		7237533F1D2D9E75002A1BC2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		723753421D2D9E75002A1BC2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		723753441D2D9E75002A1BC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7237534D1D2DA0CF002A1BC2 /* SampleMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleMapData.swift; sourceTree = "<group>"; };
+		7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuadTree+SampleData.swift"; sourceTree = "<group>"; };
 		72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalOr.swift; sourceTree = "<group>"; };
 		72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalOrTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -211,7 +211,7 @@
 		723E20721D2EBFF500CF44FA /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				7237534D1D2DA0CF002A1BC2 /* SampleMapData.swift */,
+				7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */,
 				7237533A1D2D9E75002A1BC2 /* ViewController.swift */,
 			);
 			path = ViewController;
@@ -424,7 +424,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7237534E1D2DA0CF002A1BC2 /* SampleMapData.swift in Sources */,
+				7237534E1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift in Sources */,
 				7237533B1D2D9E75002A1BC2 /* ViewController.swift in Sources */,
 				7228026E1D2E9D9100C637A6 /* Annotations.swift in Sources */,
 				723753391D2D9E75002A1BC2 /* AppDelegate.swift in Sources */,

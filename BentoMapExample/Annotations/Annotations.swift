@@ -9,7 +9,11 @@
 import Foundation
 import MapKit
 
-class SingleAnnotation: NSObject, MKAnnotation {
+protocol MapRectProvider {
+    var mapRect: MKMapRect { get }
+}
+
+class SingleAnnotation: NSObject, MKAnnotation, MapRectProvider {
 
     var coordinate: CLLocationCoordinate2D {
         return MKCoordinateForMapPoint(mapPoint)
@@ -26,7 +30,7 @@ class SingleAnnotation: NSObject, MKAnnotation {
 
 }
 
-class ClusterAnnotation: NSObject, MKAnnotation {
+class ClusterAnnotation: NSObject, MKAnnotation, MapRectProvider {
 
     var coordinate: CLLocationCoordinate2D {
         return MKCoordinateForMapPoint(mapPoint)
