@@ -8,41 +8,66 @@
 
 import Foundation
 import MapKit
+import BentoMap
 
-protocol MapRectProvider {
-    var mapRect: MKMapRect { get }
-}
-
-class SingleAnnotation: NSObject, MKAnnotation, MapRectProvider {
-
+class BaseAnnotation: NSObject, MKAnnotation {
+    let mapPoint: MKMapPoint
+    let mapRect: MKMapRect
     var coordinate: CLLocationCoordinate2D {
         return MKCoordinateForMapPoint(mapPoint)
     }
+
+    init(mapPoint: MKMapPoint, mapRect: MKMapRect) {
+        self.mapPoint = mapPoint
+        self.mapRect = mapRect
+    }
+
+    static func makeAnnotation(result: QuadTreeResult<Int>) -> BaseAnnotation {
+        let annotation: BaseAnnotation
+        switch result {
+        case let .Single(node: node):
+            annotation = SingleAnnotation(mapPoint: result.mapPoint,
+                                          annotationNumber: node.content,
+                                          mapRect: result.contentRect)
+        case let .Multiple(nodes: nodes):
+            annotation = ClusterAnnotation(mapPoint: result.mapPoint,
+                                           annotationNumbers: nodes.map({ $0.content }),
+                                           mapRect: result.contentRect)
+        }
+        return annotation
+    }
+}
+
+final class SingleAnnotation: BaseAnnotation {
+
     let annotationNumber: Int
-    let mapPoint: MKMapPoint
-    let mapRect: MKMapRect
 
     init(mapPoint: MKMapPoint, annotationNumber: Int, mapRect: MKMapRect) {
-        self.mapPoint = mapPoint
         self.annotationNumber = annotationNumber
-        self.mapRect = mapRect
+        super.init(mapPoint: mapPoint, mapRect: mapRect)
     }
 
 }
 
-class ClusterAnnotation: NSObject, MKAnnotation, MapRectProvider {
+final class ClusterAnnotation: BaseAnnotation {
 
-    var coordinate: CLLocationCoordinate2D {
-        return MKCoordinateForMapPoint(mapPoint)
-    }
     let annotationNumbers: [Int]
-    let mapPoint: MKMapPoint
-    let mapRect: MKMapRect
 
     init(mapPoint: MKMapPoint, annotationNumbers: [Int], mapRect: MKMapRect) {
-        self.mapPoint = mapPoint
         self.annotationNumbers = annotationNumbers.sort()
-        self.mapRect = mapRect
+        super.init(mapPoint: mapPoint, mapRect: mapRect)
     }
 
+}
+
+func == (lhs: BaseAnnotation, rhs: BaseAnnotation) -> Bool {
+    if let lSingle = lhs as? SingleAnnotation,
+        rSingle = rhs as? SingleAnnotation {
+        return lSingle.annotationNumber == rSingle.annotationNumber
+    }
+    else if let lMulti = lhs as? ClusterAnnotation,
+        rMulti = rhs as? ClusterAnnotation {
+        return lMulti.annotationNumbers == rMulti.annotationNumbers
+    }
+    return false
 }

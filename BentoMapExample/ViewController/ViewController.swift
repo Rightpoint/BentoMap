@@ -48,7 +48,7 @@ extension ViewController: MKMapViewDelegate {
 
     func mapView(mapView: MKMapView,
                  didSelectAnnotationView view: MKAnnotationView) {
-        guard let zoomRect = (view.annotation as? MapRectProvider)?.mapRect else {
+        guard let zoomRect = (view.annotation as? BaseAnnotation)?.mapRect else {
             return
         }
         mapView.setVisibleMapRect(zoomRect,
@@ -67,64 +67,33 @@ private extension ViewController {
 
     func updateAnnotations(inMapView mapView: MKMapView,
                                      forMapRect mapRect: MKMapRect) {
-        guard mapView.frame.size.width != 0 && mapRect.size.width != 0 else {
+        guard !mapView.frame.isEmpty && !MKMapRectIsEmpty(mapRect) else {
             mapView.removeAnnotations(mapView.annotations)
             return
         }
-        let zoomScale = Double(mapView.frame.size.width) / mapRect.size.width
+        let zoomScale = Double(mapView.frame.width) / mapRect.size.width
         let clusterResults = mapData.clusteredDataWithinMapRect(mapRect,
                                                                 zoomScale: zoomScale,
                                                                 cellSize: 64)
-        let newAnnotations = clusterResults.map(self.dynamicType.makeAnnotation)
+        let newAnnotations = clusterResults.map(BaseAnnotation.makeAnnotation)
 
-        let oldAnnotations = mapView.annotations
+        let oldAnnotations = mapView.annotations.flatMap({ $0 as? BaseAnnotation })
 
-        let annotationFilter = self.dynamicType.annotationFilter
-
-        let toRemove = oldAnnotations.filter(annotationFilter(notContainedIn: newAnnotations))
+        let toRemove = oldAnnotations.filter { annotation in
+            return !newAnnotations.contains { newAnnotation in
+                return newAnnotation == annotation
+            }
+        }
 
         mapView.removeAnnotations(toRemove)
 
-        let toAdd = newAnnotations.filter(annotationFilter(notContainedIn: oldAnnotations))
+        let toAdd = newAnnotations.filter { annotation in
+            return !oldAnnotations.contains { oldAnnotation in
+                return oldAnnotation == annotation
+            }
+        }
 
         mapView.addAnnotations(toAdd)
-    }
-
-    static func annotationFilter(notContainedIn differenceArray: [MKAnnotation]) ->
-        (MKAnnotation -> Bool) {
-            return { annotation in
-                return !differenceArray.contains(annotationEquals(annotation))
-            }
-    }
-
-    static func annotationEquals(rhs: MKAnnotation) ->
-        (MKAnnotation -> Bool) {
-            return { (lhs: MKAnnotation) -> Bool in
-                if let lSingle = lhs as? SingleAnnotation,
-                    rSingle = rhs as? SingleAnnotation {
-                    return lSingle.annotationNumber == rSingle.annotationNumber
-                }
-                else if let lMulti = lhs as? ClusterAnnotation,
-                    rMulti = rhs as? ClusterAnnotation {
-                    return lMulti.annotationNumbers == rMulti.annotationNumbers
-                }
-                return false
-            }
-    }
-
-    static func makeAnnotation(result: QuadTreeResult<Int>) -> MKAnnotation {
-        let annotation: MKAnnotation
-        switch result {
-        case let .Single(node: node):
-            annotation = SingleAnnotation(mapPoint: result.mapPoint,
-                                          annotationNumber: node.content,
-                                          mapRect: result.contentRect)
-        case let .Multiple(nodes: nodes):
-            annotation = ClusterAnnotation(mapPoint: result.mapPoint,
-                                           annotationNumbers: nodes.map({ $0.content }),
-                                           mapRect: result.contentRect)
-        }
-        return annotation
     }
 
 }
