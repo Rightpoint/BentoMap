@@ -1,5 +1,5 @@
 //
-//  SampleMapData.swift
+//  QuadTree+SampleData.swift
 //  BentoMap
 //
 //  Created by Michael Skiba on 7/6/16.
@@ -10,23 +10,15 @@ import Foundation
 import MapKit
 import BentoMap
 
-struct SampleMapData {
+extension QuadTree {
 
-    private(set) var quadTree = QuadTree<Int>(boundingBox: BoundingBox(minCoordinate: CLLocationCoordinate2D.minCoord, maxCoordinate: CLLocationCoordinate2D.maxCoord), bucketCapacity: 5)
-
-    init() {
-        generatePoints()
-    }
-
-}
-
-private extension SampleMapData {
-
-    mutating func generatePoints() {
+    static var sampleData: QuadTree<Int> {
+        var samples = QuadTree<Int>(boundingBox: BoundingBox(minCoordinate: CLLocationCoordinate2D.minCoord, maxCoordinate: CLLocationCoordinate2D.maxCoord), bucketCapacity: 5)
         for count in 1...5000 {
             let node = QuadTreeNode(mapPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
-            quadTree.insertNode(node)
+            samples.insertNode(node)
         }
+        return samples
     }
 
 }

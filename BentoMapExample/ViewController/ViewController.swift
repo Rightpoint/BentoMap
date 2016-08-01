@@ -10,110 +10,130 @@ import UIKit
 import MapKit
 import BentoMap
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
 
-    let mapData = SampleMapData().quadTree
+    // Used to make sure the map is nicely padded on the edges, and visible annotations
+    // aren't hidden under the navigation bar
+    static let mapInsets =  UIEdgeInsets(top: 80, left: 20, bottom: 20, right: 20)
 
-    var mapView: MKMapView! {
-        return view as? MKMapView
-    }
+    let mapData = QuadTree<Int>.sampleData
 
     override func loadView() {
-        navigationItem.title = NSLocalizedString("BentoMap", comment: "BentoMap navbar title")
-        view = MKMapView()
+        super.loadView()
+        let mapView = MKMapView()
         mapView.delegate = self
-        mapView.setVisibleMapRect(mapData.boundingBox.mapRect, edgePadding: UIEdgeInsets(top: 80, left: 20, bottom: 20, right: 20), animated: false)
+        mapView.setVisibleMapRect(mapData.boundingBox.mapRect,
+                                  edgePadding: self.dynamicType.mapInsets,
+                                  animated: false)
+        view = mapView
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        updateAnnotationsForMapRect(mapView.visibleMapRect)
+        navigationItem.title = NSLocalizedString("BentoMap",
+                                                 comment: "BentoMap navbar title")
     }
 
 }
 
 extension ViewController: MKMapViewDelegate {
 
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        let pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: NSStringFromClass(MKPinAnnotationView.self) as String)
-        if annotation.isKindOfClass(ClusterAnnotation.self) {
-            pin.pinTintColor = UIColor.blueColor()
-            pin.animatesDrop = false
-        }
-        else {
-            pin.pinTintColor = UIColor.redColor()
-            pin.animatesDrop = true
-        }
+    func mapView(mapView: MKMapView,
+                 viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        let pin = mapView.dequeueAnnotationView(forAnnotation: annotation)
+            as MKPinAnnotationView
+        pin.configureWithAnnotation(annotation)
         return pin
     }
 
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        if let zoomRect = (view.annotation as? SingleAnnotation)?.mapRect ?? (view.annotation as? ClusterAnnotation)?.mapRect {
-            mapView.setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: 80, left: 20, bottom: 20, right: 20), animated: true)
+    func mapView(mapView: MKMapView,
+                 didSelectAnnotationView view: MKAnnotationView) {
+        guard let zoomRect = (view.annotation as? BaseAnnotation)?.mapRect else {
+            return
         }
+        mapView.setVisibleMapRect(zoomRect,
+                                  edgePadding: self.dynamicType.mapInsets,
+                                  animated: true)
     }
 
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        updateAnnotationsForMapRect(mapView.visibleMapRect)
+        updateAnnotations(inMapView: mapView,
+                          forMapRect: mapView.visibleMapRect)
     }
+
 }
 
 private extension ViewController {
 
-    func updateAnnotationsForMapRect(mapRect: MKMapRect) {
-        let activeAnnotations: [MKAnnotation]
-
-        if mapView.frame.size.width != 0 && mapRect.size.width != 0 {
-            let zoomScale = Double(mapView.frame.size.width) / mapRect.size.width
-            activeAnnotations = mapData.clusteredDataWithinMapRect(mapRect, zoomScale: zoomScale, cellSize: 64).map(self.dynamicType.makeAnnotation)
+    func updateAnnotations(inMapView mapView: MKMapView,
+                                     forMapRect mapRect: MKMapRect) {
+        guard !mapView.frame.isEmpty && !MKMapRectIsEmpty(mapRect) else {
+            mapView.removeAnnotations(mapView.annotations)
+            return
         }
-        else {
-            activeAnnotations = []
-        }
+        let zoomScale = Double(mapView.frame.width) / mapRect.size.width
+        let clusterResults = mapData.clusteredDataWithinMapRect(mapRect,
+                                                                zoomScale: zoomScale,
+                                                                cellSize: 64)
+        let newAnnotations = clusterResults.map(BaseAnnotation.makeAnnotation)
 
-        let newAnnotations = activeAnnotations
-        let oldAnnotations = mapView.annotations
-
-        let annotationComparator = { (annotation: MKAnnotation) -> ((comparedTo: MKAnnotation) -> Bool) in
-            return { (comparedTo: MKAnnotation) -> Bool in
-                return comparedTo == annotation
-            }
-        }
+        let oldAnnotations = mapView.annotations.flatMap({ $0 as? BaseAnnotation })
 
         let toRemove = oldAnnotations.filter { annotation in
-            return !newAnnotations.contains(annotationComparator(annotation))
+            return !newAnnotations.contains { newAnnotation in
+                return newAnnotation == annotation
+            }
         }
 
         mapView.removeAnnotations(toRemove)
 
         let toAdd = newAnnotations.filter { annotation in
-            return !oldAnnotations.contains(annotationComparator(annotation))
+            return !oldAnnotations.contains { oldAnnotation in
+                return oldAnnotation == annotation
+            }
         }
 
         mapView.addAnnotations(toAdd)
     }
 
-    static func makeAnnotation(result: QuadTreeResult<Int>) -> MKAnnotation {
-        let annotation: MKAnnotation
-        switch result {
-        case let .Single(node: node):
-            annotation = SingleAnnotation(mapPoint: result.mapPoint, annotationNumber: node.content, mapRect: result.contentRect)
-        case let .Multiple(nodes: nodes):
-            annotation = ClusterAnnotation(mapPoint: result.mapPoint, annotationNumbers: nodes.map({ $0.content }), mapRect: result.contentRect)
+}
+
+private extension MKMapView {
+
+    func dequeueAnnotationView<AnnotationView: MKAnnotationView>
+        (forAnnotation annotation: MKAnnotation,
+                       identifier: String) -> AnnotationView {
+        if let annotation = dequeueReusableAnnotationViewWithIdentifier(identifier)
+            as? AnnotationView {
+            return annotation
         }
-        return annotation
+        return AnnotationView(annotation: annotation, reuseIdentifier: identifier)
+    }
+
+    func dequeueAnnotationView<AnnotationView: MKAnnotationView>
+        (forAnnotation annotation: MKAnnotation) -> AnnotationView {
+        return dequeueAnnotationView(forAnnotation: annotation,
+                                     identifier: AnnotationView.reuseIdentifer)
     }
 }
 
-private func == (lhs: MKAnnotation, rhs: MKAnnotation) -> Bool {
-    if let lSingle = lhs as? SingleAnnotation, rSingle = rhs as? SingleAnnotation {
-        return lSingle.annotationNumber == rSingle.annotationNumber
+private extension MKAnnotationView {
+
+    static var reuseIdentifer: String {
+        return NSStringFromClass(self)
     }
-    else if let lMulti = lhs as? ClusterAnnotation, rMulti = rhs as? ClusterAnnotation {
-        return lMulti.annotationNumbers == rMulti.annotationNumbers
+
+}
+
+private extension MKPinAnnotationView {
+    func configureWithAnnotation(annotation: MKAnnotation) {
+        if annotation.isKindOfClass(ClusterAnnotation.self) {
+            pinTintColor = UIColor.blueColor()
+            animatesDrop = false
+        }
+        else {
+            pinTintColor = UIColor.redColor()
+            animatesDrop = true
+        }
     }
-    return false
 }

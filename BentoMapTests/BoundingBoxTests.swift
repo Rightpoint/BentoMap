@@ -107,6 +107,34 @@ class BoundingBoxTests: XCTestCase {
         XCTAssert(MKMapRectEqualToRect(quadrants.southWest.mapRect, swRect))
         XCTAssert(MKMapRectEqualToRect(quadrants.southEast.mapRect, seRect))
     }
+
+    func testCollectionTypeExtensions() {
+        let points = [
+            MKMapPoint(x: 25.0, y: 10956.7),
+            MKMapPoint(x: 1894.5, y: 22897.5550),
+            MKMapPoint(x: 25278.445, y: 156.339),
+            MKMapPoint(x: 17603.8472, y: 2456.7),
+        ]
+
+        var boundingBox = points.boundingBox
+
+        XCTAssert(MKMapPointEqualToPoint(boundingBox.minPoint, MKMapPoint(x: 25.0, y: 156.339)))
+        XCTAssert(MKMapPointEqualToPoint(boundingBox.maxPoint, MKMapPoint(x: 25278.445, y: 22897.5550)))
+
+        let coords = [
+            CLLocationCoordinate2D(latitude: 34.6790, longitude: 28.2847),
+            CLLocationCoordinate2D(latitude: -34.6790, longitude: 88.1349),
+            CLLocationCoordinate2D(latitude: 61.9471, longitude: -14.1887),
+            CLLocationCoordinate2D(latitude: 1.2898, longitude: 42.4277),
+        ]
+
+        boundingBox = coords.boundingBox
+
+        XCTAssertEqualWithAccuracy(boundingBox.minCoordinate.latitude, -34.6790, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(boundingBox.minCoordinate.longitude, -14.1887, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(boundingBox.maxCoordinate.latitude, 61.9471, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(boundingBox.maxCoordinate.longitude, 88.1349, accuracy: 1e-4)
+    }
 }
 
 private extension MKMapPoint {

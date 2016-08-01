@@ -9,10 +9,22 @@
 import Foundation
 import MapKit
 
-public struct QuadTreeNode<NodeData> {
+public protocol MapPointProvider {
 
-    public let mapPoint: MKMapPoint
-    public let content: NodeData
+    var mapPoint: MKMapPoint { get }
+
+}
+
+extension MKMapPoint: MapPointProvider {
+
+    public var mapPoint: MKMapPoint { return self }
+
+}
+
+public struct QuadTreeNode<NodeData>: MapPointProvider {
+
+    public var mapPoint: MKMapPoint
+    public var content: NodeData
 
     public init(mapPoint: MKMapPoint, content: NodeData) {
         self.mapPoint = mapPoint
