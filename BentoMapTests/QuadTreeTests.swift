@@ -22,9 +22,9 @@ class QuadTreeTests: XCTestCase {
 
     func testQuadTreeInitialization() {
         let box = BoundingBox(mapRect: MKMapRectWorld)
-        let quadTree = QuadTree<Void>(boundingBox: box, bucketCapacity: 5)
+        let quadTree = QuadTree<Void>(bucketRegion: box, bucketCapacity: 5)
 
-        XCTAssert(MKMapRectEqualToRect(box.mapRect, quadTree.boundingBox.mapRect), "The bounding box should equal the initalized bounding box")
+        XCTAssert(MKMapRectEqualToRect(box.mapRect, quadTree.bucketRegion.mapRect), "The bounding box should equal the initalized bounding box")
         XCTAssert(quadTree.bucketCapacity == 5, "The bucket capacity passed in is the bucket capacity used")
         XCTAssertNil(quadTree.ordinalNodes, "The initalized nodes should be empty")
         XCTAssertTrue(quadTree.points.isEmpty, "The bucket of points should be empty")
@@ -46,7 +46,7 @@ class QuadTreeTests: XCTestCase {
     func testQuadTreeInsertion() {
 
         let boundingBox = BoundingBox(mapRect: MKMapRect(origin: MKMapPoint(), size: MKMapSize(width: 5000, height: 5000)))
-        var quadTree = QuadTree<Int>(boundingBox: boundingBox, bucketCapacity: 5)
+        var quadTree = QuadTree<Int>(bucketRegion: boundingBox, bucketCapacity: 5)
         var i = 0
         for x in 0.stride(to: 5000, by: 50) {
             for y in 0.stride(to: 5000, by: 50) {
