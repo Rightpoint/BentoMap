@@ -26,7 +26,7 @@ public extension CollectionType where Generator.Element: MapPointProvider {
             if mapPoint.x < min.x {
                 min.x = mapPoint.x
             }
-            if mapPoint.x > mapPoint.x {
+            if mapPoint.x > max.x {
                 max.x = mapPoint.x
             }
             if mapPoint.y < min.y {
@@ -58,7 +58,7 @@ public extension CollectionType where Generator.Element == CLLocationCoordinate2
             if coord.latitude < min.latitude {
                 min.latitude = coord.latitude
             }
-            if coord.latitude > min.latitude {
+            if coord.latitude > max.latitude {
                 max.latitude = coord.latitude
             }
             if coord.longitude < min.longitude {
