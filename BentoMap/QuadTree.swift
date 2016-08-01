@@ -18,7 +18,7 @@ public struct QuadTree<NodeData> {
     public let bucketCapacity: Int
     public var points = [QuadTreeNode<NodeData>]()
 
-    public init(boundingBox: BoundingBox, bucketCapacity: Int) {
+    public init(boundingBox: BoundingBox = .world, bucketCapacity: Int) {
         precondition(bucketCapacity > 0, "Bucket capacity must be greater than 0")
         self.boundingBox = boundingBox
         self.bucketCapacity = bucketCapacity
@@ -130,8 +130,10 @@ private extension QuadTree {
 }
 
 private extension MKMapRect {
+
     func createStep(stepSize: Int, edgeFunction: (MKMapRect -> Double),
                     roundingFunction: (Double -> Double)) -> Int {
         return Int(roundingFunction(edgeFunction(self))) - (Int(roundingFunction(edgeFunction(self))) % stepSize)
     }
+
 }
