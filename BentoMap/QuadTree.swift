@@ -28,6 +28,20 @@ public struct QuadTree<NodeData> {
 
 public extension QuadTree {
 
+    /// Recursively computes the bounding box of the points in the quad tree in O(n) time.
+    public var boundingBox: BoundingBox {
+        var boundingBox = points.boundingBox
+
+        if let ordinals = ordinalNodes {
+            boundingBox.union(ordinals.northWest.boundingBox)
+            boundingBox.union(ordinals.northEast.boundingBox)
+            boundingBox.union(ordinals.southWest.boundingBox)
+            boundingBox.union(ordinals.southEast.boundingBox)
+        }
+
+        return boundingBox
+    }
+
     public func clusteredDataWithinMapRect(mapRect: MKMapRect, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData>] {
 
         let scaleFactor: Double

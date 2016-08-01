@@ -58,6 +58,14 @@ public extension BoundingBox {
 
 extension BoundingBox {
 
+    var quadrants: QuadrantWrapper<BoundingBox> {
+        let (north, south) = mapRect.divide(percent: 0.5, edge: .MinYEdge)
+        let (northWest, northEast) = north.divide(percent: 0.5, edge: .MinXEdge)
+        let (southWest, southEast) = south.divide(percent: 0.5, edge: .MinXEdge)
+
+        return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BoundingBox.init)
+    }
+
     func containsMapPoint(mapPoint: MKMapPoint) -> Bool {
         return MKMapRectContainsPoint(mapRect, mapPoint)
     }
@@ -66,12 +74,8 @@ extension BoundingBox {
         return MKMapRectIntersectsRect(mapRect, boundingBox.mapRect)
     }
 
-    var quadrants: QuadrantWrapper<BoundingBox> {
-        let (north, south) = mapRect.divide(percent: 0.5, edge: .MinYEdge)
-        let (northWest, northEast) = north.divide(percent: 0.5, edge: .MinXEdge)
-        let (southWest, southEast) = south.divide(percent: 0.5, edge: .MinXEdge)
-
-        return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BoundingBox.init)
+    mutating func union(other: BoundingBox) {
+        mapRect = MKMapRectUnion(mapRect, other.mapRect)
     }
 
 }
