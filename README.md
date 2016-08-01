@@ -24,9 +24,10 @@ BentoMap is also compatible with [Carthage](https://github.com/Carthage/Carthage
 github "Raizlabs/BentoMap"
 ```
 
-## Author
+## Authors
 
 Michael Skiba, mike.skiba@raizlabs.com
+Rob Visentin, rob.visentin@raizlabs.com
 
 ## License
 
