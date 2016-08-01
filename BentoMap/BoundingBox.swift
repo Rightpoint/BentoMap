@@ -10,7 +10,10 @@ import Foundation
 import MapKit
 
 public struct BoundingBox {
-    public let mapRect: MKMapRect
+
+    public static let world = BoundingBox(mapRect: MKMapRectWorld)
+
+    public var mapRect: MKMapRect
 
     public init(minCoordinate: CLLocationCoordinate2D, maxCoordinate: CLLocationCoordinate2D) {
         let minPoint = MKMapPointForCoordinate(minCoordinate)
@@ -28,6 +31,7 @@ public struct BoundingBox {
     public init(mapRect: MKMapRect) {
         self.mapRect = mapRect
     }
+
 }
 
 public extension BoundingBox {
@@ -73,6 +77,7 @@ extension BoundingBox {
 }
 
 private extension MKMapRect {
+
     func divide(percent percent: Double, edge: CGRectEdge) -> (slice: MKMapRect, remainder: MKMapRect) {
         let amount: Double
         switch edge {
@@ -93,4 +98,5 @@ private extension MKMapRect {
         MKMapRectDivide(self, slice, remainder, amount, edge)
         return (slice: slice[0], remainder: remainder[0])
     }
+
 }
