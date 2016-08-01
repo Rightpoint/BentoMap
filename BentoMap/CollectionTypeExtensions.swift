@@ -73,3 +73,11 @@ public extension CollectionType where Generator.Element == CLLocationCoordinate2
     }
 
 }
+
+public extension CollectionType where Generator.Element: MKAnnotation {
+
+    var boundingBo: BoundingBox {
+        return map({ $0.coordinate }).boundingBox
+    }
+
+}
