@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 public struct BoundingBox {
-    public let mapRect: MKMapRect
+    public var mapRect: MKMapRect
 
     public init(minCoordinate: CLLocationCoordinate2D, maxCoordinate: CLLocationCoordinate2D) {
         let minPoint = MKMapPointForCoordinate(minCoordinate)

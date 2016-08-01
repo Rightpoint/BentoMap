@@ -11,8 +11,8 @@ import MapKit
 
 public struct QuadTreeNode<NodeData> {
 
-    public let mapPoint: MKMapPoint
-    public let content: NodeData
+    public var mapPoint: MKMapPoint
+    public var content: NodeData
 
     public init(mapPoint: MKMapPoint, content: NodeData) {
         self.mapPoint = mapPoint
