@@ -7,18 +7,17 @@
 //
 
 import Foundation
-import MapKit
 
 //following example code and text from https://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
-public struct QuadTree<NodeData> {
+public struct QuadTree<NodeData, R: Rectangle, C: Coordinate> {
 
-    var ordinalNodes: OrdinalNodes<NodeData>?
+    var ordinalNodes: OrdinalNodes<NodeData, R, C>?
 
-    public let boundingBox: BoundingBox
+    public let boundingBox: BoundingBox<R, C>
     public let bucketCapacity: Int
-    public var points = [QuadTreeNode<NodeData>]()
+    public var points = [QuadTreeNode<NodeData, C>]()
 
-    public init(boundingBox: BoundingBox = .world, bucketCapacity: Int) {
+    public init(boundingBox: BoundingBox<R, C>, bucketCapacity: Int) {
         precondition(bucketCapacity > 0, "Bucket capacity must be greater than 0")
         self.boundingBox = boundingBox
         self.bucketCapacity = bucketCapacity
@@ -28,32 +27,31 @@ public struct QuadTree<NodeData> {
 
 public extension QuadTree {
 
-    public func clusteredDataWithinMapRect(mapRect: MKMapRect, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData>] {
+    public func clusteredDataWithinMapRectangle(mapRectangle: R, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, R, C>] {
 
         let scaleFactor: Double
 
         // Prevents divide by zero errors from cropping up if handed bad data
         if cellSize == 0 || zoomScale == 0 {
             scaleFactor = 1
-        }
-        else {
+        } else {
             scaleFactor = zoomScale / cellSize
         }
 
-        let stepSize = Int(1.0 / scaleFactor)
+        let stepSize = CGFloat(1.0 / scaleFactor)
 
-        let minX = mapRect.createStep(stepSize, edgeFunction: MKMapRectGetMinX, roundingFunction: floor)
-        let maxX = mapRect.createStep(stepSize, edgeFunction: MKMapRectGetMaxX, roundingFunction: ceil)
-        let minY = mapRect.createStep(stepSize, edgeFunction: MKMapRectGetMinY, roundingFunction: floor)
-        let maxY = mapRect.createStep(stepSize, edgeFunction: MKMapRectGetMaxY, roundingFunction: ceil)
+        let minX = mapRectangle.minX
+        let maxX = mapRectangle.maxX
+        let minY = mapRectangle.minY
+        let maxY = mapRectangle.maxY
 
-        var result = [QuadTreeResult<NodeData>]()
+        var result = [QuadTreeResult<NodeData, R, C>]()
 
-        let mapStep = MKMapSize(width: Double(stepSize), height: Double(stepSize))
+        let mapStep = CGSize(width: Double(stepSize), height: Double(stepSize))
         for x in minX.stride(through: maxX, by: stepSize) {
             for y in minY.stride(through: maxY, by: stepSize) {
-                let cellRect = MKMapRect(origin: MKMapPoint(x: Double(x), y: Double(y)), size: mapStep)
-                let nodes = nodesInRange(BoundingBox(mapRect: cellRect))
+                let cellRectangle = R(origin: C(x: x, y: y), size: mapStep)
+                let nodes = nodesInRange(BoundingBox(mapRectangle: cellRectangle))
 
                 switch nodes.count {
                 case 0:
@@ -71,7 +69,7 @@ public extension QuadTree {
     }
 
 
-    public mutating func insertNode(node: QuadTreeNode<NodeData>) -> Bool {
+    public mutating func insertNode(node: QuadTreeNode<NodeData, C>) -> Bool {
         guard boundingBox.containsMapPoint(node.mapPoint) else {
             return false
         }
@@ -106,8 +104,8 @@ private extension QuadTree {
                                     southEast: trees.southEast)
     }
 
-    func nodesInRange(range: BoundingBox) -> [QuadTreeNode<NodeData>] {
-        var nodes = [QuadTreeNode<NodeData>]()
+    func nodesInRange(range: BoundingBox<R, C>) -> [QuadTreeNode<NodeData, C>] {
+        var nodes = [QuadTreeNode<NodeData, C>]()
 
         guard boundingBox.intersectsBoundingBox(range) else {
             return nodes
@@ -129,11 +127,11 @@ private extension QuadTree {
 
 }
 
-private extension MKMapRect {
-
-    func createStep(stepSize: Int, edgeFunction: (MKMapRect -> Double),
-                    roundingFunction: (Double -> Double)) -> Int {
-        return Int(roundingFunction(edgeFunction(self))) - (Int(roundingFunction(edgeFunction(self))) % stepSize)
-    }
-
-}
+//private extension MKMapRectangle {
+//
+//    func createStep(stepSize: Int, edgeFunction: (MKMapRectangle -> Double),
+//                    roundingFunction: (Double -> Double)) -> Int {
+//        return Int(roundingFunction(edgeFunction(self))) - (Int(roundingFunction(edgeFunction(self))) % stepSize)
+//    }
+//
+//}

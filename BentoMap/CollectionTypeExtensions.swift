@@ -7,69 +7,35 @@
 //
 
 import Foundation
-import MapKit
 
-public extension CollectionType where Generator.Element: MapPointProvider {
+public extension CollectionType where Generator.Element: Coordinate {
 
-    /// Computes the BoundingBox of the point cloud in O(n) time.
-    var boundingBox: BoundingBox {
+    func boundingBox<R: Rectangle>() -> BoundingBox<R, Generator.Element> {
         guard let first = first else {
-            return BoundingBox(mapRect: MKMapRect())
-        }
-
-        var min = first.mapPoint
-        var max = first.mapPoint
-
-        for point in self {
-            let mapPoint = point.mapPoint
-
-            if mapPoint.x < min.x {
-                min.x = mapPoint.x
-            }
-            if mapPoint.x > max.x {
-                max.x = mapPoint.x
-            }
-            if mapPoint.y < min.y {
-                min.y = mapPoint.y
-            }
-            if mapPoint.y > max.y {
-                max.y = mapPoint.y
-            }
-        }
-
-        let rect = MKMapRect(origin: min, size: MKMapSize(width: max.x - min.x, height: max.y - min.y))
-        return BoundingBox(mapRect: rect)
-    }
-
-}
-
-public extension CollectionType where Generator.Element == CLLocationCoordinate2D {
-
-    /// Computes the BoundingBox of the coordinate list in O(n) time.
-    var boundingBox: BoundingBox {
-        guard let first = first else {
-            return BoundingBox(mapRect: MKMapRect())
+            return BoundingBox(mapRectangle: R())
         }
 
         var min = first
         var max = first
 
-        for coord in self {
-            if coord.latitude < min.latitude {
-                min.latitude = coord.latitude
+        for point in self {
+
+            if point.x < min.x {
+                min.x = point.x
             }
-            if coord.latitude > max.latitude {
-                max.latitude = coord.latitude
+            if point.x > max.x {
+                max.x = point.x
             }
-            if coord.longitude < min.longitude {
-                min.longitude = coord.longitude
+            if point.y < min.y {
+                min.y = point.y
             }
-            if coord.longitude > max.longitude {
-                max.longitude = coord.longitude
+            if point.y > max.y {
+                max.y = point.y
             }
         }
 
-        return BoundingBox(minCoordinate: min, maxCoordinate: max)
+        let rectangle = R(origin: min, size: CGSize(width: max.x - min.x, height: max.y - min.y))
+        return BoundingBox(mapRectangle: rectangle)
     }
 
 }

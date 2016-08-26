@@ -9,39 +9,39 @@
 import Foundation
 import MapKit
 
-public enum QuadTreeResult<NodeData> {
+public enum QuadTreeResult<NodeData, R: Rectangle, C: Coordinate> {
 
-    case Single(node: QuadTreeNode<NodeData>)
-    case Multiple(nodes: [QuadTreeNode<NodeData>])
+    case Single(node: QuadTreeNode<NodeData, C>)
+    case Multiple(nodes: [QuadTreeNode<NodeData, C>])
 
-    public var mapPoint: MKMapPoint {
-        let mapPoint: MKMapPoint
+    public var mapPoint: C {
+        let mapPoint: C
         switch self {
         case let .Single(node):
             mapPoint = node.mapPoint
         case let .Multiple(nodes):
-            var aggregatePoint = MKMapPoint()
+            var aggregatePoint = C()
             for node in nodes {
                 aggregatePoint.x += node.mapPoint.x
                 aggregatePoint.y += node.mapPoint.y
             }
-            aggregatePoint.x /= Double(nodes.count)
-            aggregatePoint.y /= Double(nodes.count)
+            aggregatePoint.x /= CGFloat(nodes.count)
+            aggregatePoint.y /= CGFloat(nodes.count)
             mapPoint = aggregatePoint
         }
         return mapPoint
     }
 
-    public var contentRect: MKMapRect {
-        let origin: MKMapPoint
-        let size: MKMapSize
+    public var contentRectangle: R {
+        let origin: C
+        let size: CGSize
         switch  self {
         case let .Single(node: node):
             origin = node.mapPoint
-            size = MKMapSize()
+            size = CGSize()
         case let .Multiple(nodes: nodes):
-            var minPoint = MKMapPoint(x: DBL_MAX, y: DBL_MAX)
-            var maxPoint = MKMapPoint(x: DBL_MIN, y: DBL_MIN)
+            var minPoint = C(x: CGFloat(DBL_MAX), y: CGFloat(DBL_MAX))
+            var maxPoint = C(x: CGFloat(DBL_MIN), y: CGFloat(DBL_MIN))
             for node in nodes {
                 minPoint.x = min(minPoint.x, node.mapPoint.x)
                 minPoint.y = min(minPoint.y, node.mapPoint.y)
@@ -50,10 +50,10 @@ public enum QuadTreeResult<NodeData> {
             }
             origin = minPoint
             // slightly pad the size to make sure all nodes are contained
-            size = MKMapSize(width: abs(minPoint.x - maxPoint.x) + 0.001,
+            size = CGSize(width: abs(minPoint.x - maxPoint.x) + 0.001,
                              height: abs(minPoint.y - maxPoint.y) + 0.001)
         }
-        return MKMapRect(origin: origin, size: size)
+        return R(origin: origin, size: size)
     }
 
 }

@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct OrdinalNodes<NodeData> {
+struct OrdinalNodes<NodeData, R: Rectangle, C: Coordinate> {
 
-    private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData>>
+    private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData, R, C>>
 
     // Recursive structs require boxes
     private var quadrants: Box<QuadTreeWrapper>
 
-    var northWest: QuadTree<NodeData> {
+    var northWest: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.northWest
         }
@@ -24,7 +24,7 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    var northEast: QuadTree<NodeData> {
+    var northEast: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.northEast
         }
@@ -33,7 +33,7 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    var southWest: QuadTree<NodeData> {
+    var southWest: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.southWest
         }
@@ -42,7 +42,7 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    var southEast: QuadTree<NodeData> {
+    var southEast: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.southEast
         }
@@ -51,10 +51,10 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    init(northWest: QuadTree<NodeData>,
-         northEast: QuadTree<NodeData>,
-         southWest: QuadTree<NodeData>,
-         southEast: QuadTree<NodeData>) {
+    init(northWest: QuadTree<NodeData, R, C>,
+         northEast: QuadTree<NodeData, R, C>,
+         southWest: QuadTree<NodeData, R, C>,
+         southEast: QuadTree<NodeData, R, C>) {
         quadrants = Box(value: QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast))
     }
 }

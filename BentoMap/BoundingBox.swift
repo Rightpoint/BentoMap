@@ -7,96 +7,83 @@
 //
 
 import Foundation
-import MapKit
 
-public struct BoundingBox {
+public struct BoundingBox<R: Rectangle, C: Coordinate> {
 
-    public static let world = BoundingBox(mapRect: MKMapRectWorld)
+//    public static let world = BoundingBox<R, C>!
 
-    public var mapRect: MKMapRect
+    public var mapRectangle: R
 
-    public init(minCoordinate: CLLocationCoordinate2D, maxCoordinate: CLLocationCoordinate2D) {
-        let minPoint = MKMapPointForCoordinate(minCoordinate)
-        let maxPoint = MKMapPointForCoordinate(maxCoordinate)
+    public init(minPoint: C, maxPoint: C) {
 
         let minX = min(minPoint.x, maxPoint.x)
         let minY = min(minPoint.y, maxPoint.y)
         let maxX = max(minPoint.x, maxPoint.x)
         let maxY = max(minPoint.y, maxPoint.y)
 
-        mapRect = MKMapRect(origin: MKMapPoint(x: minX, y: minY),
-                            size: MKMapSize(width: maxX - minX, height: maxY - minY))
+        mapRectangle = R(origin: C(x: minX, y: minY),
+                            size: CGSize(width: maxX - minX, height: maxY - minY))
     }
 
-    public init(mapRect: MKMapRect) {
-        self.mapRect = mapRect
+    public init(mapRectangle: R) {
+        self.mapRectangle = mapRectangle
     }
 
 }
 
 public extension BoundingBox {
 
-    public var minPoint: MKMapPoint {
-        return MKMapPoint(x: MKMapRectGetMinX(mapRect), y: MKMapRectGetMinY(mapRect))
+    public var minPoint: Coordinate {
+        return C(x: mapRectangle.minX, y: mapRectangle.minY)
     }
 
-    public var maxPoint: MKMapPoint {
-        return MKMapPoint(x: MKMapRectGetMaxX(mapRect), y: MKMapRectGetMaxY(mapRect))
-    }
-
-    public var minCoordinate: CLLocationCoordinate2D {
-        let (minCoord, maxCoord) = (MKCoordinateForMapPoint(minPoint), MKCoordinateForMapPoint(maxPoint))
-        return CLLocationCoordinate2D(latitude: min(minCoord.latitude, maxCoord.latitude), longitude: min(minCoord.longitude, maxCoord.longitude))
-    }
-
-    public var maxCoordinate: CLLocationCoordinate2D {
-        let (minCoord, maxCoord) = (MKCoordinateForMapPoint(minPoint), MKCoordinateForMapPoint(maxPoint))
-        return CLLocationCoordinate2D(latitude: max(minCoord.latitude, maxCoord.latitude), longitude: max(minCoord.longitude, maxCoord.longitude))
+    public var maxPoint: Coordinate {
+        return C(x: mapRectangle.maxX, y: mapRectangle.maxY)
     }
 
 }
 
 extension BoundingBox {
 
-    func containsMapPoint(mapPoint: MKMapPoint) -> Bool {
-        return MKMapRectContainsPoint(mapRect, mapPoint)
+    func containsMapPoint(mapPoint: Coordinate) -> Bool {
+        return mapRectangle.contains(mapPoint)
     }
 
     func intersectsBoundingBox(boundingBox: BoundingBox) -> Bool {
-        return MKMapRectIntersectsRect(mapRect, boundingBox.mapRect)
+        return true
     }
 
     var quadrants: QuadrantWrapper<BoundingBox> {
-        let (north, south) = mapRect.divide(percent: 0.5, edge: .MinYEdge)
-        let (northWest, northEast) = north.divide(percent: 0.5, edge: .MinXEdge)
-        let (southWest, southEast) = south.divide(percent: 0.5, edge: .MinXEdge)
+        let (north, south) = mapRectangle.divide(0.5, edge: .MinYEdge)
+        let (northWest, northEast) = north.divide(0.5, edge: .MinXEdge)
+        let (southWest, southEast) = south.divide(0.5, edge: .MinXEdge)
 
         return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BoundingBox.init)
     }
 
 }
 
-private extension MKMapRect {
-
-    func divide(percent percent: Double, edge: CGRectEdge) -> (slice: MKMapRect, remainder: MKMapRect) {
-        let amount: Double
-        switch edge {
-        case .MaxXEdge, .MinXEdge:
-            amount = size.width / 2.0
-        case .MaxYEdge, .MinYEdge:
-            amount = size.height / 2.0
-        }
-
-        let slice = UnsafeMutablePointer<MKMapRect>.alloc(1)
-        defer {
-            slice.destroy()
-        }
-        let remainder = UnsafeMutablePointer<MKMapRect>.alloc(1)
-        defer {
-            remainder.destroy()
-        }
-        MKMapRectDivide(self, slice, remainder, amount, edge)
-        return (slice: slice[0], remainder: remainder[0])
-    }
-
-}
+//private extension MKMapRectangle {
+//
+//    func divide(percent percent: Double, edge: CGRectangleEdge) -> (slice: MKMapRectangle, remainder: MKMapRectangle) {
+//        let amount: Double
+//        switch edge {
+//        case .MaxXEdge, .MinXEdge:
+//            amount = size.width / 2.0
+//        case .MaxYEdge, .MinYEdge:
+//            amount = size.height / 2.0
+//        }
+//
+//        let slice = UnsafeMutablePointer<MKMapRectangle>.alloc(1)
+//        defer {
+//            slice.destroy()
+//        }
+//        let remainder = UnsafeMutablePointer<MKMapRectangle>.alloc(1)
+//        defer {
+//            remainder.destroy()
+//        }
+//        MKMapRectangleDivide(self, slice, remainder, amount, edge)
+//        return (slice: slice[0], remainder: remainder[0])
+//    }
+//
+//}
