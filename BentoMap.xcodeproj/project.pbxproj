@@ -31,6 +31,7 @@
 		B50426AF1D71D710008BEF76 /* CGRect+BentoRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */; };
 		B50426B41D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */; };
 		B50426B61D71F775008BEF76 /* CGPoint+BentoCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */; };
+		B50426B81D71FA21008BEF76 /* MKMapRect+BentoRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426B71D71FA21008BEF76 /* MKMapRect+BentoRect.swift */; };
 		D4C3839B1D4F9DD500556EBE /* CollectionTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,7 @@
 		B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+BentoRect.swift"; sourceTree = "<group>"; };
 		B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MKMapPoint+BentoCoordinate.swift"; sourceTree = "<group>"; };
 		B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+BentoCoordinate.swift"; sourceTree = "<group>"; };
+		B50426B71D71FA21008BEF76 /* MKMapRect+BentoRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MKMapRect+BentoRect.swift"; sourceTree = "<group>"; };
 		D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTypeExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -240,6 +242,7 @@
 				B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */,
 				B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */,
 				B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */,
+				B50426B71D71FA21008BEF76 /* MKMapRect+BentoRect.swift */,
 				D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */,
 			);
 			name = Extensions;
@@ -425,6 +428,7 @@
 				B50426B61D71F775008BEF76 /* CGPoint+BentoCoordinate.swift in Sources */,
 				B50426B41D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift in Sources */,
 				D4C3839B1D4F9DD500556EBE /* CollectionTypeExtensions.swift in Sources */,
+				B50426B81D71FA21008BEF76 /* MKMapRect+BentoRect.swift in Sources */,
 				723753251D2D9DA2002A1BC2 /* BoundingBox.swift in Sources */,
 				723753281D2D9DA2002A1BC2 /* QuadrantWrapper.swift in Sources */,
 				723753291D2D9DA2002A1BC2 /* QuadTree.swift in Sources */,
