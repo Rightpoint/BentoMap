@@ -21,7 +21,7 @@ class QuadTreeTests: XCTestCase {
     }
 
     func testQuadTreeInitialization() {
-        let box = BoundingBox(mapRect: MKMapRectWorld)
+        let box = BoundingBox<CGRect, CGPoint>(mapRectangle: CGRect.zero)
         let quadTree = QuadTree<Void>(boundingBox: box, bucketCapacity: 5)
 
         XCTAssert(MKMapRectEqualToRect(box.mapRect, quadTree.boundingBox.mapRect), "The bounding box should equal the initalized bounding box")

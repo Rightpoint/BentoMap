@@ -8,34 +8,37 @@
 
 import Foundation
 
-public extension CollectionType where Generator.Element: Coordinate {
+public extension CollectionType where Generator.Element: BentoCoordinate {
 
-    func boundingBox<R: Rectangle>() -> BoundingBox<R, Generator.Element> {
+    func bentoBox<R: BentoRect>() -> BentoBox<R, Generator.Element> {
         guard let first = first else {
-            return BoundingBox(mapRectangle: R())
+            return BentoBox(mapRectangle: R())
         }
 
-        var min = first
-        var max = first
+        let minIn = first
+        let maxIn = first
+        var minOut: CGPoint = CGPoint.zero
+        var maxOut: CGPoint = CGPoint.zero
+
 
         for point in self {
 
-            if point.x < min.x {
-                min.x = point.x
+            if point.x < minIn.x {
+                minOut.x = point.x
             }
-            if point.x > max.x {
-                max.x = point.x
+            if point.x > maxIn.x {
+                maxOut.x = point.x
             }
-            if point.y < min.y {
-                min.y = point.y
+            if point.y < minIn.y {
+                minOut.y = point.y
             }
-            if point.y > max.y {
-                max.y = point.y
+            if point.y > maxIn.y {
+                maxOut.y = point.y
             }
         }
 
-        let rectangle = R(origin: min, size: CGSize(width: max.x - min.x, height: max.y - min.y))
-        return BoundingBox(mapRectangle: rectangle)
+        let BentoRect = R(origin: minOut, size: CGSize(width: maxOut.x - minOut.x, height: maxOut.y - minOut.y))
+        return BentoBox(mapRectangle: BentoRect)
     }
 
 }

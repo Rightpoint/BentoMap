@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-public enum QuadTreeResult<NodeData, R: Rectangle, C: Coordinate> {
+public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     case Single(node: QuadTreeNode<NodeData, C>)
     case Multiple(nodes: [QuadTreeNode<NodeData, C>])
@@ -20,14 +20,15 @@ public enum QuadTreeResult<NodeData, R: Rectangle, C: Coordinate> {
         case let .Single(node):
             mapPoint = node.mapPoint
         case let .Multiple(nodes):
-            var aggregatePoint = C()
+            var x: CGFloat = 0.0
+            var y: CGFloat = 0.0
             for node in nodes {
-                aggregatePoint.x += node.mapPoint.x
-                aggregatePoint.y += node.mapPoint.y
+                x += node.mapPoint.x
+                y += node.mapPoint.y
             }
-            aggregatePoint.x /= CGFloat(nodes.count)
-            aggregatePoint.y /= CGFloat(nodes.count)
-            mapPoint = aggregatePoint
+            x /= CGFloat(nodes.count)
+            y /= CGFloat(nodes.count)
+            mapPoint = C(x: x, y: y)
         }
         return mapPoint
     }
@@ -40,15 +41,15 @@ public enum QuadTreeResult<NodeData, R: Rectangle, C: Coordinate> {
             origin = node.mapPoint
             size = CGSize()
         case let .Multiple(nodes: nodes):
-            var minPoint = C(x: CGFloat(DBL_MAX), y: CGFloat(DBL_MAX))
-            var maxPoint = C(x: CGFloat(DBL_MIN), y: CGFloat(DBL_MIN))
+            var minPoint = CGPoint(x: CGFloat(DBL_MAX), y: CGFloat(DBL_MAX))
+            var maxPoint = CGPoint(x: CGFloat(DBL_MIN), y: CGFloat(DBL_MIN))
             for node in nodes {
                 minPoint.x = min(minPoint.x, node.mapPoint.x)
                 minPoint.y = min(minPoint.y, node.mapPoint.y)
                 maxPoint.x = max(maxPoint.x, node.mapPoint.x)
                 maxPoint.y = max(maxPoint.y, node.mapPoint.y)
             }
-            origin = minPoint
+            origin = C(x: minPoint.x, y: minPoint.y)
             // slightly pad the size to make sure all nodes are contained
             size = CGSize(width: abs(minPoint.x - maxPoint.x) + 0.001,
                              height: abs(minPoint.y - maxPoint.y) + 0.001)

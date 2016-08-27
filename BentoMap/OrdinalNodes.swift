@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OrdinalNodes<NodeData, R: Rectangle, C: Coordinate> {
+struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData, R, C>>
 

@@ -1,5 +1,5 @@
 //
-//  BoundingBox.swift
+//  BentoBox.swift
 //  BentoMap
 //
 //  Created by Michael Skiba on 2/17/16.
@@ -8,9 +8,7 @@
 
 import Foundation
 
-public struct BoundingBox<R: Rectangle, C: Coordinate> {
-
-//    public static let world = BoundingBox<R, C>!
+public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
 
     public var mapRectangle: R
 
@@ -31,34 +29,34 @@ public struct BoundingBox<R: Rectangle, C: Coordinate> {
 
 }
 
-public extension BoundingBox {
+public extension BentoBox {
 
-    public var minPoint: Coordinate {
+    public var minPoint: BentoCoordinate {
         return C(x: mapRectangle.minX, y: mapRectangle.minY)
     }
 
-    public var maxPoint: Coordinate {
+    public var maxPoint: BentoCoordinate {
         return C(x: mapRectangle.maxX, y: mapRectangle.maxY)
     }
 
 }
 
-extension BoundingBox {
+extension BentoBox {
 
-    func containsMapPoint(mapPoint: Coordinate) -> Bool {
+    func containsMapPoint(mapPoint: BentoCoordinate) -> Bool {
         return mapRectangle.contains(mapPoint)
     }
 
-    func intersectsBoundingBox(boundingBox: BoundingBox) -> Bool {
+    func intersectsBentoBox(bentoBox: BentoBox) -> Bool {
         return true
     }
 
-    var quadrants: QuadrantWrapper<BoundingBox> {
+    var quadrants: QuadrantWrapper<BentoBox> {
         let (north, south) = mapRectangle.divide(0.5, edge: .MinYEdge)
         let (northWest, northEast) = north.divide(0.5, edge: .MinXEdge)
         let (southWest, southEast) = south.divide(0.5, edge: .MinXEdge)
 
-        return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BoundingBox.init)
+        return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BentoBox.init)
     }
 
 }

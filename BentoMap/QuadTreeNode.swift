@@ -12,40 +12,32 @@ public protocol Initializable {
     init()
 }
 
-public protocol Coordinate: Initializable {
+public protocol BentoCoordinate: Initializable {
 
-    var x: CGFloat { get set }
-    var y: CGFloat { get set }
+    var x: CGFloat { get }
+    var y: CGFloat { get }
 
     init(x: CGFloat, y: CGFloat)
 }
 
-public protocol Rectangle: Initializable {
+public protocol BentoRect: Initializable {
 
     var maxX: CGFloat { get }
     var maxY: CGFloat { get }
     var minX: CGFloat { get }
     var minY: CGFloat { get }
 
-    func contains(c: Coordinate) -> Bool
+    func contains(c: BentoCoordinate) -> Bool
 
     func divide(percent: CGFloat, edge: CGRectEdge) -> (Self, Self)
 
-    init(origin: Coordinate, size: CGSize)
-}
-
-extension Coordinate {
-    init(x: CGFloat, y: CGFloat) {
-        self.init()
-        self.x = x
-        self.y = y
-    }
+    init(origin: BentoCoordinate, size: CGSize)
 }
 
 //public protocol MapPointProvider {
 //
-//    associatedtype C = Coordinate
-//    associatedtype R = Rectangle
+//    associatedtype C = BentoCoordinate
+//    associatedtype R = BentoRect
 //
 //    var mapPoint: C { get }
 //
@@ -57,7 +49,7 @@ extension Coordinate {
 //
 //}
 
-public struct QuadTreeNode<NodeData, C: Coordinate> {
+public struct QuadTreeNode<NodeData, C: BentoCoordinate> {
 
     public var mapPoint: C
     public var content: NodeData

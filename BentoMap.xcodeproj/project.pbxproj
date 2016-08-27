@@ -28,6 +28,9 @@
 		7237534E1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */; };
 		72383AB51D2ECAD00071EDE2 /* OptionalOr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */; };
 		72383AB71D2ECAF70071EDE2 /* OptionalOrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */; };
+		B50426AF1D71D710008BEF76 /* CGRect+BentoRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */; };
+		B50426B41D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */; };
+		B50426B61D71F775008BEF76 /* CGPoint+BentoCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */; };
 		D4C3839B1D4F9DD500556EBE /* CollectionTypeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +90,9 @@
 		7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "QuadTree+SampleData.swift"; sourceTree = "<group>"; };
 		72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalOr.swift; sourceTree = "<group>"; };
 		72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalOrTests.swift; sourceTree = "<group>"; };
+		B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGRect+BentoRect.swift"; sourceTree = "<group>"; };
+		B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MKMapPoint+BentoCoordinate.swift"; sourceTree = "<group>"; };
+		B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+BentoCoordinate.swift"; sourceTree = "<group>"; };
 		D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionTypeExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,10 +146,10 @@
 		723753061D2D9D6D002A1BC2 /* BentoMap */ = {
 			isa = PBXGroup;
 			children = (
+				B50426B21D71F2C8008BEF76 /* Extensions */,
 				723E206E1D2EBB9C00CF44FA /* Resources */,
 				7237531E1D2D9DA2002A1BC2 /* BoundingBox.swift */,
 				7237531F1D2D9DA2002A1BC2 /* Box.swift */,
-				D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */,
 				723753201D2D9DA2002A1BC2 /* OrdinalNodes.swift */,
 				723753221D2D9DA2002A1BC2 /* QuadTree.swift */,
 				723753231D2D9DA2002A1BC2 /* QuadTreeNode.swift */,
@@ -226,6 +232,17 @@
 				723753151D2D9D6D002A1BC2 /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		B50426B21D71F2C8008BEF76 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */,
+				B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */,
+				B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */,
+				D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */,
+			);
+			name = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -405,12 +422,15 @@
 				7237532A1D2D9DA2002A1BC2 /* QuadTreeNode.swift in Sources */,
 				7237532B1D2D9DA2002A1BC2 /* QuadTreeResult.swift in Sources */,
 				72383AB51D2ECAD00071EDE2 /* OptionalOr.swift in Sources */,
+				B50426B61D71F775008BEF76 /* CGPoint+BentoCoordinate.swift in Sources */,
+				B50426B41D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift in Sources */,
 				D4C3839B1D4F9DD500556EBE /* CollectionTypeExtensions.swift in Sources */,
 				723753251D2D9DA2002A1BC2 /* BoundingBox.swift in Sources */,
 				723753281D2D9DA2002A1BC2 /* QuadrantWrapper.swift in Sources */,
 				723753291D2D9DA2002A1BC2 /* QuadTree.swift in Sources */,
 				723753261D2D9DA2002A1BC2 /* Box.swift in Sources */,
 				723753271D2D9DA2002A1BC2 /* OrdinalNodes.swift in Sources */,
+				B50426AF1D71D710008BEF76 /* CGRect+BentoRect.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

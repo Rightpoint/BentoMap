@@ -9,17 +9,17 @@
 import Foundation
 
 //following example code and text from https://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
-public struct QuadTree<NodeData, R: Rectangle, C: Coordinate> {
+public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     var ordinalNodes: OrdinalNodes<NodeData, R, C>?
 
-    public let boundingBox: BoundingBox<R, C>
+    public let bentoBox: BentoBox<R, C>
     public let bucketCapacity: Int
     public var points = [QuadTreeNode<NodeData, C>]()
 
-    public init(boundingBox: BoundingBox<R, C>, bucketCapacity: Int) {
+    public init(bentoBox: BentoBox<R, C>, bucketCapacity: Int) {
         precondition(bucketCapacity > 0, "Bucket capacity must be greater than 0")
-        self.boundingBox = boundingBox
+        self.bentoBox = bentoBox
         self.bucketCapacity = bucketCapacity
     }
 
@@ -51,7 +51,7 @@ public extension QuadTree {
         for x in minX.stride(through: maxX, by: stepSize) {
             for y in minY.stride(through: maxY, by: stepSize) {
                 let cellRectangle = R(origin: C(x: x, y: y), size: mapStep)
-                let nodes = nodesInRange(BoundingBox(mapRectangle: cellRectangle))
+                let nodes = nodesInRange(BentoBox(mapRectangle: cellRectangle))
 
                 switch nodes.count {
                 case 0:
@@ -70,7 +70,7 @@ public extension QuadTree {
 
 
     public mutating func insertNode(node: QuadTreeNode<NodeData, C>) -> Bool {
-        guard boundingBox.containsMapPoint(node.mapPoint) else {
+        guard bentoBox.containsMapPoint(node.mapPoint) else {
             return false
         }
 
@@ -94,8 +94,8 @@ public extension QuadTree {
 private extension QuadTree {
 
     mutating func subdivide() {
-        let trees = boundingBox.quadrants.map { quadrant in
-            QuadTree(boundingBox: quadrant, bucketCapacity: self.bucketCapacity)
+        let trees = bentoBox.quadrants.map { quadrant in
+            QuadTree(bentoBox: quadrant, bucketCapacity: self.bucketCapacity)
         }
 
         ordinalNodes = OrdinalNodes(northWest: trees.northWest,
@@ -104,10 +104,10 @@ private extension QuadTree {
                                     southEast: trees.southEast)
     }
 
-    func nodesInRange(range: BoundingBox<R, C>) -> [QuadTreeNode<NodeData, C>] {
+    func nodesInRange(range: BentoBox<R, C>) -> [QuadTreeNode<NodeData, C>] {
         var nodes = [QuadTreeNode<NodeData, C>]()
 
-        guard boundingBox.intersectsBoundingBox(range) else {
+        guard bentoBox.intersectsBentoBox(range) else {
             return nodes
         }
 
