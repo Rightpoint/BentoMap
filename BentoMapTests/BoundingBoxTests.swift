@@ -24,36 +24,36 @@ class BoundingBoxTests: XCTestCase {
 
         let mapRect = MKMapRectWorld
 
-        let mapRectBoundingBox = BoundingBox(mapRect: mapRect)
+        let mapRectBoundingBox = BentoBox<MKMapRect, MKMapPoint>(mapRect: mapRect)
 
         XCTAssert(MKMapRectEqualToRect(mapRect, mapRectBoundingBox.mapRect), "The bounding box's map rect should be equal to the input map rect")
 
         let maxCoord = CLLocationCoordinate2D(latitude: 30, longitude: 60)
         let minCoord = CLLocationCoordinate2D(latitude: 20, longitude: 40)
 
-        let coordBoundingBox = BoundingBox(minCoordinate: minCoord, maxCoordinate: maxCoord)
+        let coordBoundingBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minPoint: minCoord, maxPoint: maxCoord)
 
-        let minLat = min(minCoord.latitude, maxCoord.latitude)
-        XCTAssertEqualWithAccuracy(coordBoundingBox.minCoordinate.latitude, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBoundingBox.minCoordinate.latitude) should equal the smallest latitude passed in \(minLat)")
-
-
-        let maxLat = max(minCoord.latitude, maxCoord.latitude)
-        XCTAssertEqualWithAccuracy(coordBoundingBox.maxCoordinate.latitude, maxLat, accuracy: 0.001, "The bounding box's max latitude \(coordBoundingBox.maxCoordinate.latitude) should equal the largest latitude passed in \(maxLat)")
-
-        let minLong = min(minCoord.longitude, maxCoord.longitude)
-        XCTAssertEqualWithAccuracy(coordBoundingBox.minCoordinate.longitude, minLong, accuracy: 0.001, "The bounding box's min longitude \(coordBoundingBox.minCoordinate.longitude) should equal the smallest longitude passed in \(minLong)")
+        let minLat = CGFloat(min(minCoord._x, maxCoord._x))
+        XCTAssertEqualWithAccuracy(coordBoundingBox.minPoint._x, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBoundingBox.minPoint._x) should equal the smallest latitude passed in \(minLat)")
 
 
-        let maxLong = max(minCoord.longitude, maxCoord.longitude)
-        XCTAssertEqualWithAccuracy(coordBoundingBox.maxCoordinate.longitude, maxLong, accuracy: 0.001, "The bounding box's max longitude \(coordBoundingBox.minCoordinate.longitude) should equal the largest longitude passed in \(minLong)")
+        let maxLat = max(minCoord._x, maxCoord._x)
+        XCTAssertEqualWithAccuracy(coordBoundingBox.maxPoint._x, maxLat, accuracy: 0.001, "The bounding box's max latitude \(coordBoundingBox.maxPoint._x) should equal the largest latitude passed in \(maxLat)")
+
+        let minLong = min(minCoord._y, maxCoord._y)
+        XCTAssertEqualWithAccuracy(coordBoundingBox.minPoint._y, minLong, accuracy: 0.001, "The bounding box's min longitude \(coordBoundingBox.minPoint._y) should equal the smallest longitude passed in \(minLong)")
+
+
+        let maxLong = max(minCoord._y, maxCoord._y)
+        XCTAssertEqualWithAccuracy(coordBoundingBox.maxPoint._y, maxLong, accuracy: 0.001, "The bounding box's max longitude \(coordBoundingBox.minPoint._y) should equal the largest longitude passed in \(minLong)")
     }
 
     func testBoundingBoxCoordinates() {
-        let coordBoundingBox = BoundingBox(minCoordinate: CLLocationCoordinate2D(latitude: 30, longitude: 60),
-                                           maxCoordinate: CLLocationCoordinate2D(latitude: 20, longitude: 40))
+        let coordBoundingBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minPoint: CLLocationCoordinate2D(latitude: 30, longitude: 60),
+                                        maxPoint: CLLocationCoordinate2D(latitude: 20, longitude: 40))
 
-        let maxPoint = coordBoundingBox.maxPoint
-        let minPoint = coordBoundingBox.minPoint
+        let maxPoint = MKMapPoint(x: coordBoundingBox.maxPoint._x, y: coordBoundingBox.maxPoint._y)
+        let minPoint = MKMapPoint(x: coordBoundingBox.minPoint._y, y: coordBoundingBox.minPoint._y)
 
         // the min or higher is inside the bounding box
         XCTAssert(coordBoundingBox.containsMapPoint(minPoint.offset(latitude: 0.1, longitude: 0.1)))
@@ -74,9 +74,10 @@ class BoundingBoxTests: XCTestCase {
         XCTAssertFalse(coordBoundingBox.containsMapPoint(minPoint.offset(longitude: -0.1)))
         XCTAssertFalse(coordBoundingBox.containsMapPoint(minPoint.offset(latitude: -0.1)))
 
+
         // the middle point is inside the bounding box
-        let midCoord = MKMapPoint(x: (maxPoint.x + minPoint.x) / 2.0,
-                                  y: (maxPoint.y + minPoint.y) / 2.0)
+        let midCoord = MKMapPoint(x: (maxPoint._x + minPoint._x) / 2.0,
+                                  y: (maxPoint._y + minPoint._y) / 2.0)
         XCTAssert(coordBoundingBox.containsMapPoint(midCoord))
     }
 
@@ -85,12 +86,12 @@ class BoundingBoxTests: XCTestCase {
         let intersectingRect =  MKMapRectMake(250, 250, 500, 500)
         let nonIntersectingRect = MKMapRectMake(500, 0, 500, 500)
 
-        let boundingBox = BoundingBox(mapRect: rect)
-        let intersectingBox = BoundingBox(mapRect: intersectingRect)
-        let nonIntersectingBox = BoundingBox(mapRect: nonIntersectingRect)
+        let bentoBox = BentoBox<MKMapRect, MKMapPoint>(mapRect: rect)
+        let intersectingBox = BentoBox<MKMapRect, MKMapPoint>(mapRect: intersectingRect)
+        let nonIntersectingBox = BentoBox<MKMapRect, MKMapPoint>(mapRect: nonIntersectingRect)
 
-        XCTAssert(boundingBox.intersectsBoundingBox(intersectingBox))
-        XCTAssertFalse(boundingBox.intersectsBoundingBox(nonIntersectingBox))
+        XCTAssert(bentoBox.intersectsBentoBox(intersectingBox))
+        XCTAssertFalse(bentoBox.intersectsBentoBox(nonIntersectingBox))
     }
 
     func testQuadrants() {
@@ -100,7 +101,7 @@ class BoundingBoxTests: XCTestCase {
         let swRect = MKMapRectMake(0, 250, 250, 250)
         let seRect = MKMapRectMake(250, 250, 250, 250)
 
-        let quadrants = BoundingBox(mapRect: baseRect).quadrants
+        let quadrants = BentoBox<MKMapRect, MKMapPoint>(mapRect: baseRect).quadrants
 
         XCTAssert(MKMapRectEqualToRect(quadrants.northWest.mapRect, nwRect))
         XCTAssert(MKMapRectEqualToRect(quadrants.northEast.mapRect, neRect))
@@ -116,10 +117,13 @@ class BoundingBoxTests: XCTestCase {
             MKMapPoint(x: 17603.8472, y: 2456.7),
         ]
 
-        var boundingBox = points.boundingBox
+        let mapPointBentoBox: BentoBox<MKMapRect, MKMapPoint> = points.bentoBox()
 
-        XCTAssert(MKMapPointEqualToPoint(boundingBox.minPoint, MKMapPoint(x: 25.0, y: 156.339)))
-        XCTAssert(MKMapPointEqualToPoint(boundingBox.maxPoint, MKMapPoint(x: 25278.445, y: 22897.5550)))
+        let minPoint = mapPointBentoBox.minPoint
+        let maxPoint = mapPointBentoBox.maxPoint
+
+        XCTAssert(MKMapPointEqualToPoint(minPoint, MKMapPoint(x: 25.0, y: 156.339)))
+        XCTAssert(MKMapPointEqualToPoint(maxPoint, MKMapPoint(x: 25278.445, y: 22897.5550)))
 
         let coords = [
             CLLocationCoordinate2D(latitude: 34.6790, longitude: 28.2847),
@@ -128,12 +132,12 @@ class BoundingBoxTests: XCTestCase {
             CLLocationCoordinate2D(latitude: 1.2898, longitude: 42.4277),
         ]
 
-        boundingBox = coords.boundingBox
+        let coordinateBentoBox: BentoBox<MKMapRect, CLLocationCoordinate2D> = coords.bentoBox()
 
-        XCTAssertEqualWithAccuracy(boundingBox.minCoordinate.latitude, -34.6790, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(boundingBox.minCoordinate.longitude, -14.1887, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(boundingBox.maxCoordinate.latitude, 61.9471, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(boundingBox.maxCoordinate.longitude, 88.1349, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.minPoint._x, -34.6790, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.minPoint._y, -14.1887, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxPoint._x, 61.9471, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxPoint._y, 88.1349, accuracy: 1e-4)
     }
 }
 

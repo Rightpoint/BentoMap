@@ -12,7 +12,7 @@ public extension CollectionType where Generator.Element: BentoCoordinate {
 
     func bentoBox<R: BentoRect>() -> BentoBox<R, Generator.Element> {
         guard let first = first else {
-            return BentoBox(mapRectangle: R())
+            return BentoBox(mapRect: R())
         }
 
         let minIn = first
@@ -23,22 +23,22 @@ public extension CollectionType where Generator.Element: BentoCoordinate {
 
         for point in self {
 
-            if point.x < minIn.x {
-                minOut.x = point.x
+            if point._x < minIn._x {
+                minOut.x = point._x
             }
-            if point.x > maxIn.x {
-                maxOut.x = point.x
+            if point._x > maxIn._x {
+                maxOut.x = point._x
             }
-            if point.y < minIn.y {
-                minOut.y = point.y
+            if point._y < minIn._y {
+                minOut.y = point._y
             }
-            if point.y > maxIn.y {
-                maxOut.y = point.y
+            if point._y > maxIn._y {
+                maxOut.y = point._y
             }
         }
 
         let BentoRect = R(origin: minOut, size: CGSize(width: maxOut.x - minOut.x, height: maxOut.y - minOut.y))
-        return BentoBox(mapRectangle: BentoRect)
+        return BentoBox(mapRect: BentoRect)
     }
 
 }

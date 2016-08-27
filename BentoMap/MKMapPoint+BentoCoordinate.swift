@@ -11,11 +11,11 @@ import MapKit
 
 extension MKMapPoint: BentoCoordinate {
 
-    public var x: CGFloat {
+    public var _x: CGFloat {
         return CGFloat(x)
     }
 
-    public var y: CGFloat {
+    public var _y: CGFloat {
         return CGFloat(y)
     }
 

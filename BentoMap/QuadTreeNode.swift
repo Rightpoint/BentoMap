@@ -14,8 +14,8 @@ public protocol Initializable {
 
 public protocol BentoCoordinate: Initializable {
 
-    var x: CGFloat { get }
-    var y: CGFloat { get }
+    var _x: CGFloat { get }
+    var _y: CGFloat { get }
 
     init(x: CGFloat, y: CGFloat)
 }

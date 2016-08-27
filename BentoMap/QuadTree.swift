@@ -27,7 +27,7 @@ public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
 
 public extension QuadTree {
 
-    public func clusteredDataWithinMapRectangle(mapRectangle: R, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, R, C>] {
+    public func clusteredDataWithinMapRect(mapRect: R, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, R, C>] {
 
         let scaleFactor: Double
 
@@ -40,10 +40,10 @@ public extension QuadTree {
 
         let stepSize = CGFloat(1.0 / scaleFactor)
 
-        let minX = mapRectangle.minX
-        let maxX = mapRectangle.maxX
-        let minY = mapRectangle.minY
-        let maxY = mapRectangle.maxY
+        let minX = mapRect.minX
+        let maxX = mapRect.maxX
+        let minY = mapRect.minY
+        let maxY = mapRect.maxY
 
         var result = [QuadTreeResult<NodeData, R, C>]()
 
@@ -51,7 +51,7 @@ public extension QuadTree {
         for x in minX.stride(through: maxX, by: stepSize) {
             for y in minY.stride(through: maxY, by: stepSize) {
                 let cellRectangle = R(origin: C(x: x, y: y), size: mapStep)
-                let nodes = nodesInRange(BentoBox(mapRectangle: cellRectangle))
+                let nodes = nodesInRange(BentoBox(mapRect: cellRectangle))
 
                 switch nodes.count {
                 case 0:
@@ -127,9 +127,9 @@ private extension QuadTree {
 
 }
 
-//private extension MKMapRectangle {
+//private extension MKMapRect {
 //
-//    func createStep(stepSize: Int, edgeFunction: (MKMapRectangle -> Double),
+//    func createStep(stepSize: Int, edgeFunction: (MKMapRect -> Double),
 //                    roundingFunction: (Double -> Double)) -> Int {
 //        return Int(roundingFunction(edgeFunction(self))) - (Int(roundingFunction(edgeFunction(self))) % stepSize)
 //    }

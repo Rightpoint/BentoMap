@@ -10,33 +10,33 @@ import Foundation
 
 public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
 
-    public var mapRectangle: R
+    public var mapRect: R
 
     public init(minPoint: C, maxPoint: C) {
 
-        let minX = min(minPoint.x, maxPoint.x)
-        let minY = min(minPoint.y, maxPoint.y)
-        let maxX = max(minPoint.x, maxPoint.x)
-        let maxY = max(minPoint.y, maxPoint.y)
+        let minX = min(minPoint._x, maxPoint._x)
+        let minY = min(minPoint._y, maxPoint._y)
+        let maxX = max(minPoint._x, maxPoint._x)
+        let maxY = max(minPoint._y, maxPoint._y)
 
-        mapRectangle = R(origin: C(x: minX, y: minY),
+        mapRect = R(origin: C(x: minX, y: minY),
                             size: CGSize(width: maxX - minX, height: maxY - minY))
     }
 
-    public init(mapRectangle: R) {
-        self.mapRectangle = mapRectangle
+    public init(mapRect: R) {
+        self.mapRect = mapRect
     }
 
 }
 
 public extension BentoBox {
 
-    public var minPoint: BentoCoordinate {
-        return C(x: mapRectangle.minX, y: mapRectangle.minY)
+    public var minPoint: C {
+        return C(x: mapRect.minX, y: mapRect.minY)
     }
 
-    public var maxPoint: BentoCoordinate {
-        return C(x: mapRectangle.maxX, y: mapRectangle.maxY)
+    public var maxPoint: C {
+        return C(x: mapRect.maxX, y: mapRect.maxY)
     }
 
 }
@@ -44,7 +44,7 @@ public extension BentoBox {
 extension BentoBox {
 
     func containsMapPoint(mapPoint: BentoCoordinate) -> Bool {
-        return mapRectangle.contains(mapPoint)
+        return mapRect.contains(mapPoint)
     }
 
     func intersectsBentoBox(bentoBox: BentoBox) -> Bool {
@@ -52,7 +52,7 @@ extension BentoBox {
     }
 
     var quadrants: QuadrantWrapper<BentoBox> {
-        let (north, south) = mapRectangle.divide(0.5, edge: .MinYEdge)
+        let (north, south) = mapRect.divide(0.5, edge: .MinYEdge)
         let (northWest, northEast) = north.divide(0.5, edge: .MinXEdge)
         let (southWest, southEast) = south.divide(0.5, edge: .MinXEdge)
 
@@ -61,9 +61,9 @@ extension BentoBox {
 
 }
 
-//private extension MKMapRectangle {
+//private extension MKMapRect {
 //
-//    func divide(percent percent: Double, edge: CGRectangleEdge) -> (slice: MKMapRectangle, remainder: MKMapRectangle) {
+//    func divide(percent percent: Double, edge: CGRectangleEdge) -> (slice: MKMapRect, remainder: MKMapRect) {
 //        let amount: Double
 //        switch edge {
 //        case .MaxXEdge, .MinXEdge:
@@ -72,15 +72,15 @@ extension BentoBox {
 //            amount = size.height / 2.0
 //        }
 //
-//        let slice = UnsafeMutablePointer<MKMapRectangle>.alloc(1)
+//        let slice = UnsafeMutablePointer<MKMapRect>.alloc(1)
 //        defer {
 //            slice.destroy()
 //        }
-//        let remainder = UnsafeMutablePointer<MKMapRectangle>.alloc(1)
+//        let remainder = UnsafeMutablePointer<MKMapRect>.alloc(1)
 //        defer {
 //            remainder.destroy()
 //        }
-//        MKMapRectangleDivide(self, slice, remainder, amount, edge)
+//        MKMapRectDivide(self, slice, remainder, amount, edge)
 //        return (slice: slice[0], remainder: remainder[0])
 //    }
 //

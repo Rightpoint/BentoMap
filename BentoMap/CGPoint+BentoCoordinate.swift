@@ -8,4 +8,14 @@
 
 import Foundation
 
-extension CGPoint: BentoCoordinate {}
+extension CGPoint: BentoCoordinate {
+
+    public var _x: CGFloat {
+        return x
+    }
+
+    public var _y: CGFloat {
+        return y
+    }
+
+}

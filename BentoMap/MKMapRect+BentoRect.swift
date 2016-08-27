@@ -38,4 +38,5 @@ extension MKMapRect: BentoRect {
     public init(origin: BentoCoordinate, size: CGSize) {
         self.init()
     }
+
 }
