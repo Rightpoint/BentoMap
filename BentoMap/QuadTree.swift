@@ -70,7 +70,7 @@ public extension QuadTree {
 
 
     public mutating func insertNode(node: QuadTreeNode<NodeData, C>) -> Bool {
-        guard bentoBox.containsMapPoint(node.mapPoint) else {
+        guard bentoBox.containsCoordinate(node.mapPoint) else {
             return false
         }
 
@@ -112,7 +112,7 @@ private extension QuadTree {
         }
 
         nodes += points.filter { point in
-            range.containsMapPoint(point.mapPoint)
+            range.containsCoordinate(point.mapPoint)
         }
 
         if let ordinals = ordinalNodes {

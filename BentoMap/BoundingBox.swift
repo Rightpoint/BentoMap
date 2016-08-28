@@ -43,8 +43,8 @@ public extension BentoBox {
 
 extension BentoBox {
 
-    func containsMapPoint(mapPoint: BentoCoordinate) -> Bool {
-        return mapRect.contains(mapPoint)
+    func containsCoordinate(point: BentoCoordinate) -> Bool {
+        return mapRect.containsCoordinate(point)
     }
 
     func intersectsBentoBox(bentoBox: BentoBox) -> Bool {

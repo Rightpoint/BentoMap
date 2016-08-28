@@ -10,12 +10,30 @@ import Foundation
 
 extension CGRect: BentoRect {
 
-    public func contains(c: BentoCoordinate) -> Bool {
-        return true
+    public func containsCoordinate(c: BentoCoordinate) -> Bool {
+        let point = CGPoint(x: c._x, y: c._y)
+        return self.contains(point)
     }
 
     public func divide(percent: CGFloat, edge: CGRectEdge) -> (CGRect, CGRect) {
-        return (CGRect.zero, CGRect.zero)
+        let amount: CGFloat
+        switch edge {
+        case .MaxXEdge, .MinXEdge:
+            amount = size.width / 2.0
+        case .MaxYEdge, .MinYEdge:
+            amount = size.height / 2.0
+        }
+
+        let slice = UnsafeMutablePointer<CGRect>.alloc(1)
+        defer {
+            slice.destroy()
+        }
+        let remainder = UnsafeMutablePointer<CGRect>.alloc(1)
+        defer {
+            remainder.destroy()
+        }
+        CGRectDivide(self, slice, remainder, amount, edge)
+        return (slice: slice[0], remainder: remainder[0])
     }
 
     public init(originCoordinate origin: BentoCoordinate, size: CGSize) {

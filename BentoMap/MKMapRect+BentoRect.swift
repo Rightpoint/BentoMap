@@ -27,7 +27,7 @@ extension MKMapRect: BentoRect {
         return CGFloat(MKMapRectGetMaxY(self))
     }
 
-    public func contains(c: BentoCoordinate) -> Bool {
+    public func containsCoordinate(c: BentoCoordinate) -> Bool {
         let mapPoint = MKMapPoint(x: Double(c._x), y: Double(c._y))
         return MKMapRectContainsPoint(self, mapPoint)
     }

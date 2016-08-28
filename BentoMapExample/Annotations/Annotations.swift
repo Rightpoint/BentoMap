@@ -64,8 +64,7 @@ func == (lhs: BaseAnnotation, rhs: BaseAnnotation) -> Bool {
     if let lSingle = lhs as? SingleAnnotation,
         rSingle = rhs as? SingleAnnotation {
         return lSingle.annotationNumber == rSingle.annotationNumber
-    }
-    else if let lMulti = lhs as? ClusterAnnotation,
+    } else if let lMulti = lhs as? ClusterAnnotation,
         rMulti = rhs as? ClusterAnnotation {
         return lMulti.annotationNumbers == rMulti.annotationNumbers
     }

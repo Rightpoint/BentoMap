@@ -27,7 +27,7 @@ public protocol BentoRect: Initializable {
     var minX: CGFloat { get }
     var minY: CGFloat { get }
 
-    func contains(c: BentoCoordinate) -> Bool
+    func containsCoordinate(c: BentoCoordinate) -> Bool
 
     func divide(percent: CGFloat, edge: CGRectEdge) -> (Self, Self)
 

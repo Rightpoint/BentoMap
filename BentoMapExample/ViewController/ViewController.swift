@@ -22,7 +22,7 @@ final class ViewController: UIViewController {
         super.loadView()
         let mapView = MKMapView()
         mapView.delegate = self
-        mapView.setVisibleMapRect(mapData.boundingBox.mapRect,
+        mapView.setVisibleMapRect(mapData.BentoBox.mapRect,
                                   edgePadding: self.dynamicType.mapInsets,
                                   animated: false)
         view = mapView
@@ -80,7 +80,7 @@ private extension ViewController {
         let oldAnnotations = mapView.annotations.flatMap({ $0 as? BaseAnnotation })
 
         let toRemove = oldAnnotations.filter { annotation in
-            return !newAnnotations.contains { newAnnotation in
+            return !newAnnotations.containsCoordinate { newAnnotation in
                 return newAnnotation == annotation
             }
         }
@@ -88,7 +88,7 @@ private extension ViewController {
         mapView.removeAnnotations(toRemove)
 
         let toAdd = newAnnotations.filter { annotation in
-            return !oldAnnotations.contains { oldAnnotation in
+            return !oldAnnotations.containsCoordinate { oldAnnotation in
                 return oldAnnotation == annotation
             }
         }
@@ -130,8 +130,7 @@ private extension MKPinAnnotationView {
         if annotation.isKindOfClass(ClusterAnnotation.self) {
             pinTintColor = UIColor.blueColor()
             animatesDrop = false
-        }
-        else {
+        } else {
             pinTintColor = UIColor.redColor()
             animatesDrop = true
         }

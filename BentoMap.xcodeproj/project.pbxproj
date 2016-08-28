@@ -17,7 +17,7 @@
 		723753291D2D9DA2002A1BC2 /* QuadTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723753221D2D9DA2002A1BC2 /* QuadTree.swift */; };
 		7237532A1D2D9DA2002A1BC2 /* QuadTreeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723753231D2D9DA2002A1BC2 /* QuadTreeNode.swift */; };
 		7237532B1D2D9DA2002A1BC2 /* QuadTreeResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723753241D2D9DA2002A1BC2 /* QuadTreeResult.swift */; };
-		7237532E1D2D9DB5002A1BC2 /* BoundingBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237532C1D2D9DB5002A1BC2 /* BoundingBoxTests.swift */; };
+		7237532E1D2D9DB5002A1BC2 /* BentoBoxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237532C1D2D9DB5002A1BC2 /* BentoBoxTests.swift */; };
 		7237532F1D2D9DB5002A1BC2 /* QuadTreeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237532D1D2D9DB5002A1BC2 /* QuadTreeTests.swift */; };
 		723753391D2D9E75002A1BC2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723753381D2D9E75002A1BC2 /* AppDelegate.swift */; };
 		7237533B1D2D9E75002A1BC2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237533A1D2D9E75002A1BC2 /* ViewController.swift */; };
@@ -81,7 +81,7 @@
 		723753221D2D9DA2002A1BC2 /* QuadTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadTree.swift; sourceTree = "<group>"; };
 		723753231D2D9DA2002A1BC2 /* QuadTreeNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadTreeNode.swift; sourceTree = "<group>"; };
 		723753241D2D9DA2002A1BC2 /* QuadTreeResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadTreeResult.swift; sourceTree = "<group>"; };
-		7237532C1D2D9DB5002A1BC2 /* BoundingBoxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoundingBoxTests.swift; sourceTree = "<group>"; };
+		7237532C1D2D9DB5002A1BC2 /* BentoBoxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BentoBoxTests.swift; sourceTree = "<group>"; };
 		7237532D1D2D9DB5002A1BC2 /* QuadTreeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadTreeTests.swift; sourceTree = "<group>"; };
 		723753361D2D9E75002A1BC2 /* BentoMapExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BentoMapExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		723753381D2D9E75002A1BC2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				723E20731D2EC00400CF44FA /* Resources */,
-				7237532C1D2D9DB5002A1BC2 /* BoundingBoxTests.swift */,
+				7237532C1D2D9DB5002A1BC2 /* BentoBoxTests.swift */,
 				7237532D1D2D9DB5002A1BC2 /* QuadTreeTests.swift */,
 				72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */,
 			);
@@ -446,7 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7237532E1D2D9DB5002A1BC2 /* BoundingBoxTests.swift in Sources */,
+				7237532E1D2D9DB5002A1BC2 /* BentoBoxTests.swift in Sources */,
 				72383AB71D2ECAF70071EDE2 /* OptionalOrTests.swift in Sources */,
 				7237532F1D2D9DB5002A1BC2 /* QuadTreeTests.swift in Sources */,
 			);
