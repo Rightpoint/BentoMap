@@ -18,8 +18,8 @@ extension CGRect: BentoRect {
         return (CGRect.zero, CGRect.zero)
     }
 
-    public init(origin: BentoCoordinate, size: CGSize) {
-        self.init()
+    public init(originCoordinate origin: BentoCoordinate, size: CGSize) {
+        self.init(origin: CGPoint(x: origin._x, y: origin._y), size: size)
     }
 
 }

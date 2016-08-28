@@ -34,7 +34,7 @@ class BoundingBoxTests: XCTestCase {
         let coordBoundingBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minPoint: minCoord, maxPoint: maxCoord)
 
         let minLat = CGFloat(min(minCoord._x, maxCoord._x))
-        XCTAssertEqualWithAccuracy(coordBoundingBox.minPoint._x, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBoundingBox.minPoint._x) should equal the smallest latitude passed in \(minLat)")
+        XCTAssertEqualWithAccuracy(coordBoundingBox.mapRect.minX, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBoundingBox.mapRect.minX) should equal the smallest latitude passed in \(minLat)")
 
 
         let maxLat = max(minCoord._x, maxCoord._x)
@@ -52,8 +52,8 @@ class BoundingBoxTests: XCTestCase {
         let coordBoundingBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minPoint: CLLocationCoordinate2D(latitude: 30, longitude: 60),
                                         maxPoint: CLLocationCoordinate2D(latitude: 20, longitude: 40))
 
-        let maxPoint = MKMapPoint(x: coordBoundingBox.maxPoint._x, y: coordBoundingBox.maxPoint._y)
-        let minPoint = MKMapPoint(x: coordBoundingBox.minPoint._y, y: coordBoundingBox.minPoint._y)
+        let maxPoint = MKMapPoint(x: Double(coordBoundingBox.maxPoint._x), y: Double(coordBoundingBox.maxPoint._y))
+        let minPoint = MKMapPoint(x: Double(coordBoundingBox.minPoint._x), y: Double(coordBoundingBox.minPoint._y))
 
         // the min or higher is inside the bounding box
         XCTAssert(coordBoundingBox.containsMapPoint(minPoint.offset(latitude: 0.1, longitude: 0.1)))
@@ -76,8 +76,8 @@ class BoundingBoxTests: XCTestCase {
 
 
         // the middle point is inside the bounding box
-        let midCoord = MKMapPoint(x: (maxPoint._x + minPoint._x) / 2.0,
-                                  y: (maxPoint._y + minPoint._y) / 2.0)
+        let midCoord = MKMapPoint(x: Double(maxPoint._x + minPoint._x) / 2.0,
+                                  y: Double(maxPoint._y + minPoint._y) / 2.0)
         XCTAssert(coordBoundingBox.containsMapPoint(midCoord))
     }
 

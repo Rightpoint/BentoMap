@@ -81,7 +81,7 @@ class QuadTreeTests: XCTestCase {
         }
         XCTAssertTrue(totalNodeCount == 10000, "All nodes should add up to 10k nodes")
 
-        XCTAssertFalse(quadTree.insertNode(QuadTreeNode(mapPoint: MKMapPoint(x: CGFloat(5002), y: CGFloat(5002)), content: 1)))
+        XCTAssertFalse(quadTree.insertNode(QuadTreeNode(mapPoint: MKMapPoint(x: Double(5002), y: Double(5002)), content: 1)))
         let unclusteredNodes2 = quadTree.clusteredDataWithinMapRect(bentoBox.mapRect, zoomScale: 1, cellSize: 50)
         XCTAssertTrue(unclusteredNodes2.count == 10000, "This should return 10k clusters as an out of bounds cluster shouldn't insert")
 

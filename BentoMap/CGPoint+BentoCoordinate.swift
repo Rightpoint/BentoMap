@@ -18,4 +18,8 @@ extension CGPoint: BentoCoordinate {
         return y
     }
 
+    public init(_x: CGFloat, _y: CGFloat) {
+        self.init(x: _x, y: _y)
+    }
+
 }

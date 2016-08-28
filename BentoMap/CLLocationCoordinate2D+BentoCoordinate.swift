@@ -19,7 +19,7 @@ extension CLLocationCoordinate2D: BentoCoordinate {
         return CGFloat(longitude)
     }
 
-    public init(x: CGFloat, y: CGFloat) {
+    public init(_x x: CGFloat, _y y: CGFloat) {
         self.init(latitude: CLLocationDegrees(x), longitude: CLLocationDegrees(y))
     }
 

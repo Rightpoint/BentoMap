@@ -28,7 +28,7 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
             }
             x /= CGFloat(nodes.count)
             y /= CGFloat(nodes.count)
-            mapPoint = C(x: x, y: y)
+            mapPoint = C(_x: x, _y: y)
         }
         return mapPoint
     }
@@ -49,12 +49,12 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
                 maxPoint.x = max(maxPoint._x, node.mapPoint._x)
                 maxPoint.y = max(maxPoint._y, node.mapPoint._y)
             }
-            origin = C(x: minPoint.x, y: minPoint.y)
+            origin = C(_x: minPoint.x, _y: minPoint.y)
             // slightly pad the size to make sure all nodes are contained
             size = CGSize(width: abs(minPoint.x - maxPoint.x) + 0.001,
                              height: abs(minPoint.y - maxPoint.y) + 0.001)
         }
-        return R(origin: origin, size: size)
+        return R(originCoordinate: origin, size: size)
     }
 
 }

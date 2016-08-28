@@ -19,8 +19,8 @@ extension MKMapPoint: BentoCoordinate {
         return CGFloat(y)
     }
 
-    public init(x: CGFloat, y: CGFloat) {
-        self.init()
+    public init(_x: CGFloat, _y: CGFloat) {
+        self.init(x: Double(_x), y: Double(_y))
     }
 
 }
