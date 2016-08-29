@@ -22,7 +22,7 @@ final class ViewController: UIViewController {
         super.loadView()
         let mapView = MKMapView()
         mapView.delegate = self
-        mapView.setVisibleMapRect(mapData.BentoBox.mapRect,
+        mapView.setVisibleMapRect(mapData.BentoBox.rootNode,
                                   edgePadding: self.dynamicType.mapInsets,
                                   animated: false)
         view = mapView
@@ -48,7 +48,7 @@ extension ViewController: MKMapViewDelegate {
 
     func mapView(mapView: MKMapView,
                  didSelectAnnotationView view: MKAnnotationView) {
-        guard let zoomRect = (view.annotation as? BaseAnnotation)?.mapRect else {
+        guard let zoomRect = (view.annotation as? BaseAnnotation)?.rootNode else {
             return
         }
         mapView.setVisibleMapRect(zoomRect,
@@ -66,13 +66,13 @@ extension ViewController: MKMapViewDelegate {
 private extension ViewController {
 
     func updateAnnotations(inMapView mapView: MKMapView,
-                                     forMapRect mapRect: MKMapRect) {
-        guard !mapView.frame.isEmpty && !MKMapRectIsEmpty(mapRect) else {
+                                     forMapRect rootNode: MKMapRect) {
+        guard !mapView.frame.isEmpty && !MKMapRectIsEmpty(rootNode) else {
             mapView.removeAnnotations(mapView.annotations)
             return
         }
-        let zoomScale = Double(mapView.frame.width) / mapRect.size.width
-        let clusterResults = mapData.clusteredDataWithinMapRect(mapRect,
+        let zoomScale = Double(mapView.frame.width) / rootNode.size.width
+        let clusterResults = mapData.clusteredDataWithinMapRect(rootNode,
                                                                 zoomScale: zoomScale,
                                                                 cellSize: 64)
         let newAnnotations = clusterResults.map(BaseAnnotation.makeAnnotation)

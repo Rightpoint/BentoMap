@@ -32,7 +32,7 @@ public extension CollectionType where Generator.Element: BentoCoordinate {
         }
 
         let BentoRect = R(originCoordinate: min, size: CGSize(width: max.x - min.x, height: max.y - min.y))
-        return BentoBox(mapRect: BentoRect)
+        return BentoBox(rootNode: BentoRect)
     }
 
 }
