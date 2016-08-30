@@ -1,5 +1,5 @@
 //
-//  BentoBox.swift
+//  BentoMap.swift
 //  BentoMap
 //
 //  Created by Michael Skiba on 2/17/16.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
+public struct BentoMap<R: BentoRect, C: BentoCoordinate> {
 
     /// The root node of the tree. Can be thought of
     /// as the container map of the sub-rectangles
@@ -22,7 +22,7 @@ public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
 
 // MARK: Public API
 
-public extension BentoBox {
+public extension BentoMap {
 
     /// The coordinate at the top left corner of the root rect
     public var minCoordinate: C {
@@ -36,7 +36,7 @@ public extension BentoBox {
 
 }
 
-extension BentoBox {
+extension BentoMap {
 
     /**
      Returns a Bool value for whether the rootNode contains
@@ -53,25 +53,25 @@ extension BentoBox {
 
     /**
      Returns a Bool value for whether the rootNode intersects with the
-     rootNode of the bentoBox passed in
+     rootNode of the bentoMap passed in
 
-     - parameter bentoBox: a BentoBox
+     - parameter bentoMap: a BentoMap
 
      - returns: whether the rootNode intersects with the
-     rootNode of the bentoBox passed in
+     rootNode of the bentoMap passed in
      */
-    func intersectsBentoBox(bentoBox: BentoBox) -> Bool {
-        return rootNode.minX < bentoBox.rootNode.maxX && rootNode.maxX > bentoBox.rootNode.minX &&
-            rootNode.minY < bentoBox.rootNode.maxY && rootNode.maxY > bentoBox.rootNode.minY
+    func intersectsBentoBox(bentoMap: BentoMap) -> Bool {
+        return rootNode.minX < bentoMap.rootNode.maxX && rootNode.maxX > bentoMap.rootNode.minX &&
+            rootNode.minY < bentoMap.rootNode.maxY && rootNode.maxY > bentoMap.rootNode.minY
     }
 
     /// A wrapper around the 4 child nodes of the rootNode
-    var quadrants: QuadrantWrapper<BentoBox> {
+    var quadrants: QuadrantWrapper<BentoMap> {
         let (north, south) = rootNode.divide(0.5, edge: .MinYEdge)
         let (northWest, northEast) = north.divide(0.5, edge: .MinXEdge)
         let (southWest, southEast) = south.divide(0.5, edge: .MinXEdge)
 
-        return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BentoBox.init)
+        return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BentoMap.init)
     }
 
 }

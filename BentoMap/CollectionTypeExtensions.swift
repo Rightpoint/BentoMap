@@ -10,7 +10,7 @@ import Foundation
 
 public extension CollectionType where Generator.Element: BentoCoordinate {
 
-    func bentoBox<R: BentoRect>() -> BentoBox<R, Generator.Element> {
+    func bentoMap<R: BentoRect>() -> BentoMap<R, Generator.Element> {
 
         var min: CGPoint = CGPoint(x: CGFloat.max, y: CGFloat.max)
         var max: CGPoint = CGPoint.zero
@@ -32,7 +32,7 @@ public extension CollectionType where Generator.Element: BentoCoordinate {
         }
 
         let BentoRect = R(originCoordinate: min, size: CGSize(width: max.x - min.x, height: max.y - min.y))
-        return BentoBox(rootNode: BentoRect)
+        return BentoMap(rootNode: BentoRect)
     }
 
 }

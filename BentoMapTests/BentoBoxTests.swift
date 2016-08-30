@@ -24,14 +24,14 @@ class MapKitTests: XCTestCase {
 
         let rootNode = MKMapRectWorld
 
-        let rootNodeBentoBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: rootNode)
+        let rootNodeBentoBox = BentoMap<MKMapRect, MKMapPoint>(rootNode: rootNode)
 
         XCTAssert(MKMapRectEqualToRect(rootNode, rootNodeBentoBox.rootNode), "The bounding box's map rect should be equal to the input map rect")
 
         let maxCoord = CLLocationCoordinate2D(latitude: 30, longitude: 60)
         let minCoord = CLLocationCoordinate2D(latitude: 20, longitude: 40)
 
-        let coordBentoBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minCoordinate: minCoord, maxCoordinate: maxCoord)
+        let coordBentoBox = BentoMap<MKMapRect, CLLocationCoordinate2D>(minCoordinate: minCoord, maxCoordinate: maxCoord)
 
         let minLat = CGFloat(min(minCoord._x, maxCoord._x))
         XCTAssertEqualWithAccuracy(coordBentoBox.rootNode.minX, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBentoBox.rootNode.minX) should equal the smallest latitude passed in \(minLat)")
@@ -49,7 +49,7 @@ class MapKitTests: XCTestCase {
     }
 
     func testBentoBoxCoordinates() {
-        let coordBentoBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minCoordinate: CLLocationCoordinate2D(latitude: 30, longitude: 60),
+        let coordBentoBox = BentoMap<MKMapRect, CLLocationCoordinate2D>(minCoordinate: CLLocationCoordinate2D(latitude: 30, longitude: 60),
                                         maxCoordinate: CLLocationCoordinate2D(latitude: 20, longitude: 40))
 
         let maxCoordinate = MKMapPoint(x: Double(coordBentoBox.maxCoordinate._x), y: Double(coordBentoBox.maxCoordinate._y))
@@ -86,12 +86,12 @@ class MapKitTests: XCTestCase {
         let intersectingRect =  MKMapRectMake(250, 250, 500, 500)
         let nonIntersectingRect = MKMapRectMake(500, 0, 500, 500)
 
-        let bentoBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: rect)
-        let intersectingBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: intersectingRect)
-        let nonIntersectingBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: nonIntersectingRect)
+        let bentoMap = BentoMap<MKMapRect, MKMapPoint>(rootNode: rect)
+        let intersectingBox = BentoMap<MKMapRect, MKMapPoint>(rootNode: intersectingRect)
+        let nonIntersectingBox = BentoMap<MKMapRect, MKMapPoint>(rootNode: nonIntersectingRect)
 
-        XCTAssert(bentoBox.intersectsBentoBox(intersectingBox))
-        XCTAssertFalse(bentoBox.intersectsBentoBox(nonIntersectingBox))
+        XCTAssert(bentoMap.intersectsBentoBox(intersectingBox))
+        XCTAssertFalse(bentoMap.intersectsBentoBox(nonIntersectingBox))
     }
 
     func testQuadrants() {
@@ -101,7 +101,7 @@ class MapKitTests: XCTestCase {
         let swRect = MKMapRectMake(0, 250, 250, 250)
         let seRect = MKMapRectMake(250, 250, 250, 250)
 
-        let quadrants = BentoBox<MKMapRect, MKMapPoint>(rootNode: baseRect).quadrants
+        let quadrants = BentoMap<MKMapRect, MKMapPoint>(rootNode: baseRect).quadrants
 
         XCTAssert(MKMapRectEqualToRect(quadrants.northWest.rootNode, nwRect))
         XCTAssert(MKMapRectEqualToRect(quadrants.northEast.rootNode, neRect))
@@ -117,7 +117,7 @@ class MapKitTests: XCTestCase {
             MKMapPoint(x: 17603.8472, y: 2456.7),
         ]
 
-        let mapPointBentoBox: BentoBox<MKMapRect, MKMapPoint> = points.bentoBox()
+        let mapPointBentoBox: BentoMap<MKMapRect, MKMapPoint> = points.bentoMap()
 
         let minCoordinate = mapPointBentoBox.minCoordinate
         let maxCoordinate = mapPointBentoBox.maxCoordinate
@@ -132,7 +132,7 @@ class MapKitTests: XCTestCase {
             CLLocationCoordinate2D(latitude: 1.2898, longitude: 42.4277),
         ]
 
-        let coordinateBentoBox: BentoBox<MKMapRect, CLLocationCoordinate2D> = coords.bentoBox()
+        let coordinateBentoBox: BentoMap<MKMapRect, CLLocationCoordinate2D> = coords.bentoMap()
 
         XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._x, -34.6790, accuracy: 1e-4)
         XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._y, -14.1887, accuracy: 1e-4)
@@ -157,14 +157,14 @@ class CoreGraphicsTests: XCTestCase {
         let gridSize = CGSize(width: 1000.0, height: 1000.0)
         let rootNode = CGRect(origin: origin, size: gridSize)
 
-        let rootNodeBentoBox = BentoBox<CGRect, CGPoint>(rootNode: rootNode)
+        let rootNodeBentoBox = BentoMap<CGRect, CGPoint>(rootNode: rootNode)
 
         XCTAssertEqual(rootNode, rootNodeBentoBox.rootNode, "The bounding box's map rect should be equal to the input map rect")
 
         let maxCoord = CGPoint(x: 30.0, y: 60.0)
         let minCoord = CGPoint(x: 20.0, y: 40.0)
 
-        let coordBentoBox = BentoBox<CGRect, CGPoint>(minCoordinate: minCoord, maxCoordinate: maxCoord)
+        let coordBentoBox = BentoMap<CGRect, CGPoint>(minCoordinate: minCoord, maxCoordinate: maxCoord)
 
         let minLat = CGFloat(min(minCoord._x, maxCoord._x))
         XCTAssertEqualWithAccuracy(coordBentoBox.rootNode.minX, minLat, accuracy: 0.001, "The bounding box's min x \(coordBentoBox.rootNode.minX) should equal the smallest x passed in \(minLat)")
@@ -182,7 +182,7 @@ class CoreGraphicsTests: XCTestCase {
     }
 
     func testBentoBoxCoordinates() {
-        let coordBentoBox = BentoBox<CGRect, CGPoint>(minCoordinate: CGPoint(x: 30, y: 60),
+        let coordBentoBox = BentoMap<CGRect, CGPoint>(minCoordinate: CGPoint(x: 30, y: 60),
                                         maxCoordinate: CGPoint(x: 20, y: 40))
 
         let maxCoordinate = CGPoint(x: coordBentoBox.maxCoordinate._x, y: coordBentoBox.maxCoordinate._y)
@@ -219,12 +219,12 @@ class CoreGraphicsTests: XCTestCase {
         let intersectingRect =  CGRect(x: 250, y: 250, width: 500, height: 500)
         let nonIntersectingRect = CGRect(x: 500, y: 0, width: 500, height: 500)
 
-        let bentoBox = BentoBox<CGRect, CGPoint>(rootNode: rect)
-        let intersectingBox = BentoBox<CGRect, CGPoint>(rootNode: intersectingRect)
-        let nonIntersectingBox = BentoBox<CGRect, CGPoint>(rootNode: nonIntersectingRect)
+        let bentoMap = BentoMap<CGRect, CGPoint>(rootNode: rect)
+        let intersectingBox = BentoMap<CGRect, CGPoint>(rootNode: intersectingRect)
+        let nonIntersectingBox = BentoMap<CGRect, CGPoint>(rootNode: nonIntersectingRect)
 
-        XCTAssert(bentoBox.intersectsBentoBox(intersectingBox))
-        XCTAssertFalse(bentoBox.intersectsBentoBox(nonIntersectingBox))
+        XCTAssert(bentoMap.intersectsBentoBox(intersectingBox))
+        XCTAssertFalse(bentoMap.intersectsBentoBox(nonIntersectingBox))
     }
 
     func testQuadrants() {
@@ -234,7 +234,7 @@ class CoreGraphicsTests: XCTestCase {
         let swRect = CGRect(x: 0, y: 250, width: 250, height: 250)
         let seRect = CGRect(x: 250, y: 250, width: 250, height: 250)
 
-        let quadrants = BentoBox<CGRect, CGPoint>(rootNode: baseRect).quadrants
+        let quadrants = BentoMap<CGRect, CGPoint>(rootNode: baseRect).quadrants
 
         XCTAssert(CGRectEqualToRect(quadrants.northWest.rootNode, nwRect))
         XCTAssert(CGRectEqualToRect(quadrants.northEast.rootNode, neRect))
@@ -250,7 +250,7 @@ class CoreGraphicsTests: XCTestCase {
             CGPoint(x: 17603.8472, y: 2456.7),
         ]
 
-        let mapPointBentoBox: BentoBox<CGRect, CGPoint> = points.bentoBox()
+        let mapPointBentoBox: BentoMap<CGRect, CGPoint> = points.bentoMap()
 
         let minCoordinate = mapPointBentoBox.minCoordinate
         let maxCoordinate = mapPointBentoBox.maxCoordinate
@@ -265,7 +265,7 @@ class CoreGraphicsTests: XCTestCase {
             CGPoint(x: 1.2898, y: 42.4277),
         ]
 
-        let coordinateBentoBox: BentoBox<CGRect, CGPoint> = coords.bentoBox()
+        let coordinateBentoBox: BentoMap<CGRect, CGPoint> = coords.bentoMap()
 
         XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._x, -34.6790, accuracy: 1e-4)
         XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._y, -14.1887, accuracy: 1e-4)

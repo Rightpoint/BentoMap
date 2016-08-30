@@ -10,7 +10,7 @@
 		7228026E1D2E9D9100C637A6 /* Annotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7228026D1D2E9D9100C637A6 /* Annotations.swift */; };
 		723753081D2D9D6D002A1BC2 /* BentoMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 723753071D2D9D6D002A1BC2 /* BentoMap.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7237530F1D2D9D6D002A1BC2 /* BentoMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 723753041D2D9D6D002A1BC2 /* BentoMap.framework */; };
-		723753251D2D9DA2002A1BC2 /* BentoBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237531E1D2D9DA2002A1BC2 /* BentoBox.swift */; };
+		723753251D2D9DA2002A1BC2 /* BentoMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237531E1D2D9DA2002A1BC2 /* BentoMap.swift */; };
 		723753261D2D9DA2002A1BC2 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237531F1D2D9DA2002A1BC2 /* Box.swift */; };
 		723753271D2D9DA2002A1BC2 /* OrdinalNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723753201D2D9DA2002A1BC2 /* OrdinalNodes.swift */; };
 		723753281D2D9DA2002A1BC2 /* QuadrantWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723753211D2D9DA2002A1BC2 /* QuadrantWrapper.swift */; };
@@ -74,7 +74,7 @@
 		723753091D2D9D6D002A1BC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7237530E1D2D9D6D002A1BC2 /* BentoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BentoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		723753151D2D9D6D002A1BC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7237531E1D2D9DA2002A1BC2 /* BentoBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BentoBox.swift; sourceTree = "<group>"; };
+		7237531E1D2D9DA2002A1BC2 /* BentoMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BentoMap.swift; sourceTree = "<group>"; };
 		7237531F1D2D9DA2002A1BC2 /* Box.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		723753201D2D9DA2002A1BC2 /* OrdinalNodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrdinalNodes.swift; sourceTree = "<group>"; };
 		723753211D2D9DA2002A1BC2 /* QuadrantWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadrantWrapper.swift; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 			children = (
 				B50426B21D71F2C8008BEF76 /* Extensions */,
 				723E206E1D2EBB9C00CF44FA /* Resources */,
-				7237531E1D2D9DA2002A1BC2 /* BentoBox.swift */,
+				7237531E1D2D9DA2002A1BC2 /* BentoMap.swift */,
 				7237531F1D2D9DA2002A1BC2 /* Box.swift */,
 				723753201D2D9DA2002A1BC2 /* OrdinalNodes.swift */,
 				723753221D2D9DA2002A1BC2 /* QuadTree.swift */,
@@ -432,7 +432,7 @@
 				B50426B41D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift in Sources */,
 				D4C3839B1D4F9DD500556EBE /* CollectionTypeExtensions.swift in Sources */,
 				B50426B81D71FA21008BEF76 /* MKMapRect+BentoRect.swift in Sources */,
-				723753251D2D9DA2002A1BC2 /* BentoBox.swift in Sources */,
+				723753251D2D9DA2002A1BC2 /* BentoMap.swift in Sources */,
 				B50426BA1D7203C9008BEF76 /* CLLocationCoordinate2D+BentoCoordinate.swift in Sources */,
 				723753281D2D9DA2002A1BC2 /* QuadrantWrapper.swift in Sources */,
 				723753291D2D9DA2002A1BC2 /* QuadTree.swift in Sources */,

@@ -13,13 +13,13 @@ public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     var ordinalNodes: OrdinalNodes<NodeData, R, C>?
 
-    public let bentoBox: BentoBox<R, C>
+    public let bentoMap: BentoMap<R, C>
     public let bucketCapacity: Int
     public var points = [QuadTreeNode<NodeData, C>]()
 
-    public init(bentoBox: BentoBox<R, C>, bucketCapacity: Int) {
+    public init(bentoMap: BentoMap<R, C>, bucketCapacity: Int) {
         precondition(bucketCapacity > 0, "Bucket capacity must be greater than 0")
-        self.bentoBox = bentoBox
+        self.bentoMap = bentoMap
         self.bucketCapacity = bucketCapacity
     }
 
@@ -51,7 +51,7 @@ public extension QuadTree {
         for x in minX.stride(through: maxX, by: stepSize) {
             for y in minY.stride(through: maxY, by: stepSize) {
                 let cellRectangle = R(originCoordinate: C(_x: x, _y: y), size: mapStep)
-                let nodes = nodesInRange(BentoBox(rootNode: cellRectangle))
+                let nodes = nodesInRange(BentoMap(rootNode: cellRectangle))
 
                 switch nodes.count {
                 case 0:
@@ -70,7 +70,7 @@ public extension QuadTree {
 
 
     public mutating func insertNode(node: QuadTreeNode<NodeData, C>) -> Bool {
-        guard bentoBox.containsCoordinate(node.mapPoint) else {
+        guard bentoMap.containsCoordinate(node.mapPoint) else {
             return false
         }
 
@@ -94,8 +94,8 @@ public extension QuadTree {
 private extension QuadTree {
 
     mutating func subdivide() {
-        let trees = bentoBox.quadrants.map { quadrant in
-            QuadTree(bentoBox: quadrant, bucketCapacity: self.bucketCapacity)
+        let trees = bentoMap.quadrants.map { quadrant in
+            QuadTree(bentoMap: quadrant, bucketCapacity: self.bucketCapacity)
         }
 
         ordinalNodes = OrdinalNodes(northWest: trees.northWest,
@@ -104,10 +104,10 @@ private extension QuadTree {
                                     southEast: trees.southEast)
     }
 
-    func nodesInRange(range: BentoBox<R, C>) -> [QuadTreeNode<NodeData, C>] {
+    func nodesInRange(range: BentoMap<R, C>) -> [QuadTreeNode<NodeData, C>] {
         var nodes = [QuadTreeNode<NodeData, C>]()
 
-        guard bentoBox.intersectsBentoBox(range) else {
+        guard bentoMap.intersectsBentoBox(range) else {
             return nodes
         }
 

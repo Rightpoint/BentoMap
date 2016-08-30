@@ -22,7 +22,7 @@ final class ViewController: UIViewController {
         super.loadView()
         let mapView = MKMapView()
         mapView.delegate = self
-        mapView.setVisibleMapRect(mapData.BentoBox.rootNode,
+        mapView.setVisibleMapRect(mapData.BentoMap.rootNode,
                                   edgePadding: self.dynamicType.mapInsets,
                                   animated: false)
         view = mapView
