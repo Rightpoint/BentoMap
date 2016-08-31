@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// A workaround because Swift structs do not
+/// allow recursive value types
 class Box<T> {
 
     var value: T

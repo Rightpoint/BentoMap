@@ -10,11 +10,15 @@ import Foundation
 
 struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
 
+    /// A type that exposes all 4 quadrants of a given QuadTree
     private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData, R, C>>
 
-    // Recursive structs require boxes
+    // Recursive structs require a workaround class type
+    // because it is impossible at runtime to calculate
+    // how much memory must be allocated
     private var quadrants: Box<QuadTreeWrapper>
 
+    /// The NorthWest quadrant of the QuadTree's rootNode.
     var northWest: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.northWest
@@ -24,6 +28,7 @@ struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
         }
     }
 
+    /// The NorthEast quadrant of the QuadTree's rootNode.
     var northEast: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.northEast
@@ -33,6 +38,7 @@ struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
         }
     }
 
+    /// The SouthWest quadrant of the QuadTree's rootNode.
     var southWest: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.southWest
@@ -42,6 +48,7 @@ struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
         }
     }
 
+    /// The SouthEast quadrant of the QuadTree's rootNode.
     var southEast: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.southEast
@@ -55,6 +62,9 @@ struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
          northEast: QuadTree<NodeData, R, C>,
          southWest: QuadTree<NodeData, R, C>,
          southEast: QuadTree<NodeData, R, C>) {
-        quadrants = Box(value: QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast))
+        quadrants = Box(value: QuadrantWrapper(northWest: northWest,
+            northEast: northEast,
+            southWest: southWest,
+            southEast: southEast))
     }
 }
