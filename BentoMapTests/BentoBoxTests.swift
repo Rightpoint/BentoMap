@@ -31,7 +31,7 @@ class MapKitTests: XCTestCase {
         let maxCoord = CLLocationCoordinate2D(latitude: 30, longitude: 60)
         let minCoord = CLLocationCoordinate2D(latitude: 20, longitude: 40)
 
-        let coordBentoBox = BentoMap<MKMapRect, CLLocationCoordinate2D>(minCoordinate: minCoord, maxCoordinate: maxCoord)
+        let coordBentoBox = BentoMap<MKMapRect, CLLocationCoordinate2D>(minPoint: minCoord, maxPoint: maxCoord)
 
         let minLat = CGFloat(min(minCoord._x, maxCoord._x))
         XCTAssertEqualWithAccuracy(coordBentoBox.rootNode.minX, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBentoBox.rootNode.minX) should equal the smallest latitude passed in \(minLat)")
@@ -49,8 +49,8 @@ class MapKitTests: XCTestCase {
     }
 
     func testBentoBoxCoordinates() {
-        let coordBentoBox = BentoMap<MKMapRect, CLLocationCoordinate2D>(minCoordinate: CLLocationCoordinate2D(latitude: 30, longitude: 60),
-                                        maxCoordinate: CLLocationCoordinate2D(latitude: 20, longitude: 40))
+        let coordBentoBox = BentoMap<MKMapRect, CLLocationCoordinate2D>(minPoint: CLLocationCoordinate2D(latitude: 30, longitude: 60),
+                                                                        maxPoint: CLLocationCoordinate2D(latitude: 20, longitude: 40))
 
         let maxCoordinate = MKMapPoint(x: Double(coordBentoBox.maxCoordinate._x), y: Double(coordBentoBox.maxCoordinate._y))
         let minCoordinate = MKMapPoint(x: Double(coordBentoBox.minCoordinate._x), y: Double(coordBentoBox.minCoordinate._y))
@@ -164,7 +164,7 @@ class CoreGraphicsTests: XCTestCase {
         let maxCoord = CGPoint(x: 30.0, y: 60.0)
         let minCoord = CGPoint(x: 20.0, y: 40.0)
 
-        let coordBentoBox = BentoMap<CGRect, CGPoint>(minCoordinate: minCoord, maxCoordinate: maxCoord)
+        let coordBentoBox = BentoMap<CGRect, CGPoint>(minPoint: minCoord, maxPoint: maxCoord)
 
         let minLat = CGFloat(min(minCoord._x, maxCoord._x))
         XCTAssertEqualWithAccuracy(coordBentoBox.rootNode.minX, minLat, accuracy: 0.001, "The bounding box's min x \(coordBentoBox.rootNode.minX) should equal the smallest x passed in \(minLat)")
@@ -182,8 +182,8 @@ class CoreGraphicsTests: XCTestCase {
     }
 
     func testBentoBoxCoordinates() {
-        let coordBentoBox = BentoMap<CGRect, CGPoint>(minCoordinate: CGPoint(x: 30, y: 60),
-                                        maxCoordinate: CGPoint(x: 20, y: 40))
+        let coordBentoBox = BentoMap<CGRect, CGPoint>(minPoint: CGPoint(x: 30, y: 60),
+                                                      maxPoint: CGPoint(x: 20, y: 40))
 
         let maxCoordinate = CGPoint(x: coordBentoBox.maxCoordinate._x, y: coordBentoBox.maxCoordinate._y)
         let minCoordinate = CGPoint(x: coordBentoBox.minCoordinate._x, y: coordBentoBox.minCoordinate._y)

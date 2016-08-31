@@ -16,13 +16,13 @@ final class ViewController: UIViewController {
     // aren't hidden under the navigation bar
     static let mapInsets =  UIEdgeInsets(top: 80, left: 20, bottom: 20, right: 20)
 
-    let mapData = QuadTree<Int>.sampleData
+    let mapData = QuadTree<Int, MKMapRect, CLLocationCoordinate2D>.sampleData
 
     override func loadView() {
         super.loadView()
         let mapView = MKMapView()
         mapView.delegate = self
-        mapView.setVisibleMapRect(mapData.BentoMap.rootNode,
+        mapView.setVisibleMapRect(mapData.bentoMap.rootNode,
                                   edgePadding: self.dynamicType.mapInsets,
                                   animated: false)
         view = mapView
@@ -80,7 +80,7 @@ private extension ViewController {
         let oldAnnotations = mapView.annotations.flatMap({ $0 as? BaseAnnotation })
 
         let toRemove = oldAnnotations.filter { annotation in
-            return !newAnnotations.containsCoordinate { newAnnotation in
+            return !newAnnotations.contains { newAnnotation in
                 return newAnnotation == annotation
             }
         }
@@ -88,7 +88,7 @@ private extension ViewController {
         mapView.removeAnnotations(toRemove)
 
         let toAdd = newAnnotations.filter { annotation in
-            return !oldAnnotations.containsCoordinate { oldAnnotation in
+            return !oldAnnotations.contains { oldAnnotation in
                 return oldAnnotation == annotation
             }
         }

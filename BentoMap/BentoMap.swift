@@ -12,7 +12,18 @@ public struct BentoMap<R: BentoRect, C: BentoCoordinate> {
 
     /// The root node of the tree. Can be thought of
     /// as the container map of the sub-rectangles
-    private var rootNode: R
+    public var rootNode: R
+
+    public init(minPoint: C, maxPoint: C) {
+
+        let minX = min(minPoint._x, maxPoint._x)
+        let minY = min(minPoint._y, maxPoint._y)
+        let maxX = max(minPoint._x, maxPoint._x)
+        let maxY = max(minPoint._y, maxPoint._y)
+
+        rootNode = R(originCoordinate: C(_x: minX, _y: minY),
+                    size: CGSize(width: maxX - minX, height: maxY - minY))
+    }
 
     public init(rootNode: R) {
         self.rootNode = rootNode
