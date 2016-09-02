@@ -11,9 +11,13 @@ import Foundation
 //following example code and text from https://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
 public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
 
+    /// The individual nodes that compose the QuadTree
     var ordinalNodes: OrdinalNodes<NodeData, R, C>?
 
+    /// The rectangular map specified by the QuadTree
     public let bentoMap: BentoMap<R, C>
+
+    /// The number of coordinates or points that an individual node may contain
     public let bucketCapacity: Int
     public var points = [QuadTreeNode<NodeData, C>]()
 
