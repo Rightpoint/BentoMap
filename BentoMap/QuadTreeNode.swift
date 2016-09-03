@@ -8,11 +8,7 @@
 
 import Foundation
 
-public protocol Initializable {
-    init()
-}
-
-public protocol BentoCoordinate: Initializable {
+public protocol BentoCoordinate {
 
     var _x: CGFloat { get }
     var _y: CGFloat { get }
@@ -20,7 +16,7 @@ public protocol BentoCoordinate: Initializable {
     init(_x: CGFloat, _y: CGFloat)
 }
 
-public protocol BentoRect: Initializable {
+public protocol BentoRect {
 
     var maxX: CGFloat { get }
     var maxY: CGFloat { get }
@@ -31,15 +27,9 @@ public protocol BentoRect: Initializable {
 
     func divide(percent: CGFloat, edge: CGRectEdge) -> (Self, Self)
 
+    func unionWith(other: Self) -> Self
+
     init(originCoordinate: BentoCoordinate, size: CGSize)
-}
-
-extension BentoRect {
-
-    func intersects(rect: BentoRect) -> Bool {
-        return true
-    }
-
 }
 
 public struct QuadTreeNode<NodeData, C: BentoCoordinate> {
@@ -50,6 +40,24 @@ public struct QuadTreeNode<NodeData, C: BentoCoordinate> {
     public init(mapPoint: C, content: NodeData) {
         self.mapPoint = mapPoint
         self.content = content
+    }
+
+}
+
+public protocol CoordinateProvider {
+
+    associatedtype CoordinateType: BentoCoordinate
+
+    var coordinate: CoordinateType { get }
+
+}
+
+extension QuadTreeNode: CoordinateProvider {
+
+    public typealias CoordinateType = C
+
+    public var coordinate: C {
+        return mapPoint
     }
 
 }

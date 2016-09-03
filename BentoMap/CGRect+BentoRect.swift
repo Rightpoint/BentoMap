@@ -36,6 +36,10 @@ extension CGRect: BentoRect {
         return (slice: slice[0], remainder: remainder[0])
     }
 
+    public func unionWith(other: CGRect) -> CGRect {
+        return union(other)
+    }
+
     public init(originCoordinate origin: BentoCoordinate, size: CGSize) {
         self.init(origin: CGPoint(x: origin._x, y: origin._y), size: size)
     }

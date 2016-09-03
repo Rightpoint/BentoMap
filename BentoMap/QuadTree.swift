@@ -15,7 +15,6 @@ public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
     var ordinalNodes: OrdinalNodes<NodeData, R, C>?
 
     /// The rectangular map specified by the QuadTree
-    public let bentoMap: BentoMap<R, C>
 
     /// The number of coordinates or points that an individual node may contain
     public let bucketCapacity: Int
@@ -23,13 +22,27 @@ public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     public init(bentoMap: BentoMap<R, C>, bucketCapacity: Int) {
         precondition(bucketCapacity > 0, "Bucket capacity must be greater than 0")
-        self.bentoMap = bentoMap
         self.bucketCapacity = bucketCapacity
     }
 
 }
 
 public extension QuadTree {
+
+
+    /// Recursively computes the bounding box of the points in the quad tree in O(n) time.
+    public var bentoMap: BentoMap<R, C> {
+        let boundingBox: BentoMap<R, C> = points.boundingBox()
+
+        if let ordinals = ordinalNodes {
+            boundingBox.union(ordinals.northWest.bentoMap)
+            boundingBox.union(ordinals.northEast.bentoMap)
+            boundingBox.union(ordinals.southWest.bentoMap)
+            boundingBox.union(ordinals.southEast.bentoMap)
+        }
+
+        return boundingBox
+    }
 
     public func clusteredDataWithinMapRect(rootNode: R, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, R, C>] {
 

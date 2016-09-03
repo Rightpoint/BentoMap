@@ -53,6 +53,10 @@ extension MKMapRect: BentoRect {
         return (slice: slice[0], remainder: remainder[0])
     }
 
+    public func unionWith(other: MKMapRect) -> MKMapRect {
+        return MKMapRectUnion(self, other)
+    }
+
     public init(originCoordinate origin: BentoCoordinate, size: CGSize) {
         self.init(origin: MKMapPoint(x: Double(origin._x), y: Double(origin._y)), size: MKMapSize(width: Double(size.width), height: Double(size.height)))
     }

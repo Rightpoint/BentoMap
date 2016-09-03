@@ -85,4 +85,8 @@ extension BentoMap {
         return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BentoMap.init)
     }
 
+    func union(other: BentoMap<R, C>) -> R {
+        return rootNode.unionWith(other.rootNode)
+    }
+
 }
