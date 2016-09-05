@@ -24,7 +24,7 @@ class QuadTreeTests: XCTestCase {
         let box = BentoMap<MKMapRect, MKMapPoint>(rootNode: MKMapRectWorld)
         let quadTree = QuadTree<Void, MKMapRect, MKMapPoint>(bentoMap: box, bucketCapacity: 5)
 
-        XCTAssert(MKMapRectEqualToRect(box.rootNode, quadTree.bentoMap.rootNode), "The bounding box should equal the initalized bounding box")
+        XCTAssert(MKMapRectEqualToRect(box.rootNode, quadTree.rootNodeRegion.rootNode), "The bounding box should equal the initalized bounding box")
         XCTAssert(quadTree.bucketCapacity == 5, "The bucket capacity passed in is the bucket capacity used")
         XCTAssertNil(quadTree.ordinalNodes, "The initalized nodes should be empty")
         XCTAssertTrue(quadTree.points.isEmpty, "The bucket of points should be empty")

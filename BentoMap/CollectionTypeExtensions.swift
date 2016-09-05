@@ -13,12 +13,9 @@ public extension CollectionType where Generator.Element: BentoCoordinate {
 
     func bentoMap<R: BentoRect>() -> BentoMap<R, Generator.Element> {
 
-        guard let y = self as? [BentoCoordinate] else {
-            return bentoMap()
-        }
+        let coordinates: [BentoCoordinate] = flatMap({return $0 as BentoCoordinate})
 
-
-        return BentoMap(rootNode: bb(y, rectType: R.self))
+        return BentoMap(rootNode: bb(coordinates, rectType: R.self))
     }
 
 }

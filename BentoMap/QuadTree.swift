@@ -15,6 +15,7 @@ public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
     var ordinalNodes: OrdinalNodes<NodeData, R, C>?
 
     /// The rectangular map specified by the QuadTree
+    var rootNodeRegion: BentoMap<R, C>
 
     /// The number of coordinates or points that an individual node may contain
     public let bucketCapacity: Int
@@ -22,6 +23,7 @@ public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     public init(bentoMap: BentoMap<R, C>, bucketCapacity: Int) {
         precondition(bucketCapacity > 0, "Bucket capacity must be greater than 0")
+        self.rootNodeRegion = bentoMap
         self.bucketCapacity = bucketCapacity
     }
 
@@ -87,7 +89,7 @@ public extension QuadTree {
 
 
     public mutating func insertNode(node: QuadTreeNode<NodeData, C>) -> Bool {
-        guard bentoMap.containsCoordinate(node.mapPoint) else {
+        guard rootNodeRegion.containsCoordinate(node.mapPoint) else {
             return false
         }
 
@@ -111,7 +113,7 @@ public extension QuadTree {
 private extension QuadTree {
 
     mutating func subdivide() {
-        let trees = bentoMap.quadrants.map { quadrant in
+        let trees = rootNodeRegion.quadrants.map { quadrant in
             QuadTree(bentoMap: quadrant, bucketCapacity: self.bucketCapacity)
         }
 
@@ -124,7 +126,7 @@ private extension QuadTree {
     func nodesInRange(range: BentoMap<R, C>) -> [QuadTreeNode<NodeData, C>] {
         var nodes = [QuadTreeNode<NodeData, C>]()
 
-        guard bentoMap.intersectsBentoBox(range) else {
+        guard rootNodeRegion.intersectsBentoBox(range) else {
             return nodes
         }
 

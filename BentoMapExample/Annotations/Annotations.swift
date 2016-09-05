@@ -11,18 +11,18 @@ import MapKit
 import BentoMap
 
 class BaseAnnotation: NSObject, MKAnnotation {
-    let mapPoint: CLLocationCoordinate2D
+    let mapPoint: MKMapPoint
     let rootNode: MKMapRect
     var coordinate: CLLocationCoordinate2D {
-        return mapPoint
+        return MKCoordinateForMapPoint(mapPoint)
     }
 
-    init(mapPoint: CLLocationCoordinate2D, rootNode: MKMapRect) {
+    init(mapPoint: MKMapPoint, rootNode: MKMapRect) {
         self.mapPoint = mapPoint
         self.rootNode = rootNode
     }
 
-    static func makeAnnotation(result: QuadTreeResult<Int, MKMapRect, CLLocationCoordinate2D>) -> BaseAnnotation {
+    static func makeAnnotation(result: QuadTreeResult<Int, MKMapRect, MKMapPoint>) -> BaseAnnotation {
         let annotation: BaseAnnotation
         switch result {
         case let .Single(node: node):
@@ -42,7 +42,7 @@ final class SingleAnnotation: BaseAnnotation {
 
     let annotationNumber: Int
 
-    init(mapPoint: CLLocationCoordinate2D, annotationNumber: Int, rootNode: MKMapRect) {
+    init(mapPoint: MKMapPoint, annotationNumber: Int, rootNode: MKMapRect) {
         self.annotationNumber = annotationNumber
         super.init(mapPoint: mapPoint, rootNode: rootNode)
     }
@@ -53,7 +53,7 @@ final class ClusterAnnotation: BaseAnnotation {
 
     let annotationNumbers: [Int]
 
-    init(mapPoint: CLLocationCoordinate2D, annotationNumbers: [Int], rootNode: MKMapRect) {
+    init(mapPoint: MKMapPoint, annotationNumbers: [Int], rootNode: MKMapRect) {
         self.annotationNumbers = annotationNumbers.sort()
         super.init(mapPoint: mapPoint, rootNode: rootNode)
     }

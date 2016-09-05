@@ -12,10 +12,10 @@ import BentoMap
 
 extension QuadTree {
 
-    static var sampleData: QuadTree<Int, MKMapRect, CLLocationCoordinate2D> {
-        var samples = QuadTree<Int, MKMapRect, CLLocationCoordinate2D>(bentoMap: BentoMap(minPoint: CLLocationCoordinate2D.minCoord, maxPoint: CLLocationCoordinate2D.maxCoord), bucketCapacity: 5)
+    static var sampleData: QuadTree<Int, MKMapRect, MKMapPoint> {
+        var samples = QuadTree<Int, MKMapRect, MKMapPoint>(bentoMap: BentoMap(minPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.minCoord), maxPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.maxCoord)), bucketCapacity: 5)
         for count in 1...5000 {
-            let node = QuadTreeNode(mapPoint: CLLocationCoordinate2D.randomCoordinate(), content: count)
+            let node = QuadTreeNode(mapPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
             samples.insertNode(node)
         }
         return samples
