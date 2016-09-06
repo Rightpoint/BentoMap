@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MapKitViewController.swift
 //  BentoMapExample
 //
 //  Created by Michael Skiba on 7/6/16.
@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import BentoMap
 
-final class ViewController: UIViewController {
+final class MapKitViewController: UIViewController {
 
     // Used to make sure the map is nicely padded on the edges, and visible annotations
     // aren't hidden under the navigation bar
@@ -36,7 +36,7 @@ final class ViewController: UIViewController {
 
 }
 
-extension ViewController: MKMapViewDelegate {
+extension MapKitViewController: MKMapViewDelegate {
 
     func mapView(mapView: MKMapView,
                  viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -63,7 +63,7 @@ extension ViewController: MKMapViewDelegate {
 
 }
 
-private extension ViewController {
+private extension MapKitViewController {
 
     func updateAnnotations(inMapView mapView: MKMapView,
                                      forMapRect rootNode: MKMapRect) {
