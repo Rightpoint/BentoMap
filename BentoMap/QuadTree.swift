@@ -12,7 +12,7 @@ import Foundation
 public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     /// The individual nodes that compose the QuadTree
-    var ordinalNodes: OrdinalNodes<NodeData, R, C>?
+    public var ordinalNodes: OrdinalNodes<NodeData, R, C>?
 
     /// The rectangular map specified by the QuadTree
     var rootNodeRegion: BentoMap<R, C>

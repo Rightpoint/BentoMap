@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
+public struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
 
     /// A type that exposes all 4 quadrants of a given QuadTree
     private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData, R, C>>

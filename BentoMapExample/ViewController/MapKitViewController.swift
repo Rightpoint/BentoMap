@@ -16,7 +16,7 @@ final class MapKitViewController: UIViewController {
     // aren't hidden under the navigation bar
     static let mapInsets =  UIEdgeInsets(top: 80, left: 20, bottom: 20, right: 20)
 
-    let mapData = QuadTree<Int, MKMapRect, CLLocationCoordinate2D>.sampleData
+    let mapData = QuadTree<Int, MKMapRect, CLLocationCoordinate2D>.sampleMapData
 
     override func loadView() {
         super.loadView()

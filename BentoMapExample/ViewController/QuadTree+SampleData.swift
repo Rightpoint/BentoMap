@@ -1,5 +1,5 @@
 //
-//  QuadTree+SampleData.swift
+//  QuadTree+sampleMapData.swift
 //  BentoMap
 //
 //  Created by Michael Skiba on 7/6/16.
@@ -12,13 +12,36 @@ import BentoMap
 
 extension QuadTree {
 
-    static var sampleData: QuadTree<Int, MKMapRect, MKMapPoint> {
+    static var sampleMapData: QuadTree<Int, MKMapRect, MKMapPoint> {
         var samples = QuadTree<Int, MKMapRect, MKMapPoint>(bentoMap: BentoMap(minPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.minCoord), maxPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.maxCoord)), bucketCapacity: 5)
         for count in 1...5000 {
             let node = QuadTreeNode(mapPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
             samples.insertNode(node)
         }
         return samples
+    }
+
+    static func sampleGridData(forContainerRect containerRect: CGRect) -> QuadTree<Int, CGRect, CGPoint> {
+        let minPoint = CGPoint(x: containerRect.minX, y: containerRect.minY)
+        let maxPoint = CGPoint(x: containerRect.maxX, y: containerRect.maxY)
+        var samples = QuadTree<Int, CGRect, CGPoint>(bentoMap: BentoMap(minPoint: minPoint, maxPoint: maxPoint), bucketCapacity: 5)
+        let rootNode = QuadTreeNode(mapPoint: CGPoint.zero, content: 1000)
+        samples.insertNode(rootNode)
+        for count in 1...500 {
+            let node = QuadTreeNode(mapPoint: CGPoint.randomPoint(withinRect: containerRect), content: count)
+            samples.insertNode(node)
+        }
+        return samples
+    }
+
+}
+
+private extension CGPoint {
+
+    static func randomPoint(withinRect rect: CGRect) -> CGPoint {
+        let x = Double.cappedRandom(min: Double(rect.minX), max: Double(rect.maxX))
+        let y = Double.cappedRandom(min: Double(rect.minY), max: Double(rect.maxY))
+        return CGPoint(x: x, y: y)
     }
 
 }
