@@ -12,7 +12,7 @@ public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
 
     /// The root node of the tree. Can be thought of
     /// as the container map of the sub-rectangles
-    public var rootNode: R
+    public var root: R
 
     public init(minPoint: C, maxPoint: C) {
 
@@ -21,12 +21,12 @@ public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
         let maxX = max(minPoint._x, maxPoint._x)
         let maxY = max(minPoint._y, maxPoint._y)
 
-        rootNode = R(originCoordinate: C(_x: minX, _y: minY),
+        root = R(originCoordinate: C(_x: minX, _y: minY),
                     size: CGSize(width: maxX - minX, height: maxY - minY))
     }
 
-    public init(rootNode: R) {
-        self.rootNode = rootNode
+    public init(root: R) {
+        self.root = root
     }
 
 }
@@ -37,12 +37,12 @@ public extension BentoBox {
 
     /// The coordinate at the top left corner of the root rect
     public var minCoordinate: C {
-        return C(_x: rootNode.minX, _y: rootNode.minY)
+        return C(_x: root.minX, _y: root.minY)
     }
 
     /// The coordinate at the bottom right corner of the root rect
     public var maxCoordinate: C {
-        return C(_x: rootNode.maxX, _y: rootNode.maxY)
+        return C(_x: root.maxX, _y: root.maxY)
     }
 
 }
@@ -50,35 +50,35 @@ public extension BentoBox {
 extension BentoBox {
 
     /**
-     Returns a Bool value for whether the rootNode contains
+     Returns a Bool value for whether the root contains
      the coordinate passed in
 
      - parameter coordinate: a BentoCoordinate
 
-     - returns: whether the rootNode contains
+     - returns: whether the root contains
      the coordinate passed in
      */
     func containsCoordinate(coordinate: BentoCoordinate) -> Bool {
-        return rootNode.containsCoordinate(coordinate)
+        return root.containsCoordinate(coordinate)
     }
 
     /**
-     Returns a Bool value for whether the rootNode intersects with the
-     rootNode of the bentoBox passed in
+     Returns a Bool value for whether the root intersects with the
+     root of the bentoBox passed in
 
      - parameter bentoBox: a BentoBox
 
-     - returns: whether the rootNode intersects with the
-     rootNode of the bentoBox passed in
+     - returns: whether the root intersects with the
+     root of the bentoBox passed in
      */
     func intersectsBentoBox(bentoBox: BentoBox) -> Bool {
-        return rootNode.minX < bentoBox.rootNode.maxX && rootNode.maxX > bentoBox.rootNode.minX &&
-            rootNode.minY < bentoBox.rootNode.maxY && rootNode.maxY > bentoBox.rootNode.minY
+        return root.minX < bentoBox.root.maxX && root.maxX > bentoBox.root.minX &&
+            root.minY < bentoBox.root.maxY && root.maxY > bentoBox.root.minY
     }
 
-    /// A wrapper around the 4 child nodes of the rootNode
+    /// A wrapper around the 4 child nodes of the root
     var quadrants: QuadrantWrapper<BentoBox> {
-        let (north, south) = rootNode.divide(0.5, edge: .MinYEdge)
+        let (north, south) = root.divide(0.5, edge: .MinYEdge)
         let (northWest, northEast) = north.divide(0.5, edge: .MinXEdge)
         let (southWest, southEast) = south.divide(0.5, edge: .MinXEdge)
 
@@ -86,7 +86,7 @@ extension BentoBox {
     }
 
     func union(other: BentoBox<R, C>) -> R {
-        return rootNode.unionWith(other.rootNode)
+        return root.unionWith(other.root)
     }
 
 }

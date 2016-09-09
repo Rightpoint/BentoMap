@@ -22,11 +22,11 @@ class MapKitTests: XCTestCase {
 
     func testBentoBoxCreation() {
 
-        let rootNode = MKMapRectWorld
+        let root = MKMapRectWorld
 
-        let rootNodeBentoBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: rootNode)
+        let rootNodeBentoBox = BentoBox<MKMapRect, MKMapPoint>(root: root)
 
-        XCTAssert(MKMapRectEqualToRect(rootNode, rootNodeBentoBox.rootNode), "The bounding box's map rect should be equal to the input map rect")
+        XCTAssert(MKMapRectEqualToRect(root, rootNodeBentoBox.root), "The bounding box's map rect should be equal to the input map rect")
 
         let maxCoord = CLLocationCoordinate2D(latitude: 30, longitude: 60)
         let minCoord = CLLocationCoordinate2D(latitude: 20, longitude: 40)
@@ -34,7 +34,7 @@ class MapKitTests: XCTestCase {
         let coordBentoBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minPoint: minCoord, maxPoint: maxCoord)
 
         let minLat = CGFloat(min(minCoord._x, maxCoord._x))
-        XCTAssertEqualWithAccuracy(coordBentoBox.rootNode.minX, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBentoBox.rootNode.minX) should equal the smallest latitude passed in \(minLat)")
+        XCTAssertEqualWithAccuracy(coordBentoBox.root.minX, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBentoBox.root.minX) should equal the smallest latitude passed in \(minLat)")
 
 
         let maxLat = max(minCoord._x, maxCoord._x)
@@ -86,9 +86,9 @@ class MapKitTests: XCTestCase {
         let intersectingRect =  MKMapRectMake(250, 250, 500, 500)
         let nonIntersectingRect = MKMapRectMake(500, 0, 500, 500)
 
-        let bentoBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: rect)
-        let intersectingBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: intersectingRect)
-        let nonIntersectingBox = BentoBox<MKMapRect, MKMapPoint>(rootNode: nonIntersectingRect)
+        let bentoBox = BentoBox<MKMapRect, MKMapPoint>(root: rect)
+        let intersectingBox = BentoBox<MKMapRect, MKMapPoint>(root: intersectingRect)
+        let nonIntersectingBox = BentoBox<MKMapRect, MKMapPoint>(root: nonIntersectingRect)
 
         XCTAssert(bentoBox.intersectsBentoBox(intersectingBox))
         XCTAssertFalse(bentoBox.intersectsBentoBox(nonIntersectingBox))
@@ -101,12 +101,12 @@ class MapKitTests: XCTestCase {
         let swRect = MKMapRectMake(0, 250, 250, 250)
         let seRect = MKMapRectMake(250, 250, 250, 250)
 
-        let quadrants = BentoBox<MKMapRect, MKMapPoint>(rootNode: baseRect).quadrants
+        let quadrants = BentoBox<MKMapRect, MKMapPoint>(root: baseRect).quadrants
 
-        XCTAssert(MKMapRectEqualToRect(quadrants.northWest.rootNode, nwRect))
-        XCTAssert(MKMapRectEqualToRect(quadrants.northEast.rootNode, neRect))
-        XCTAssert(MKMapRectEqualToRect(quadrants.southWest.rootNode, swRect))
-        XCTAssert(MKMapRectEqualToRect(quadrants.southEast.rootNode, seRect))
+        XCTAssert(MKMapRectEqualToRect(quadrants.northWest.root, nwRect))
+        XCTAssert(MKMapRectEqualToRect(quadrants.northEast.root, neRect))
+        XCTAssert(MKMapRectEqualToRect(quadrants.southWest.root, swRect))
+        XCTAssert(MKMapRectEqualToRect(quadrants.southEast.root, seRect))
     }
 
     func testCollectionTypeExtensions() {
@@ -155,11 +155,11 @@ class CoreGraphicsTests: XCTestCase {
 
         let origin = CGPoint.zero
         let gridSize = CGSize(width: 1000.0, height: 1000.0)
-        let rootNode = CGRect(origin: origin, size: gridSize)
+        let root = CGRect(origin: origin, size: gridSize)
 
-        let rootNodeBentoBox = BentoBox<CGRect, CGPoint>(rootNode: rootNode)
+        let rootNodeBentoBox = BentoBox<CGRect, CGPoint>(root: root)
 
-        XCTAssertEqual(rootNode, rootNodeBentoBox.rootNode, "The bounding box's map rect should be equal to the input map rect")
+        XCTAssertEqual(root, rootNodeBentoBox.root, "The bounding box's map rect should be equal to the input map rect")
 
         let maxCoord = CGPoint(x: 30.0, y: 60.0)
         let minCoord = CGPoint(x: 20.0, y: 40.0)
@@ -167,7 +167,7 @@ class CoreGraphicsTests: XCTestCase {
         let coordBentoBox = BentoBox<CGRect, CGPoint>(minPoint: minCoord, maxPoint: maxCoord)
 
         let minLat = CGFloat(min(minCoord._x, maxCoord._x))
-        XCTAssertEqualWithAccuracy(coordBentoBox.rootNode.minX, minLat, accuracy: 0.001, "The bounding box's min x \(coordBentoBox.rootNode.minX) should equal the smallest x passed in \(minLat)")
+        XCTAssertEqualWithAccuracy(coordBentoBox.root.minX, minLat, accuracy: 0.001, "The bounding box's min x \(coordBentoBox.root.minX) should equal the smallest x passed in \(minLat)")
 
 
         let maxLat = max(minCoord._x, maxCoord._x)
@@ -219,9 +219,9 @@ class CoreGraphicsTests: XCTestCase {
         let intersectingRect =  CGRect(x: 250, y: 250, width: 500, height: 500)
         let nonIntersectingRect = CGRect(x: 500, y: 0, width: 500, height: 500)
 
-        let bentoBox = BentoBox<CGRect, CGPoint>(rootNode: rect)
-        let intersectingBox = BentoBox<CGRect, CGPoint>(rootNode: intersectingRect)
-        let nonIntersectingBox = BentoBox<CGRect, CGPoint>(rootNode: nonIntersectingRect)
+        let bentoBox = BentoBox<CGRect, CGPoint>(root: rect)
+        let intersectingBox = BentoBox<CGRect, CGPoint>(root: intersectingRect)
+        let nonIntersectingBox = BentoBox<CGRect, CGPoint>(root: nonIntersectingRect)
 
         XCTAssert(bentoBox.intersectsBentoBox(intersectingBox))
         XCTAssertFalse(bentoBox.intersectsBentoBox(nonIntersectingBox))
@@ -234,12 +234,12 @@ class CoreGraphicsTests: XCTestCase {
         let swRect = CGRect(x: 0, y: 250, width: 250, height: 250)
         let seRect = CGRect(x: 250, y: 250, width: 250, height: 250)
 
-        let quadrants = BentoBox<CGRect, CGPoint>(rootNode: baseRect).quadrants
+        let quadrants = BentoBox<CGRect, CGPoint>(root: baseRect).quadrants
 
-        XCTAssert(CGRectEqualToRect(quadrants.northWest.rootNode, nwRect))
-        XCTAssert(CGRectEqualToRect(quadrants.northEast.rootNode, neRect))
-        XCTAssert(CGRectEqualToRect(quadrants.southWest.rootNode, swRect))
-        XCTAssert(CGRectEqualToRect(quadrants.southEast.rootNode, seRect))
+        XCTAssert(CGRectEqualToRect(quadrants.northWest.root, nwRect))
+        XCTAssert(CGRectEqualToRect(quadrants.northEast.root, neRect))
+        XCTAssert(CGRectEqualToRect(quadrants.southWest.root, swRect))
+        XCTAssert(CGRectEqualToRect(quadrants.southEast.root, seRect))
     }
 
     func testCollectionTypeExtensions() {

@@ -15,7 +15,7 @@ public extension CollectionType where Generator.Element: BentoCoordinate {
 
         let coordinates: [BentoCoordinate] = flatMap({return $0 as BentoCoordinate})
 
-        return BentoBox(rootNode: bb(coordinates, rectType: R.self))
+        return BentoBox(root: bb(coordinates, rectType: R.self))
     }
 
 }
@@ -52,7 +52,7 @@ public extension CollectionType where Generator.Element: CoordinateProvider {
         let boundingBox: [BentoCoordinate] = map({ $0.coordinate })
 
 
-        return BentoBox(rootNode: bb(boundingBox, rectType: R.self))
+        return BentoBox(root: bb(boundingBox, rectType: R.self))
     }
 
 }

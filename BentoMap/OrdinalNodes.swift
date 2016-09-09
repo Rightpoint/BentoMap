@@ -18,7 +18,7 @@ public struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
     // how much memory must be allocated
     private var quadrants: Box<QuadTreeWrapper>
 
-    /// The NorthWest quadrant of the QuadTree's rootNode.
+    /// The NorthWest quadrant of the QuadTree's root.
     var northWest: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.northWest
@@ -28,7 +28,7 @@ public struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
         }
     }
 
-    /// The NorthEast quadrant of the QuadTree's rootNode.
+    /// The NorthEast quadrant of the QuadTree's root.
     var northEast: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.northEast
@@ -38,7 +38,7 @@ public struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
         }
     }
 
-    /// The SouthWest quadrant of the QuadTree's rootNode.
+    /// The SouthWest quadrant of the QuadTree's root.
     var southWest: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.southWest
@@ -48,7 +48,7 @@ public struct OrdinalNodes<NodeData, R: BentoRect, C: BentoCoordinate> {
         }
     }
 
-    /// The SouthEast quadrant of the QuadTree's rootNode.
+    /// The SouthEast quadrant of the QuadTree's root.
     var southEast: QuadTree<NodeData, R, C> {
         get {
             return quadrants.value.southEast

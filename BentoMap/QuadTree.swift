@@ -50,14 +50,14 @@ public extension QuadTree {
      Computes clusters of data based on the zoomscale
      and cell size passed in.
 
-     - parameter rootNode:  the root bentoBox of the Quadtree (used
+     - parameter root:  the root bentoBox of the Quadtree (used
      to compute the bounding rectangle for the map.
      - parameter zoomScale: used to calculate scale factor relative to the cell size passed in.
      - parameter cellSize:  the desired size for the "clustering region" for each individual bucket.i
 
      - returns: an array of quadtree results for each cell that contains nodes.
      */
-    public func clusteredDataWithinMapRect(rootNode: R, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, R, C>] {
+    public func clusteredDataWithinMapRect(root: R, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, R, C>] {
 
         let scaleFactor: Double
 
@@ -70,10 +70,10 @@ public extension QuadTree {
 
         let stepSize = CGFloat(1.0 / scaleFactor)
 
-        let minX = rootNode.minX
-        let maxX = rootNode.maxX
-        let minY = rootNode.minY
-        let maxY = rootNode.maxY
+        let minX = root.minX
+        let maxX = root.maxX
+        let minY = root.minY
+        let maxY = root.maxY
 
         var result = [QuadTreeResult<NodeData, R, C>]()
 
@@ -81,7 +81,7 @@ public extension QuadTree {
         for x in minX.stride(through: maxX, by: stepSize) {
             for y in minY.stride(through: maxY, by: stepSize) {
                 let cellRectangle = R(originCoordinate: C(_x: x, _y: y), size: mapStep)
-                let nodes = nodesInRange(BentoBox(rootNode: cellRectangle))
+                let nodes = nodesInRange(BentoBox(root: cellRectangle))
 
                 switch nodes.count {
                 case 0:
@@ -112,7 +112,7 @@ public extension QuadTree {
      - returns: a Bool indicating success or failure of the insertion.
      */
     public mutating func insertNode(node: QuadTreeNode<NodeData, C>) -> Bool {
-        guard root.containsCoordinate(node.mapPoint) else {
+        guard root.containsCoordinate(node.originCoordinate) else {
             return false
         }
 
@@ -165,7 +165,7 @@ private extension QuadTree {
         }
 
         nodes += points.filter { point in
-            range.containsCoordinate(point.mapPoint)
+            range.containsCoordinate(point.originCoordinate)
         }
 
         if let ordinals = ordinalNodes {

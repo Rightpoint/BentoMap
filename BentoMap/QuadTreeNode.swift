@@ -68,13 +68,13 @@ public protocol BentoRect {
 public struct QuadTreeNode<NodeData, C: BentoCoordinate> {
 
     /// The location of this node in the map's coordinate space.
-    public var mapPoint: C
+    public var originCoordinate: C
 
     /// The data associated with this node.
     public var content: NodeData
 
-    public init(mapPoint: C, content: NodeData) {
-        self.mapPoint = mapPoint
+    public init(originCoordinate: C, content: NodeData) {
+        self.originCoordinate = originCoordinate
         self.content = content
     }
 
@@ -96,7 +96,7 @@ extension QuadTreeNode: CoordinateProvider {
 
     /// The origin coordinate of the QuadTree.
     public var coordinate: C {
-        return mapPoint
+        return originCoordinate
     }
 
 }

@@ -28,8 +28,8 @@ extension MKMapRect: BentoRect {
     }
 
     public func containsCoordinate(c: BentoCoordinate) -> Bool {
-        let mapPoint = MKMapPoint(x: Double(c._x), y: Double(c._y))
-        return MKMapRectContainsPoint(self, mapPoint)
+        let originCoordinate = MKMapPoint(x: Double(c._x), y: Double(c._y))
+        return MKMapRectContainsPoint(self, originCoordinate)
     }
 
     public func divide(percent: CGFloat, edge: CGRectEdge) -> (MKMapRect, MKMapRect) {

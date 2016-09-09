@@ -15,7 +15,7 @@ extension QuadTree {
     static var sampleMapData: QuadTree<Int, MKMapRect, MKMapPoint> {
         var samples = QuadTree<Int, MKMapRect, MKMapPoint>(bentoBox: BentoBox(minPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.minCoord), maxPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.maxCoord)), bucketCapacity: 5)
         for count in 1...5000 {
-            let node = QuadTreeNode(mapPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
+            let node = QuadTreeNode(originCoordinate: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
             samples.insertNode(node)
         }
         return samples
@@ -25,10 +25,10 @@ extension QuadTree {
         let minPoint = CGPoint(x: containerRect.minX, y: containerRect.minY)
         let maxPoint = CGPoint(x: containerRect.maxX, y: containerRect.maxY)
         var samples = QuadTree<Int, CGRect, CGPoint>(bentoBox: BentoBox(minPoint: minPoint, maxPoint: maxPoint), bucketCapacity: 5)
-        let rootNode = QuadTreeNode(mapPoint: CGPoint.zero, content: 1000)
-        samples.insertNode(rootNode)
+        let root = QuadTreeNode(originCoordinate: CGPoint.zero, content: 1000)
+        samples.insertNode(root)
         for count in 1...500 {
-            let node = QuadTreeNode(mapPoint: CGPoint.randomPoint(withinRect: containerRect), content: count)
+            let node = QuadTreeNode(originCoordinate: CGPoint.randomPoint(withinRect: containerRect), content: count)
             samples.insertNode(node)
         }
         return samples
