@@ -1,6 +1,6 @@
 //
 //  MainMenuTableViewController.swift
-//  BentoMap
+//  BentoBox
 //
 //  Created by Matthew Buckley on 9/5/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.

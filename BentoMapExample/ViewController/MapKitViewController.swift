@@ -22,7 +22,7 @@ final class MapKitViewController: UIViewController {
         super.loadView()
         let mapView = MKMapView()
         mapView.delegate = self
-        mapView.setVisibleMapRect(mapData.bentoMap.rootNode,
+        mapView.setVisibleMapRect(mapData.bentoBox.rootNode,
                                   edgePadding: self.dynamicType.mapInsets,
                                   animated: false)
         view = mapView
@@ -30,8 +30,8 @@ final class MapKitViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = NSLocalizedString("BentoMap",
-                                                 comment: "BentoMap navbar title")
+        navigationItem.title = NSLocalizedString("BentoBox",
+                                                 comment: "BentoBox navbar title")
     }
 
 }

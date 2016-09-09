@@ -1,6 +1,6 @@
 //
 //  QuadTreeResult.swift
-//  BentoMap
+//  BentoBox
 //
 //  Created by Michael Skiba on 2/17/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -14,6 +14,8 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
     case Single(node: QuadTreeNode<NodeData, C>)
     case Multiple(nodes: [QuadTreeNode<NodeData, C>])
 
+    /// The average of the origin points of all the nodes
+    /// contained in the QuadTree.
     public var mapPoint: C {
         let mapPoint: C
         switch self {
@@ -33,6 +35,7 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
         return mapPoint
     }
 
+    /// The smallest possible rectangle that contains the node(s) contained in this QuadTree.
     public var contentRect: R {
         let origin: C
         let size: CGSize

@@ -1,6 +1,6 @@
 //
 //  QuadTree+sampleMapData.swift
-//  BentoMap
+//  BentoBox
 //
 //  Created by Michael Skiba on 7/6/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -13,7 +13,7 @@ import BentoMap
 extension QuadTree {
 
     static var sampleMapData: QuadTree<Int, MKMapRect, MKMapPoint> {
-        var samples = QuadTree<Int, MKMapRect, MKMapPoint>(bentoMap: BentoMap(minPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.minCoord), maxPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.maxCoord)), bucketCapacity: 5)
+        var samples = QuadTree<Int, MKMapRect, MKMapPoint>(bentoBox: BentoBox(minPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.minCoord), maxPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.maxCoord)), bucketCapacity: 5)
         for count in 1...5000 {
             let node = QuadTreeNode(mapPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
             samples.insertNode(node)
@@ -24,7 +24,7 @@ extension QuadTree {
     static func sampleGridData(forContainerRect containerRect: CGRect) -> QuadTree<Int, CGRect, CGPoint> {
         let minPoint = CGPoint(x: containerRect.minX, y: containerRect.minY)
         let maxPoint = CGPoint(x: containerRect.maxX, y: containerRect.maxY)
-        var samples = QuadTree<Int, CGRect, CGPoint>(bentoMap: BentoMap(minPoint: minPoint, maxPoint: maxPoint), bucketCapacity: 5)
+        var samples = QuadTree<Int, CGRect, CGPoint>(bentoBox: BentoBox(minPoint: minPoint, maxPoint: maxPoint), bucketCapacity: 5)
         let rootNode = QuadTreeNode(mapPoint: CGPoint.zero, content: 1000)
         samples.insertNode(rootNode)
         for count in 1...500 {

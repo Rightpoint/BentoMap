@@ -1,6 +1,6 @@
 //
 //  QuadrantWrapper.swift
-//  BentoMap
+//  BentoBox
 //
 //  Created by Michael Skiba on 7/5/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.

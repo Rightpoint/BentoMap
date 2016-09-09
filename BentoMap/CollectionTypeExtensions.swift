@@ -1,6 +1,6 @@
 //
 //  CollectionTypeExtensions.swift
-//  BentoMap
+//  BentoBox
 //
 //  Created by Rob Visentin on 8/1/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -11,11 +11,11 @@ import MapKit
 
 public extension CollectionType where Generator.Element: BentoCoordinate {
 
-    func bentoMap<R: BentoRect>() -> BentoMap<R, Generator.Element> {
+    func bentoBox<R: BentoRect>() -> BentoBox<R, Generator.Element> {
 
         let coordinates: [BentoCoordinate] = flatMap({return $0 as BentoCoordinate})
 
-        return BentoMap(rootNode: bb(coordinates, rectType: R.self))
+        return BentoBox(rootNode: bb(coordinates, rectType: R.self))
     }
 
 }
@@ -48,11 +48,11 @@ public extension CollectionType {
 
 public extension CollectionType where Generator.Element: CoordinateProvider {
 
-    func boundingBox<R: BentoRect, C: BentoCoordinate>() -> BentoMap<R, C> {
+    func boundingBox<R: BentoRect, C: BentoCoordinate>() -> BentoBox<R, C> {
         let boundingBox: [BentoCoordinate] = map({ $0.coordinate })
 
 
-        return BentoMap(rootNode: bb(boundingBox, rectType: R.self))
+        return BentoBox(rootNode: bb(boundingBox, rectType: R.self))
     }
 
 }
