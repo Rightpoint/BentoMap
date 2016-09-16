@@ -28,7 +28,7 @@ extension MKMapRect: BentoRect {
     }
 
     public func containsCoordinate(c: BentoCoordinate) -> Bool {
-        let originCoordinate = MKMapPoint(x: Double(c._x), y: Double(c._y))
+        let originCoordinate = MKMapPoint(x: Double(c.x), y: Double(c.y))
         return MKMapRectContainsPoint(self, originCoordinate)
     }
 
@@ -58,7 +58,7 @@ extension MKMapRect: BentoRect {
     }
 
     public init(originCoordinate origin: BentoCoordinate, size: CGSize) {
-        self.init(origin: MKMapPoint(x: Double(origin._x), y: Double(origin._y)), size: MKMapSize(width: Double(size.width), height: Double(size.height)))
+        self.init(origin: MKMapPoint(x: Double(origin.x), y: Double(origin.y)), size: MKMapSize(width: Double(size.width), height: Double(size.height)))
     }
 
 }

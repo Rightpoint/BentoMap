@@ -80,7 +80,7 @@ public extension QuadTree {
         let mapStep = CGSize(width: Double(stepSize), height: Double(stepSize))
         for x in minX.stride(through: maxX, by: stepSize) {
             for y in minY.stride(through: maxY, by: stepSize) {
-                let cellRectangle = R(originCoordinate: C(_x: x, _y: y), size: mapStep)
+                let cellRectangle = R(originCoordinate: C(x: x, y: y), size: mapStep)
                 let nodes = nodesInRange(BentoBox(root: cellRectangle))
 
                 switch nodes.count {

@@ -28,17 +28,17 @@ public extension CollectionType {
 
         for point in coords {
 
-            if point._x < min.x {
-                min.x = point._x
+            if point.x < min.x {
+                min.x = point.x
             }
-            if point._x > max.x {
-                max.x = point._x
+            if point.x > max.x {
+                max.x = point.x
             }
-            if point._y < min.y {
-                min.y = point._y
+            if point.y < min.y {
+                min.y = point.y
             }
-            if point._y > max.y {
-                max.y = point._y
+            if point.y > max.y {
+                max.y = point.y
             }
         }
 

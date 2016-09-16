@@ -59,8 +59,8 @@ class QuadTreeTests: XCTestCase {
 
         let unclusteredNodes = quadTree.clusteredDataWithinMapRect(bentoBox.root, zoomScale: 1, cellSize: 50)
         for point in unclusteredNodes {
-            XCTAssert(Int(point.originCoordinate.x) % 50 == 0, "all map point coords should be divisible by 50")
-            XCTAssert(Int(point.originCoordinate.y) % 50 == 0, "all map point coords should be divisible by 50")
+            XCTAssert(Int(point.originCoordinate.x as CGFloat) % 50 == 0, "all map point coords should be divisible by 50")
+            XCTAssert(Int(point.originCoordinate.y as CGFloat) % 50 == 0, "all map point coords should be divisible by 50")
             resultRectTester(point)
         }
         XCTAssertTrue(unclusteredNodes.count == 10000, "This should return 10k clusters")
@@ -68,8 +68,8 @@ class QuadTreeTests: XCTestCase {
         XCTAssertTrue(clusteredNodes.count == 100, "This should return 100 clusters")
         var totalNodeCount = 0
         for cluster in clusteredNodes {
-            XCTAssert(Int(cluster.originCoordinate.x - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering/ point was \(cluster.originCoordinate.x)")
-            XCTAssert(Int(cluster.originCoordinate.y - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering. point was \(cluster.originCoordinate.y)")
+            XCTAssert(Int(cluster.originCoordinate.x as CGFloat - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering/ point was \(cluster.originCoordinate.x)")
+            XCTAssert(Int(cluster.originCoordinate.y as CGFloat - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering. point was \(cluster.originCoordinate.y)")
             resultRectTester(cluster)
             switch cluster {
             case .Single:

@@ -11,12 +11,12 @@ import Foundation
 public protocol BentoCoordinate {
 
     /// The horizontal location of the coordinate
-    var _x: CGFloat { get }
+    var x: CGFloat { get set }
 
     /// The vertical location of the coordinate
-    var _y: CGFloat { get }
+    var y: CGFloat { get set }
 
-    init(_x: CGFloat, _y: CGFloat)
+    init(x: CGFloat, y: CGFloat)
 }
 
 public protocol BentoRect {

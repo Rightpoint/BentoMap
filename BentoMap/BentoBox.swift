@@ -16,12 +16,12 @@ public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
 
     public init(minPoint: C, maxPoint: C) {
 
-        let minX = min(minPoint._x, maxPoint._x)
-        let minY = min(minPoint._y, maxPoint._y)
-        let maxX = max(minPoint._x, maxPoint._x)
-        let maxY = max(minPoint._y, maxPoint._y)
+        let minX = min(minPoint.x, maxPoint.x)
+        let minY = min(minPoint.y, maxPoint.y)
+        let maxX = max(minPoint.x, maxPoint.x)
+        let maxY = max(minPoint.y, maxPoint.y)
 
-        root = R(originCoordinate: C(_x: minX, _y: minY),
+        root = R(originCoordinate: C(x: minX, y: minY),
                     size: CGSize(width: maxX - minX, height: maxY - minY))
     }
 
@@ -37,12 +37,12 @@ public extension BentoBox {
 
     /// The coordinate at the top left corner of the root rect
     public var minCoordinate: C {
-        return C(_x: root.minX, _y: root.minY)
+        return C(x: root.minX, y: root.minY)
     }
 
     /// The coordinate at the bottom right corner of the root rect
     public var maxCoordinate: C {
-        return C(_x: root.maxX, _y: root.maxY)
+        return C(x: root.maxX, y: root.maxY)
     }
 
 }

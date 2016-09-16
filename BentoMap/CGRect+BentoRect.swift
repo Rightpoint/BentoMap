@@ -11,7 +11,7 @@ import Foundation
 extension CGRect: BentoRect {
 
     public func containsCoordinate(c: BentoCoordinate) -> Bool {
-        let point = CGPoint(x: c._x, y: c._y)
+        let point = CGPoint(x: c.x, y: c.y)
         return self.contains(point)
     }
 
@@ -41,7 +41,7 @@ extension CGRect: BentoRect {
     }
 
     public init(originCoordinate origin: BentoCoordinate, size: CGSize) {
-        self.init(origin: CGPoint(x: origin._x, y: origin._y), size: size)
+        self.init(origin: CGPoint(x: origin.x, y: origin.y), size: size)
     }
 
 }

@@ -33,27 +33,27 @@ class MapKitTests: XCTestCase {
 
         let coordBentoBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minPoint: minCoord, maxPoint: maxCoord)
 
-        let minLat = CGFloat(min(minCoord._x, maxCoord._x))
+        let minLat = CGFloat(min(minCoord.x, maxCoord.x))
         XCTAssertEqualWithAccuracy(coordBentoBox.root.minX, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBentoBox.root.minX) should equal the smallest latitude passed in \(minLat)")
 
 
-        let maxLat = max(minCoord._x, maxCoord._x)
-        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate._x, maxLat, accuracy: 0.001, "The bounding box's max latitude \(coordBentoBox.maxCoordinate._x) should equal the largest latitude passed in \(maxLat)")
+        let maxLat = max(minCoord.x, maxCoord.x)
+        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate.x, maxLat, accuracy: 0.001, "The bounding box's max latitude \(coordBentoBox.maxCoordinate.x) should equal the largest latitude passed in \(maxLat)")
 
-        let minLong = min(minCoord._y, maxCoord._y)
-        XCTAssertEqualWithAccuracy(coordBentoBox.minCoordinate._y, minLong, accuracy: 0.001, "The bounding box's min longitude \(coordBentoBox.minCoordinate._y) should equal the smallest longitude passed in \(minLong)")
+        let minLong = min(minCoord.y, maxCoord.y)
+        XCTAssertEqualWithAccuracy(coordBentoBox.minCoordinate.y, minLong, accuracy: 0.001, "The bounding box's min longitude \(coordBentoBox.minCoordinate.y) should equal the smallest longitude passed in \(minLong)")
 
 
-        let maxLong = max(minCoord._y, maxCoord._y)
-        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate._y, maxLong, accuracy: 0.001, "The bounding box's max longitude \(coordBentoBox.minCoordinate._y) should equal the largest longitude passed in \(minLong)")
+        let maxLong = max(minCoord.y, maxCoord.y)
+        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate.y, maxLong, accuracy: 0.001, "The bounding box's max longitude \(coordBentoBox.minCoordinate.y) should equal the largest longitude passed in \(minLong)")
     }
 
     func testBentoBoxCoordinates() {
         let coordBentoBox = BentoBox<MKMapRect, CLLocationCoordinate2D>(minPoint: CLLocationCoordinate2D(latitude: 30, longitude: 60),
                                                                         maxPoint: CLLocationCoordinate2D(latitude: 20, longitude: 40))
 
-        let maxCoordinate = MKMapPoint(x: Double(coordBentoBox.maxCoordinate._x), y: Double(coordBentoBox.maxCoordinate._y))
-        let minCoordinate = MKMapPoint(x: Double(coordBentoBox.minCoordinate._x), y: Double(coordBentoBox.minCoordinate._y))
+        let maxCoordinate = MKMapPoint(x: Double(coordBentoBox.maxCoordinate.x), y: Double(coordBentoBox.maxCoordinate.y))
+        let minCoordinate = MKMapPoint(x: Double(coordBentoBox.minCoordinate.x), y: Double(coordBentoBox.minCoordinate.y))
 
         // the min or higher is inside the bounding box
         XCTAssert(coordBentoBox.containsCoordinate(minCoordinate.offset(latitude: 0.1, longitude: 0.1)))
@@ -76,8 +76,8 @@ class MapKitTests: XCTestCase {
 
 
         // the middle point is inside the bounding box
-        let midCoord = MKMapPoint(x: Double(maxCoordinate._x + minCoordinate._x) / 2.0,
-                                  y: Double(maxCoordinate._y + minCoordinate._y) / 2.0)
+        let midCoord = MKMapPoint(x: (maxCoordinate.x  + minCoordinate.x) / 2.0,
+                                  y: (maxCoordinate.y + minCoordinate.y) / 2.0)
         XCTAssert(coordBentoBox.containsCoordinate(midCoord))
     }
 
@@ -134,10 +134,10 @@ class MapKitTests: XCTestCase {
 
         let coordinateBentoBox: BentoBox<MKMapRect, CLLocationCoordinate2D> = coords.bentoBox()
 
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._x, -34.6790, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._y, -14.1887, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate._x, 61.9471, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate._y, 88.1349, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate.x, -34.6790, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate.y, -14.1887, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate.x, 61.9471, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate.y, 88.1349, accuracy: 1e-4)
     }
 }
 
@@ -166,27 +166,27 @@ class CoreGraphicsTests: XCTestCase {
 
         let coordBentoBox = BentoBox<CGRect, CGPoint>(minPoint: minCoord, maxPoint: maxCoord)
 
-        let minLat = CGFloat(min(minCoord._x, maxCoord._x))
+        let minLat = CGFloat(min(minCoord.x, maxCoord.x))
         XCTAssertEqualWithAccuracy(coordBentoBox.root.minX, minLat, accuracy: 0.001, "The bounding box's min x \(coordBentoBox.root.minX) should equal the smallest x passed in \(minLat)")
 
 
-        let maxLat = max(minCoord._x, maxCoord._x)
-        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate._x, maxLat, accuracy: 0.001, "The bounding box's max x \(coordBentoBox.maxCoordinate._x) should equal the largest x passed in \(maxLat)")
+        let maxLat = max(minCoord.x, maxCoord.x)
+        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate.x, maxLat, accuracy: 0.001, "The bounding box's max x \(coordBentoBox.maxCoordinate.x) should equal the largest x passed in \(maxLat)")
 
-        let minLong = min(minCoord._y, maxCoord._y)
-        XCTAssertEqualWithAccuracy(coordBentoBox.minCoordinate._y, minLong, accuracy: 0.001, "The bounding box's min y \(coordBentoBox.minCoordinate._y) should equal the smallest y passed in \(minLong)")
+        let minLong = min(minCoord.y, maxCoord.y)
+        XCTAssertEqualWithAccuracy(coordBentoBox.minCoordinate.y, minLong, accuracy: 0.001, "The bounding box's min y \(coordBentoBox.minCoordinate.y) should equal the smallest y passed in \(minLong)")
 
 
-        let maxLong = max(minCoord._y, maxCoord._y)
-        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate._y, maxLong, accuracy: 0.001, "The bounding box's max y \(coordBentoBox.minCoordinate._y) should equal the largest y passed in \(minLong)")
+        let maxLong = max(minCoord.y, maxCoord.y)
+        XCTAssertEqualWithAccuracy(coordBentoBox.maxCoordinate.y, maxLong, accuracy: 0.001, "The bounding box's max y \(coordBentoBox.minCoordinate.y) should equal the largest y passed in \(minLong)")
     }
 
     func testBentoBoxCoordinates() {
         let coordBentoBox = BentoBox<CGRect, CGPoint>(minPoint: CGPoint(x: 30, y: 60),
                                                       maxPoint: CGPoint(x: 20, y: 40))
 
-        let maxCoordinate = CGPoint(x: coordBentoBox.maxCoordinate._x, y: coordBentoBox.maxCoordinate._y)
-        let minCoordinate = CGPoint(x: coordBentoBox.minCoordinate._x, y: coordBentoBox.minCoordinate._y)
+        let maxCoordinate = CGPoint(x: coordBentoBox.maxCoordinate.x, y: coordBentoBox.maxCoordinate.y)
+        let minCoordinate = CGPoint(x: coordBentoBox.minCoordinate.x, y: coordBentoBox.minCoordinate.y)
 
         // the min or higher is inside the bounding box
         XCTAssert(coordBentoBox.containsCoordinate(minCoordinate.offset(x: 0.1, y: 0.1)))
@@ -209,8 +209,8 @@ class CoreGraphicsTests: XCTestCase {
 
 
         // the middle point is inside the bounding box
-        let midCoord = CGPoint(x: (maxCoordinate._x + minCoordinate._x) / 2.0,
-                                  y: (maxCoordinate._y + minCoordinate._y) / 2.0)
+        let midCoord = CGPoint(x: (maxCoordinate.x + minCoordinate.x) / 2.0,
+                                  y: (maxCoordinate.y + minCoordinate.y) / 2.0)
         XCTAssert(coordBentoBox.containsCoordinate(midCoord))
     }
 
@@ -267,10 +267,10 @@ class CoreGraphicsTests: XCTestCase {
 
         let coordinateBentoBox: BentoBox<CGRect, CGPoint> = coords.bentoBox()
 
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._x, -34.6790, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate._y, -14.1887, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate._x, 61.9471, accuracy: 1e-4)
-        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate._y, 88.1349, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate.x, -34.6790, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.minCoordinate.y, -14.1887, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate.x, 61.9471, accuracy: 1e-4)
+        XCTAssertEqualWithAccuracy(coordinateBentoBox.maxCoordinate.y, 88.1349, accuracy: 1e-4)
     }
 }
 

@@ -25,12 +25,12 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
             var x: CGFloat = 0.0
             var y: CGFloat = 0.0
             for node in nodes {
-                x += node.originCoordinate._x
-                y += node.originCoordinate._y
+                x += node.originCoordinate.x
+                y += node.originCoordinate.y
             }
             x /= CGFloat(nodes.count)
             y /= CGFloat(nodes.count)
-            originCoordinate = C(_x: x, _y: y)
+            originCoordinate = C(x: x, y: y)
         }
         return originCoordinate
     }
@@ -47,12 +47,12 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
             var minCoordinate = CGPoint(x: CGFloat(DBL_MAX), y: CGFloat(DBL_MAX))
             var maxCoordinate = CGPoint(x: CGFloat(DBL_MIN), y: CGFloat(DBL_MIN))
             for node in nodes {
-                minCoordinate.x = min(minCoordinate._x, node.originCoordinate._x)
-                minCoordinate.y = min(minCoordinate._y, node.originCoordinate._y)
-                maxCoordinate.x = max(maxCoordinate._x, node.originCoordinate._x)
-                maxCoordinate.y = max(maxCoordinate._y, node.originCoordinate._y)
+                minCoordinate.x = min(minCoordinate.x, node.originCoordinate.x)
+                minCoordinate.y = min(minCoordinate.y, node.originCoordinate.y)
+                maxCoordinate.x = max(maxCoordinate.x, node.originCoordinate.x)
+                maxCoordinate.y = max(maxCoordinate.y, node.originCoordinate.y)
             }
-            origin = C(_x: minCoordinate.x, _y: minCoordinate.y)
+            origin = C(x: minCoordinate.x, y: minCoordinate.y)
             // slightly pad the size to make sure all nodes are contained
             size = CGSize(width: abs(minCoordinate.x - maxCoordinate.x) + 0.001,
                              height: abs(minCoordinate.y - maxCoordinate.y) + 0.001)
