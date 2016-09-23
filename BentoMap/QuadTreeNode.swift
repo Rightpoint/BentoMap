@@ -65,15 +65,15 @@ public protocol BentoRect {
     init(originCoordinate: BentoCoordinate, size: CGSize)
 }
 
-public struct QuadTreeNode<NodeData, C: BentoCoordinate> {
+public struct QuadTreeNode<NodeData, Coordinate: BentoCoordinate> {
 
     /// The location of this node in the map's coordinate space.
-    public var originCoordinate: C
+    public var originCoordinate: Coordinate
 
     /// The data associated with this node.
     public var content: NodeData
 
-    public init(originCoordinate: C, content: NodeData) {
+    public init(originCoordinate: Coordinate, content: NodeData) {
         self.originCoordinate = originCoordinate
         self.content = content
     }
@@ -92,10 +92,10 @@ public protocol CoordinateProvider {
 
 extension QuadTreeNode: CoordinateProvider {
 
-    public typealias CoordinateType = C
+    public typealias CoordinateType = Coordinate
 
     /// The origin coordinate of the QuadTree.
-    public var coordinate: C {
+    public var coordinate: Coordinate {
         return originCoordinate
     }
 

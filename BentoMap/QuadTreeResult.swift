@@ -9,15 +9,15 @@
 import Foundation
 import MapKit
 
-public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
+public enum QuadTreeResult<NodeData, Rect: BentoRect, Coordinate: BentoCoordinate> {
 
-    case Single(node: QuadTreeNode<NodeData, C>)
-    case Multiple(nodes: [QuadTreeNode<NodeData, C>])
+    case Single(node: QuadTreeNode<NodeData, Coordinate>)
+    case Multiple(nodes: [QuadTreeNode<NodeData, Coordinate>])
 
     /// The average of the origin points of all the nodes
     /// contained in the QuadTree.
-    public var originCoordinate: C {
-        let originCoordinate: C
+    public var originCoordinate: Coordinate {
+        let originCoordinate: Coordinate
         switch self {
         case let .Single(node):
             originCoordinate = node.originCoordinate
@@ -30,14 +30,14 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
             }
             x /= CGFloat(nodes.count)
             y /= CGFloat(nodes.count)
-            originCoordinate = C(x: x, y: y)
+            originCoordinate = Coordinate(x: x, y: y)
         }
         return originCoordinate
     }
 
     /// The smallest possible rectangle that contains the node(s) contained in this QuadTree.
-    public var contentRect: R {
-        let origin: C
+    public var contentRect: Rect {
+        let origin: Coordinate
         let size: CGSize
         switch  self {
         case let .Single(node: node):
@@ -52,12 +52,12 @@ public enum QuadTreeResult<NodeData, R: BentoRect, C: BentoCoordinate> {
                 maxCoordinate.x = max(maxCoordinate.x, node.originCoordinate.x)
                 maxCoordinate.y = max(maxCoordinate.y, node.originCoordinate.y)
             }
-            origin = C(x: minCoordinate.x, y: minCoordinate.y)
+            origin = Coordinate(x: minCoordinate.x, y: minCoordinate.y)
             // slightly pad the size to make sure all nodes are contained
             size = CGSize(width: abs(minCoordinate.x - maxCoordinate.x) + 0.001,
                              height: abs(minCoordinate.y - maxCoordinate.y) + 0.001)
         }
-        return R(originCoordinate: origin, size: size)
+        return Rect(originCoordinate: origin, size: size)
     }
 
 }

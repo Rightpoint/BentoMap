@@ -8,24 +8,24 @@
 
 import Foundation
 
-public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
+public struct BentoBox<Rect: BentoRect, Coordinate: BentoCoordinate> {
 
     /// The root node of the tree. Can be thought of
     /// as the container map of the sub-rectangles
-    public var root: R
+    public var root: Rect
 
-    public init(minPoint: C, maxPoint: C) {
+    public init(minPoint: Coordinate, maxPoint: Coordinate) {
 
         let minX = min(minPoint.x, maxPoint.x)
         let minY = min(minPoint.y, maxPoint.y)
         let maxX = max(minPoint.x, maxPoint.x)
         let maxY = max(minPoint.y, maxPoint.y)
 
-        root = R(originCoordinate: C(x: minX, y: minY),
+        root = Rect(originCoordinate: Coordinate(x: minX, y: minY),
                     size: CGSize(width: maxX - minX, height: maxY - minY))
     }
 
-    public init(root: R) {
+    public init(root: Rect) {
         self.root = root
     }
 
@@ -36,13 +36,13 @@ public struct BentoBox<R: BentoRect, C: BentoCoordinate> {
 public extension BentoBox {
 
     /// The coordinate at the top left corner of the root rect
-    public var minCoordinate: C {
-        return C(x: root.minX, y: root.minY)
+    public var minCoordinate: Coordinate {
+        return Coordinate(x: root.minX, y: root.minY)
     }
 
     /// The coordinate at the bottom right corner of the root rect
-    public var maxCoordinate: C {
-        return C(x: root.maxX, y: root.maxY)
+    public var maxCoordinate: Coordinate {
+        return Coordinate(x: root.maxX, y: root.maxY)
     }
 
 }
@@ -85,7 +85,7 @@ extension BentoBox {
         return QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast).map(BentoBox.init)
     }
 
-    func union(other: BentoBox<R, C>) -> R {
+    func union(other: BentoBox<Rect, Coordinate>) -> Rect {
         return root.unionWith(other.root)
     }
 

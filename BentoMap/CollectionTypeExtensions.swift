@@ -11,18 +11,18 @@ import MapKit
 
 public extension CollectionType where Generator.Element: BentoCoordinate {
 
-    func bentoBox<R: BentoRect>() -> BentoBox<R, Generator.Element> {
+    func bentoBox<Rect: BentoRect>() -> BentoBox<Rect, Generator.Element> {
 
         let coordinates: [BentoCoordinate] = flatMap({return $0 as BentoCoordinate})
 
-        return BentoBox(root: bb(coordinates, rectType: R.self))
+        return BentoBox(root: bb(coordinates, rectType: Rect.self))
     }
 
 }
 
 public extension CollectionType {
 
-    func bb<R: BentoRect>(coords: [BentoCoordinate], rectType: R.Type) -> R {
+    func bb<Rect: BentoRect>(coords: [BentoCoordinate], rectType: Rect.Type) -> Rect {
         var min: CGPoint = CGPoint(x: CGFloat.max, y: CGFloat.max)
         var max: CGPoint = CGPoint.zero
 
@@ -42,17 +42,17 @@ public extension CollectionType {
             }
         }
 
-        return R(originCoordinate: min, size: CGSize(width: max.x - min.x, height: max.y - min.y))
+        return Rect(originCoordinate: min, size: CGSize(width: max.x - min.x, height: max.y - min.y))
     }
 }
 
 public extension CollectionType where Generator.Element: CoordinateProvider {
 
-    func boundingBox<R: BentoRect, C: BentoCoordinate>() -> BentoBox<R, C> {
+    func boundingBox<Rect: BentoRect, Coordinate: BentoCoordinate>() -> BentoBox<Rect, Coordinate> {
         let boundingBox: [BentoCoordinate] = map({ $0.coordinate })
 
 
-        return BentoBox(root: bb(boundingBox, rectType: R.self))
+        return BentoBox(root: bb(boundingBox, rectType: Rect.self))
     }
 
 }

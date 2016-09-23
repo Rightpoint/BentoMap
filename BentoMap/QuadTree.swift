@@ -9,19 +9,19 @@
 import Foundation
 
 //following example code and text from https://robots.thoughtbot.com/how-to-handle-large-amounts-of-data-on-maps
-public struct QuadTree<NodeData, R: BentoRect, C: BentoCoordinate> {
+public struct QuadTree<NodeData, Rect: BentoRect, Coordinate: BentoCoordinate> {
 
     /// The individual nodes that compose the QuadTree
-    public var ordinalNodes: OrdinalNodes<NodeData, R, C>?
+    public var ordinalNodes: OrdinalNodes<NodeData, Rect, Coordinate>?
 
     /// The rectangular map specified by the QuadTree
-    var root: BentoBox<R, C>
+    var root: BentoBox<Rect, Coordinate>
 
     /// The number of coordinates or points that an individual node may contain
     public let bucketCapacity: Int
-    public var points = [QuadTreeNode<NodeData, C>]()
+    public var points = [QuadTreeNode<NodeData, Coordinate>]()
 
-    public init(bentoBox: BentoBox<R, C>, bucketCapacity: Int) {
+    public init(bentoBox: BentoBox<Rect, Coordinate>, bucketCapacity: Int) {
         precondition(bucketCapacity > 0, "Bucket capacity must be greater than 0")
         self.root = bentoBox
         self.bucketCapacity = bucketCapacity
@@ -33,8 +33,8 @@ public extension QuadTree {
 
 
     /// Recursively computes the bounding box of the points in the quad tree in O(n) time.
-    public var bentoBox: BentoBox<R, C> {
-        let boundingBox: BentoBox<R, C> = points.boundingBox()
+    public var bentoBox: BentoBox<Rect, Coordinate> {
+        let boundingBox: BentoBox<Rect, Coordinate> = points.boundingBox()
 
         if let ordinals = ordinalNodes {
             boundingBox.union(ordinals.northWest.bentoBox)
@@ -57,7 +57,7 @@ public extension QuadTree {
 
      - returns: an array of quadtree results for each cell that contains nodes.
      */
-    public func clusteredDataWithinMapRect(root: R, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, R, C>] {
+    public func clusteredDataWithinMapRect(root: Rect, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, Rect, Coordinate>] {
 
         let scaleFactor: Double
 
@@ -75,12 +75,12 @@ public extension QuadTree {
         let minY = root.minY
         let maxY = root.maxY
 
-        var result = [QuadTreeResult<NodeData, R, C>]()
+        var result = [QuadTreeResult<NodeData, Rect, Coordinate>]()
 
         let mapStep = CGSize(width: Double(stepSize), height: Double(stepSize))
         for x in minX.stride(through: maxX, by: stepSize) {
             for y in minY.stride(through: maxY, by: stepSize) {
-                let cellRectangle = R(originCoordinate: C(x: x, y: y), size: mapStep)
+                let cellRectangle = Rect(originCoordinate: Coordinate(x: x, y: y), size: mapStep)
                 let nodes = nodesInRange(BentoBox(root: cellRectangle))
 
                 switch nodes.count {
@@ -111,7 +111,7 @@ public extension QuadTree {
 
      - returns: a Bool indicating success or failure of the insertion.
      */
-    public mutating func insertNode(node: QuadTreeNode<NodeData, C>) -> Bool {
+    public mutating func insertNode(node: QuadTreeNode<NodeData, Coordinate>) -> Bool {
         guard root.containsCoordinate(node.originCoordinate) else {
             return false
         }
@@ -157,8 +157,8 @@ private extension QuadTree {
 
      - returns: a collection of nodes.
      */
-    func nodesInRange(range: BentoBox<R, C>) -> [QuadTreeNode<NodeData, C>] {
-        var nodes = [QuadTreeNode<NodeData, C>]()
+    func nodesInRange(range: BentoBox<Rect, Coordinate>) -> [QuadTreeNode<NodeData, Coordinate>] {
+        var nodes = [QuadTreeNode<NodeData, Coordinate>]()
 
         guard root.intersectsBentoBox(range) else {
             return nodes
