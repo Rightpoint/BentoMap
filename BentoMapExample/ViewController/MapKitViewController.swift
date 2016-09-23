@@ -130,7 +130,8 @@ private extension MKPinAnnotationView {
         if annotation.isKindOfClass(ClusterAnnotation.self) {
             pinTintColor = UIColor.blueColor()
             animatesDrop = false
-        } else {
+        }
+        else {
             pinTintColor = UIColor.redColor()
             animatesDrop = true
         }

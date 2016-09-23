@@ -1,6 +1,6 @@
 //
 //  QuadTree.swift
-//  BentoBox
+// BentoMap
 //
 //  Created by Michael Skiba on 2/17/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -64,7 +64,8 @@ public extension QuadTree {
         // Prevents divide by zero errors from cropping up if handed bad data
         if cellSize == 0 || zoomScale == 0 {
             scaleFactor = 1
-        } else {
+        }
+        else {
             scaleFactor = zoomScale / cellSize
         }
 
@@ -102,7 +103,7 @@ public extension QuadTree {
     /**
      Inserts a node if the node fits in the
      bucket's coordinate space and if the bucket
-     capacty has not been reach. If the bucket
+     capacty has not been reached. If the bucket
      capacity has been reached, it subdivides the
      Quadtree (if required) and inserts the node
      into the appropriate subnode.

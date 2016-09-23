@@ -1,6 +1,6 @@
 //
 //  OptionalOrTests.swift
-//  BentoBox
+// BentoMap
 //
 //  Created by Michael Skiba on 7/7/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.

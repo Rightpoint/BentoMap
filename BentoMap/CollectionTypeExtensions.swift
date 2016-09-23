@@ -1,6 +1,6 @@
 //
 //  CollectionTypeExtensions.swift
-//  BentoBox
+// BentoMap
 //
 //  Created by Rob Visentin on 8/1/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.

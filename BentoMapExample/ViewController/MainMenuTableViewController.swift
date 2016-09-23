@@ -1,6 +1,6 @@
 //
 //  MainMenuTableViewController.swift
-//  BentoBox
+// BentoMap
 //
 //  Created by Matthew Buckley on 9/5/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -33,7 +33,8 @@ class MainMenuTableViewController: UITableViewController {
         }
         if indexPath.row == 0 {
             cell.textLabel?.text = "MapKit Example"
-        } else if indexPath.row == 1 {
+        }
+        else if indexPath.row == 1 {
             cell.textLabel?.text = "CoreGraphics Example"
         }
         cell.accessoryType = .DisclosureIndicator
@@ -43,7 +44,8 @@ class MainMenuTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == 0 {
             navigationController?.pushViewController(MapKitViewController(), animated: true)
-        } else if indexPath.row == 1 {
+        }
+        else if indexPath.row == 1 {
             navigationController?.pushViewController(CoreGraphicsViewController(), animated: true)
         }
     }

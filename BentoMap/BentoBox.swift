@@ -1,6 +1,6 @@
 //
-//  BentoBox.swift
-//  BentoBox
+// BentoBox.swift
+// BentoMap
 //
 //  Created by Michael Skiba on 2/17/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.

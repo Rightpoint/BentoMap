@@ -1,5 +1,5 @@
 //
-//  BentoBoxTests.swift
+// BentoMapTests.swift
 //  BentoMapTests
 //
 //  Created by Michael Skiba on 7/5/16.

@@ -1,6 +1,6 @@
 //
-//  BentoBox.h
-//  BentoBox
+//  BentoMap.h
+// BentoMap
 //
 //  Created by Michael Skiba on 7/6/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.

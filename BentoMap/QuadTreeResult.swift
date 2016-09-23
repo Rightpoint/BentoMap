@@ -1,6 +1,6 @@
 //
 //  QuadTreeResult.swift
-//  BentoBox
+// BentoMap
 //
 //  Created by Michael Skiba on 2/17/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -44,8 +44,8 @@ public enum QuadTreeResult<NodeData, Rect: BentoRect, Coordinate: BentoCoordinat
             origin = node.originCoordinate
             size = CGSize()
         case let .Multiple(nodes: nodes):
-            var minCoordinate = CGPoint(x: CGFloat(DBL_MAX), y: CGFloat(DBL_MAX))
-            var maxCoordinate = CGPoint(x: CGFloat(DBL_MIN), y: CGFloat(DBL_MIN))
+            var minCoordinate = CGPoint(x: CGFloat.max, y: CGFloat.max)
+            var maxCoordinate = CGPoint(x: CGFloat.min, y: CGFloat.min)
             for node in nodes {
                 minCoordinate.x = min(minCoordinate.x, node.originCoordinate.x)
                 minCoordinate.y = min(minCoordinate.y, node.originCoordinate.y)

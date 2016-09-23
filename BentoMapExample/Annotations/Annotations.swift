@@ -1,6 +1,6 @@
 //
 //  Annotations.swift
-//  BentoBox
+// BentoMap
 //
 //  Created by Michael Skiba on 7/7/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -64,7 +64,8 @@ func == (lhs: BaseAnnotation, rhs: BaseAnnotation) -> Bool {
     if let lSingle = lhs as? SingleAnnotation,
         rSingle = rhs as? SingleAnnotation {
         return lSingle.annotationNumber == rSingle.annotationNumber
-    } else if let lMulti = lhs as? ClusterAnnotation,
+    }
+    else if let lMulti = lhs as? ClusterAnnotation,
         rMulti = rhs as? ClusterAnnotation {
         return lMulti.annotationNumbers == rMulti.annotationNumbers
     }
