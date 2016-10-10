@@ -19,7 +19,6 @@ final class ViewController: UIViewController {
     let mapData = QuadTree<Int>.sampleData
 
     override func loadView() {
-        super.loadView()
         let mapView = MKMapView()
         mapView.delegate = self
         mapView.setVisibleMapRect(mapData.boundingBox.mapRect,
