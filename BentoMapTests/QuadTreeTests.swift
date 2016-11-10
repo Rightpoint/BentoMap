@@ -90,5 +90,4 @@ class QuadTreeTests: XCTestCase {
         XCTAssertTrue(testZero.count == 1, "This should return 100 clusters")
     }
 
-
 }

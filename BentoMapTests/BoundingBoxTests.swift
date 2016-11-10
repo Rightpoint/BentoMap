@@ -36,13 +36,11 @@ class BoundingBoxTests: XCTestCase {
         let minLat = min(minCoord.latitude, maxCoord.latitude)
         XCTAssertEqualWithAccuracy(coordBoundingBox.minCoordinate.latitude, minLat, accuracy: 0.001, "The bounding box's min latitude \(coordBoundingBox.minCoordinate.latitude) should equal the smallest latitude passed in \(minLat)")
 
-
         let maxLat = max(minCoord.latitude, maxCoord.latitude)
         XCTAssertEqualWithAccuracy(coordBoundingBox.maxCoordinate.latitude, maxLat, accuracy: 0.001, "The bounding box's max latitude \(coordBoundingBox.maxCoordinate.latitude) should equal the largest latitude passed in \(maxLat)")
 
         let minLong = min(minCoord.longitude, maxCoord.longitude)
         XCTAssertEqualWithAccuracy(coordBoundingBox.minCoordinate.longitude, minLong, accuracy: 0.001, "The bounding box's min longitude \(coordBoundingBox.minCoordinate.longitude) should equal the smallest longitude passed in \(minLong)")
-
 
         let maxLong = max(minCoord.longitude, maxCoord.longitude)
         XCTAssertEqualWithAccuracy(coordBoundingBox.maxCoordinate.longitude, maxLong, accuracy: 0.001, "The bounding box's max longitude \(coordBoundingBox.minCoordinate.longitude) should equal the largest longitude passed in \(minLong)")
