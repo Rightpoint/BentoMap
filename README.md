@@ -7,6 +7,8 @@
 
 BentoMap is an implementation of [quadtrees](https://en.wikipedia.org/wiki/Quadtree) for map annotation clustering and storage written in Swift. The library intends to require minimal code in-app to get clustered annotations on screen, the example target included in BentoMap.xcodeproj contains the bare code required dynamically update the map with clusters whenever the map view's bounds changes.
 
+The Android equivalent, known as "Marker Clustering," is [documented here](https://developers.google.com/maps/documentation/android-api/utility/marker-clustering).
+
 ## Installation with CocoaPods
 
 BentoMap is available through [CocoaPods](http://cocoapods.org). To install

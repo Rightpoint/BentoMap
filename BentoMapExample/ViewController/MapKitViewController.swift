@@ -19,7 +19,6 @@ final class MapKitViewController: UIViewController {
     let mapData = QuadTree<Int, MKMapRect, CLLocationCoordinate2D>.sampleMapData
 
     override func loadView() {
-        super.loadView()
         let mapView = MKMapView()
         mapView.delegate = self
         mapView.setVisibleMapRect(mapData.bentoBox.root,
