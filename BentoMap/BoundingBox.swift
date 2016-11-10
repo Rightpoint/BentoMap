@@ -67,7 +67,10 @@ extension BoundingBox {
     }
 
     func containsMapPoint(mapPoint: MKMapPoint) -> Bool {
-        return MKMapRectContainsPoint(mapRect, mapPoint)
+        var pt = mapPoint
+        pt.x = pt.x + 0.00001
+        pt.y = pt.y + 0.00001
+        return MKMapRectContainsPoint(mapRect, pt)
     }
 
     func intersectsBoundingBox(boundingBox: BoundingBox) -> Bool {
