@@ -1,5 +1,6 @@
 # BentoMap
 
+[![Build Status](https://travis-ci.org/Raizlabs/BentoMap.svg?branch=develop)](https://travis-ci.org/Raizlabs/BentoMap)
 [![Version](https://img.shields.io/cocoapods/v/BentoMap.svg?style=flat)](http://cocoapods.org/pods/BentoMap)
 [![License](https://img.shields.io/cocoapods/l/BentoMap.svg?style=flat)](http://cocoapods.org/pods/BentoMap)
 [![Platform](https://img.shields.io/cocoapods/p/BentoMap.svg?style=flat)](http://cocoapods.org/pods/BentoMap)

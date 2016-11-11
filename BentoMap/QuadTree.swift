@@ -84,7 +84,6 @@ public extension QuadTree {
         return result
     }
 
-
     public mutating func insertNode(node: QuadTreeNode<NodeData>) -> Bool {
         guard bucketRegion.containsMapPoint(node.mapPoint) else {
             return false
