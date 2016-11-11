@@ -59,7 +59,16 @@ extension BentoBox {
      the coordinate passed in
      */
     func containsCoordinate(coordinate: BentoCoordinate) -> Bool {
-        return root.containsCoordinate(coordinate)
+        // we aren't using MKMapRectContainsPoint(mapRect, pt) because it will test true for points that
+        // are exatly on either edge, which means that a point exact on an edge may be counted in multiple boxes
+        let width = root.maxX - root.minX
+        let height = root.maxY - root.minY
+
+        let isContained = coordinate.x >= root.minX &&
+            coordinate.x < (root.minX + width) &&
+            coordinate.y >= root.minY &&
+            coordinate.y < (root.minY + height)
+        return isContained
     }
 
     /**
