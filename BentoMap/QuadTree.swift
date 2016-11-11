@@ -99,7 +99,6 @@ public extension QuadTree {
         return result
     }
 
-
     /**
      Inserts a node if the node fits in the
      bucket's coordinate space and if the bucket
