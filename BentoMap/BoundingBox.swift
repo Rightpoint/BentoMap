@@ -67,7 +67,13 @@ extension BoundingBox {
     }
 
     func containsMapPoint(mapPoint: MKMapPoint) -> Bool {
-        return MKMapRectContainsPoint(mapRect, mapPoint)
+        // we aren't using MKMapRectContainsPoint(mapRect, pt) because it will test true for points that
+        // are exatly on either edge, which means that a point exact on an edge may be counted in multiple boxes
+        let isContained = mapPoint.x >= mapRect.origin.x &&
+            mapPoint.x < (mapRect.origin.x + mapRect.size.width) &&
+            mapPoint.y >= mapRect.origin.y &&
+            mapPoint.y < (mapRect.origin.y + mapRect.size.height)
+        return isContained
     }
 
     func intersectsBoundingBox(boundingBox: BoundingBox) -> Bool {
