@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'BentoMap'
-  s.version          = '1.0.0'
+  s.version          = '0.3.0'
   s.summary          = 'Map Clustering for Swift.'
 
   s.description      = <<-DESC
