@@ -1,6 +1,6 @@
 //
-//  QuadTree+SampleData.swift
-//  BentoMap
+//  QuadTree+sampleMapData.swift
+// BentoMap
 //
 //  Created by Michael Skiba on 7/6/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -12,13 +12,36 @@ import BentoMap
 
 extension QuadTree {
 
-    static var sampleData: QuadTree<Int> {
-        var samples = QuadTree<Int>(bucketRegion: BoundingBox(minCoordinate: CLLocationCoordinate2D.minCoord, maxCoordinate: CLLocationCoordinate2D.maxCoord), bucketCapacity: 5)
+    static var sampleData: QuadTree<Int, MKMapRect, MKMapPoint> {
+        var samples = QuadTree<Int, MKMapRect, MKMapPoint>(bentoBox: BentoBox(minPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.minCoord), maxPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.maxCoord)), bucketCapacity: 5)
         for count in 1...5000 {
-            let node = QuadTreeNode(mapPoint: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
+            let node = QuadTreeNode(originCoordinate: MKMapPointForCoordinate(CLLocationCoordinate2D.randomCoordinate()), content: count)
             samples.insertNode(node)
         }
         return samples
+    }
+
+    static func sampleGridData(forContainerRect containerRect: CGRect) -> QuadTree<Int, CGRect, CGPoint> {
+        let minPoint = CGPoint(x: containerRect.minX, y: containerRect.minY)
+        let maxPoint = CGPoint(x: containerRect.maxX, y: containerRect.maxY)
+        var samples = QuadTree<Int, CGRect, CGPoint>(bentoBox: BentoBox(minPoint: minPoint, maxPoint: maxPoint), bucketCapacity: 5)
+        let root = QuadTreeNode(originCoordinate: CGPoint.zero, content: 1000)
+        samples.insertNode(root)
+        for count in 1...500 {
+            let node = QuadTreeNode(originCoordinate: CGPoint.randomPoint(withinRect: containerRect), content: count)
+            samples.insertNode(node)
+        }
+        return samples
+    }
+
+}
+
+private extension CGPoint {
+
+    static func randomPoint(withinRect rect: CGRect) -> CGPoint {
+        let x = Double.cappedRandom(min: Double(rect.minX), max: Double(rect.maxX))
+        let y = Double.cappedRandom(min: Double(rect.minY), max: Double(rect.maxY))
+        return CGPoint(x: x, y: y)
     }
 
 }

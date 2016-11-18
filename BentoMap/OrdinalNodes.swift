@@ -1,6 +1,6 @@
 //
 //  OrdinalNodes.swift
-//  BentoMap
+// BentoMap
 //
 //  Created by Michael Skiba on 2/17/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -8,14 +8,18 @@
 
 import Foundation
 
-struct OrdinalNodes<NodeData> {
+public struct OrdinalNodes<NodeData, Rect: BentoRect, Coordinate: BentoCoordinate> {
 
-    private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData>>
+    /// A type that exposes all 4 quadrants of a given QuadTree
+    fileprivate typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData, Rect, Coordinate>>
 
-    // Recursive structs require boxes
-    private var quadrants: Box<QuadTreeWrapper>
+    // Recursive structs require a workaround class type
+    // because it is impossible at runtime to calculate
+    // how much memory must be allocated
+    fileprivate var quadrants: Box<QuadTreeWrapper>
 
-    var northWest: QuadTree<NodeData> {
+    /// The NorthWest quadrant of the QuadTree's root.
+    var northWest: QuadTree<NodeData, Rect, Coordinate> {
         get {
             return quadrants.value.northWest
         }
@@ -24,7 +28,8 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    var northEast: QuadTree<NodeData> {
+    /// The NorthEast quadrant of the QuadTree's root.
+    var northEast: QuadTree<NodeData, Rect, Coordinate> {
         get {
             return quadrants.value.northEast
         }
@@ -33,7 +38,8 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    var southWest: QuadTree<NodeData> {
+    /// The SouthWest quadrant of the QuadTree's root.
+    var southWest: QuadTree<NodeData, Rect, Coordinate> {
         get {
             return quadrants.value.southWest
         }
@@ -42,7 +48,8 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    var southEast: QuadTree<NodeData> {
+    /// The SouthEast quadrant of the QuadTree's root.
+    var southEast: QuadTree<NodeData, Rect, Coordinate> {
         get {
             return quadrants.value.southEast
         }
@@ -51,10 +58,13 @@ struct OrdinalNodes<NodeData> {
         }
     }
 
-    init(northWest: QuadTree<NodeData>,
-         northEast: QuadTree<NodeData>,
-         southWest: QuadTree<NodeData>,
-         southEast: QuadTree<NodeData>) {
-        quadrants = Box(value: QuadrantWrapper(northWest: northWest, northEast: northEast, southWest: southWest, southEast: southEast))
+    init(northWest: QuadTree<NodeData, Rect, Coordinate>,
+         northEast: QuadTree<NodeData, Rect, Coordinate>,
+         southWest: QuadTree<NodeData, Rect, Coordinate>,
+         southEast: QuadTree<NodeData, Rect, Coordinate>) {
+        quadrants = Box(value: QuadrantWrapper(northWest: northWest,
+            northEast: northEast,
+            southWest: southWest,
+            southEast: southEast))
     }
 }

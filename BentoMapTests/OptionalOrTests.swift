@@ -1,6 +1,6 @@
 //
 //  OptionalOrTests.swift
-//  BentoMap
+// BentoMap
 //
 //  Created by Michael Skiba on 7/7/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -26,7 +26,7 @@ class OptionalOrTests: XCTestCase {
             if let unwrappedRight = rhs {
                 XCTAssert(lhs ||? unwrappedRight, "Should be true")
             }
-            if let unwrappedLeft = lhs, unwrappedRight = rhs {
+            if let unwrappedLeft = lhs, let unwrappedRight = rhs {
                 XCTAssert(unwrappedLeft ||? unwrappedRight, "Should be true")
             }
         }
@@ -45,7 +45,7 @@ class OptionalOrTests: XCTestCase {
             if let unwrappedRight = rhs {
                 XCTAssertFalse(lhs ||? unwrappedRight, "Should be false")
             }
-            if let unwrappedLeft = lhs, unwrappedRight = rhs {
+            if let unwrappedLeft = lhs, let unwrappedRight = rhs {
                 XCTAssertFalse(unwrappedLeft ||? unwrappedRight, "Should be false")
             }
         }

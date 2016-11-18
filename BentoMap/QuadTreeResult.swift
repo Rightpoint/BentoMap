@@ -1,6 +1,6 @@
 //
 //  QuadTreeResult.swift
-//  BentoMap
+// BentoMap
 //
 //  Created by Michael Skiba on 2/17/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -9,51 +9,55 @@
 import Foundation
 import MapKit
 
-public enum QuadTreeResult<NodeData> {
+public enum QuadTreeResult<NodeData, Rect: BentoRect, Coordinate: BentoCoordinate> {
 
-    case Single(node: QuadTreeNode<NodeData>)
-    case Multiple(nodes: [QuadTreeNode<NodeData>])
+    case single(node: QuadTreeNode<NodeData, Coordinate>)
+    case multiple(nodes: [QuadTreeNode<NodeData, Coordinate>])
 
-    public var mapPoint: MKMapPoint {
-        let mapPoint: MKMapPoint
+    /// The average of the origin points of all the nodes
+    /// contained in the QuadTree.
+    public var originCoordinate: Coordinate {
+        let originCoordinate: Coordinate
         switch self {
-        case let .Single(node):
-            mapPoint = node.mapPoint
-        case let .Multiple(nodes):
-            var aggregatePoint = MKMapPoint()
+        case let .single(node):
+            originCoordinate = node.originCoordinate
+        case let .multiple(nodes):
+            var x: CGFloat = 0.0
+            var y: CGFloat = 0.0
             for node in nodes {
-                aggregatePoint.x += node.mapPoint.x
-                aggregatePoint.y += node.mapPoint.y
+                x += node.originCoordinate.coordX
+                y += node.originCoordinate.coordY
             }
-            aggregatePoint.x /= Double(nodes.count)
-            aggregatePoint.y /= Double(nodes.count)
-            mapPoint = aggregatePoint
+            x /= CGFloat(nodes.count)
+            y /= CGFloat(nodes.count)
+            originCoordinate = Coordinate(coordX: x, coordY: y)
         }
-        return mapPoint
+        return originCoordinate
     }
 
-    public var contentRect: MKMapRect {
-        let origin: MKMapPoint
-        let size: MKMapSize
+    /// The smallest possible rectangle that contains the node(s) contained in this QuadTree.
+    public var contentRect: Rect {
+        let origin: Coordinate
+        let size: CGSize
         switch  self {
-        case let .Single(node: node):
-            origin = node.mapPoint
-            size = MKMapSize()
-        case let .Multiple(nodes: nodes):
-            var minPoint = MKMapPoint(x: DBL_MAX, y: DBL_MAX)
-            var maxPoint = MKMapPoint(x: DBL_MIN, y: DBL_MIN)
+        case let .single(node: node):
+            origin = node.originCoordinate
+            size = CGSize()
+        case let .multiple(nodes: nodes):
+            var minCoordinate = CGPoint(x: CGFloat.greatestFiniteMagnitude, y: CGFloat.greatestFiniteMagnitude)
+            var maxCoordinate = CGPoint(x: CGFloat.leastNormalMagnitude, y: CGFloat.leastNormalMagnitude)
             for node in nodes {
-                minPoint.x = min(minPoint.x, node.mapPoint.x)
-                minPoint.y = min(minPoint.y, node.mapPoint.y)
-                maxPoint.x = max(maxPoint.x, node.mapPoint.x)
-                maxPoint.y = max(maxPoint.y, node.mapPoint.y)
+                minCoordinate.x = min(minCoordinate.coordX, node.originCoordinate.coordX)
+                minCoordinate.y = min(minCoordinate.coordY, node.originCoordinate.coordY)
+                maxCoordinate.x = max(maxCoordinate.coordX, node.originCoordinate.coordX)
+                maxCoordinate.y = max(maxCoordinate.coordX, node.originCoordinate.coordY)
             }
-            origin = minPoint
+            origin = Coordinate(coordX: minCoordinate.coordX, coordY: minCoordinate.coordY)
             // slightly pad the size to make sure all nodes are contained
-            size = MKMapSize(width: abs(minPoint.x - maxPoint.x) + 0.001,
-                             height: abs(minPoint.y - maxPoint.y) + 0.001)
+            size = CGSize(width: abs(minCoordinate.x - maxCoordinate.x) + 0.001,
+                             height: abs(minCoordinate.y - maxCoordinate.y) + 0.001)
         }
-        return MKMapRect(origin: origin, size: size)
+        return Rect(originCoordinate: origin, size: size)
     }
 
 }

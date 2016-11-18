@@ -1,6 +1,6 @@
 //
 //  OptionalOr.swift
-//  BentoMap
+// BentoMap
 //
 //  Created by Michael Skiba on 7/7/16.
 //  Copyright © 2016 Raizlabs. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-infix operator ||? { associativity left precedence 140 }
+infix operator ||?: LogicalDisjunctionPrecedence
 
 func ||? (lhs: Optional<Bool>, rhs: Optional<Bool>) -> Bool {
     return (lhs ?? false) || (rhs ?? false)
