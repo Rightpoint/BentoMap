@@ -158,12 +158,12 @@
 				723E206E1D2EBB9C00CF44FA /* Resources */,
 				7237531E1D2D9DA2002A1BC2 /* BentoBox.swift */,
 				7237531F1D2D9DA2002A1BC2 /* Box.swift */,
+				72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */,
 				723753201D2D9DA2002A1BC2 /* OrdinalNodes.swift */,
 				723753221D2D9DA2002A1BC2 /* QuadTree.swift */,
 				723753231D2D9DA2002A1BC2 /* QuadTreeNode.swift */,
 				723753241D2D9DA2002A1BC2 /* QuadTreeResult.swift */,
 				723753211D2D9DA2002A1BC2 /* QuadrantWrapper.swift */,
-				72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */,
 			);
 			path = BentoMap;
 			sourceTree = "<group>";
@@ -173,8 +173,8 @@
 			children = (
 				723E20731D2EC00400CF44FA /* Resources */,
 				7237532C1D2D9DB5002A1BC2 /* BentoBoxTests.swift */,
-				7237532D1D2D9DB5002A1BC2 /* QuadTreeTests.swift */,
 				72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */,
+				7237532D1D2D9DB5002A1BC2 /* QuadTreeTests.swift */,
 			);
 			path = BentoMapTests;
 			sourceTree = "<group>";
@@ -183,9 +183,9 @@
 			isa = PBXGroup;
 			children = (
 				723E20701D2EBBD000CF44FA /* Annotations */,
+				723E20721D2EBFF500CF44FA /* App */,
 				723E206F1D2EBBC000CF44FA /* App Delegate */,
 				723E20711D2EBC9200CF44FA /* Assets */,
-				723E20721D2EBFF500CF44FA /* App */,
 			);
 			path = BentoMapExample;
 			sourceTree = "<group>";
@@ -228,13 +228,13 @@
 		723E20721D2EBFF500CF44FA /* App */ = {
 			isa = PBXGroup;
 			children = (
-				7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */,
-				7237533A1D2D9E75002A1BC2 /* MapKitViewController.swift */,
 				B539B33D1D7E35D60089AFE6 /* CoreGraphicsViewController.swift */,
 				B539B33F1D7E35ED0089AFE6 /* MainMenuTableViewController.swift */,
+				7237533A1D2D9E75002A1BC2 /* MapKitViewController.swift */,
+				7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */,
 			);
 			name = App;
-			path = ViewController;
+			path = App;
 			sourceTree = "<group>";
 		};
 		723E20731D2EC00400CF44FA /* Resources */ = {
@@ -248,14 +248,15 @@
 		B50426B21D71F2C8008BEF76 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */,
 				B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */,
 				B50426B91D7203C9008BEF76 /* CLLocationCoordinate2D+BentoCoordinate.swift */,
-				B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */,
+				D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */,
 				B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */,
 				B50426B71D71FA21008BEF76 /* MKMapRect+BentoRect.swift */,
-				D4C3839A1D4F9DD500556EBE /* CollectionTypeExtensions.swift */,
 			);
 			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
