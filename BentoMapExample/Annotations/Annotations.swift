@@ -22,14 +22,14 @@ class BaseAnnotation: NSObject, MKAnnotation {
         self.root = root
     }
 
-    static func makeAnnotation(result: QuadTreeResult<Int, MKMapRect, MKMapPoint>) -> BaseAnnotation {
+    static func makeAnnotation(_ result: QuadTreeResult<Int, MKMapRect, MKMapPoint>) -> BaseAnnotation {
         let annotation: BaseAnnotation
         switch result {
-        case let .Single(node: node):
+        case let .single(node: node):
             annotation = SingleAnnotation(originCoordinate: result.originCoordinate,
                                           annotationNumber: node.content,
                                           root: result.contentRect)
-        case let .Multiple(nodes: nodes):
+        case let .multiple(nodes: nodes):
             annotation = ClusterAnnotation(originCoordinate: result.originCoordinate,
                                            annotationNumbers: nodes.map({ $0.content }),
                                            root: result.contentRect)
@@ -54,7 +54,7 @@ final class ClusterAnnotation: BaseAnnotation {
     let annotationNumbers: [Int]
 
     init(originCoordinate: MKMapPoint, annotationNumbers: [Int], root: MKMapRect) {
-        self.annotationNumbers = annotationNumbers.sort()
+        self.annotationNumbers = annotationNumbers.sorted()
         super.init(originCoordinate: originCoordinate, root: root)
     }
 
@@ -62,11 +62,11 @@ final class ClusterAnnotation: BaseAnnotation {
 
 func == (lhs: BaseAnnotation, rhs: BaseAnnotation) -> Bool {
     if let lSingle = lhs as? SingleAnnotation,
-        rSingle = rhs as? SingleAnnotation {
+        let rSingle = rhs as? SingleAnnotation {
         return lSingle.annotationNumber == rSingle.annotationNumber
     }
     else if let lMulti = lhs as? ClusterAnnotation,
-        rMulti = rhs as? ClusterAnnotation {
+        let rMulti = rhs as? ClusterAnnotation {
         return lMulti.annotationNumbers == rMulti.annotationNumbers
     }
     return false

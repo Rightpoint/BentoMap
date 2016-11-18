@@ -31,7 +31,6 @@ public struct QuadTree<NodeData, Rect: BentoRect, Coordinate: BentoCoordinate> {
 
 public extension QuadTree {
 
-
     /// Recursively computes the bounding box of the points in the quad tree in O(n) time.
     public var bentoBox: BentoBox<Rect, Coordinate> {
         let boundingBox: BentoBox<Rect, Coordinate> = points.boundingBox()
@@ -57,7 +56,7 @@ public extension QuadTree {
 
      - returns: an array of quadtree results for each cell that contains nodes.
      */
-    public func clusteredDataWithinMapRect(root: Rect, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, Rect, Coordinate>] {
+    public func clusteredDataWithinMapRect(_ root: Rect, zoomScale: Double, cellSize: Double) -> [QuadTreeResult<NodeData, Rect, Coordinate>] {
 
         let scaleFactor: Double
 
@@ -79,9 +78,9 @@ public extension QuadTree {
         var result = [QuadTreeResult<NodeData, Rect, Coordinate>]()
 
         let mapStep = CGSize(width: Double(stepSize), height: Double(stepSize))
-        for x in minX.stride(through: maxX, by: stepSize) {
-            for y in minY.stride(through: maxY, by: stepSize) {
-                let cellRectangle = Rect(originCoordinate: Coordinate(x: x, y: y), size: mapStep)
+        for x in stride(from: minX, through: maxX, by: stepSize) {
+            for y in stride(from: minY, through: maxY, by: stepSize) {
+                let cellRectangle = Rect(originCoordinate: Coordinate(coordX: x, coordY: y), size: mapStep)
                 let nodes = nodesInRange(BentoBox(root: cellRectangle))
 
                 switch nodes.count {
@@ -89,16 +88,15 @@ public extension QuadTree {
                     continue
                 case 1:
                     if let first = nodes.first {
-                        result.append(.Single(node: first))
+                        result.append(.single(node: first))
                     }
                 default:
-                    result.append(.Multiple(nodes: nodes))
+                    result.append(.multiple(nodes: nodes))
                 }
             }
         }
         return result
     }
-
 
     /**
      Inserts a node if the node fits in the
@@ -112,7 +110,7 @@ public extension QuadTree {
 
      - returns: a Bool indicating success or failure of the insertion.
      */
-    public mutating func insertNode(node: QuadTreeNode<NodeData, Coordinate>) -> Bool {
+    @discardableResult public mutating func insertNode(_ node: QuadTreeNode<NodeData, Coordinate>) -> Bool {
         guard root.containsCoordinate(node.originCoordinate) else {
             return false
         }
@@ -158,7 +156,7 @@ private extension QuadTree {
 
      - returns: a collection of nodes.
      */
-    func nodesInRange(range: BentoBox<Rect, Coordinate>) -> [QuadTreeNode<NodeData, Coordinate>] {
+    func nodesInRange(_ range: BentoBox<Rect, Coordinate>) -> [QuadTreeNode<NodeData, Coordinate>] {
         var nodes = [QuadTreeNode<NodeData, Coordinate>]()
 
         guard root.intersectsBentoBox(range) else {

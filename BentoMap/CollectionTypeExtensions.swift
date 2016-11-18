@@ -9,9 +9,9 @@
 import Foundation
 import MapKit
 
-public extension CollectionType where Generator.Element: BentoCoordinate {
+public extension Collection where Iterator.Element: BentoCoordinate {
 
-    func bentoBox<Rect: BentoRect>() -> BentoBox<Rect, Generator.Element> {
+    func bentoBox<Rect: BentoRect>() -> BentoBox<Rect, Iterator.Element> {
 
         let coordinates: [BentoCoordinate] = flatMap({return $0 as BentoCoordinate})
 
@@ -20,25 +20,25 @@ public extension CollectionType where Generator.Element: BentoCoordinate {
 
 }
 
-public extension CollectionType {
+public extension Collection {
 
-    func bb<Rect: BentoRect>(coords: [BentoCoordinate], rectType: Rect.Type) -> Rect {
-        var min: CGPoint = CGPoint(x: CGFloat.max, y: CGFloat.max)
+    func bb<Rect: BentoRect>(_ coords: [BentoCoordinate], rectType: Rect.Type) -> Rect {
+        var min: CGPoint = CGPoint(x: CGFloat.greatestFiniteMagnitude, y: CGFloat.greatestFiniteMagnitude)
         var max: CGPoint = CGPoint.zero
 
         for point in coords {
 
-            if point.x < min.x {
-                min.x = point.x
+            if point.coordX < min.coordX {
+                min.coordX = point.coordX
             }
-            if point.x > max.x {
-                max.x = point.x
+            if point.coordX > max.coordX {
+                max.coordX = point.coordX
             }
-            if point.y < min.y {
-                min.y = point.y
+            if point.coordY < min.coordY {
+                min.coordY = point.coordY
             }
-            if point.y > max.y {
-                max.y = point.y
+            if point.coordY > max.coordY {
+                max.coordY = point.coordY
             }
         }
 
@@ -46,11 +46,10 @@ public extension CollectionType {
     }
 }
 
-public extension CollectionType where Generator.Element: CoordinateProvider {
+public extension Collection where Iterator.Element: CoordinateProvider {
 
     func boundingBox<Rect: BentoRect, Coordinate: BentoCoordinate>() -> BentoBox<Rect, Coordinate> {
         let boundingBox: [BentoCoordinate] = map({ $0.coordinate })
-
 
         return BentoBox(root: bb(boundingBox, rectType: Rect.self))
     }

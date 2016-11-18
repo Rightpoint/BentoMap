@@ -11,18 +11,18 @@ import MapKit
 
 extension MKMapPoint: BentoCoordinate {
 
-    public var x: CGFloat {
+    public var coordX: CGFloat {
         get { return CGFloat(x) }
         set { x = Double(newValue) }
     }
 
-    public var y: CGFloat {
+    public var coordY: CGFloat {
         get { return CGFloat(y) }
         set { y = Double(newValue) }
     }
 
-    public init(x: CGFloat, y: CGFloat) {
-        self.init(x: Double(x), y: Double(y))
+    public init(coordX: CGFloat, coordY: CGFloat) {
+        self.init(x: Double(coordX), y: Double(coordY))
     }
 
 }

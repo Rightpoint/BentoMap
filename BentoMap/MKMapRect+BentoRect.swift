@@ -27,38 +27,38 @@ extension MKMapRect: BentoRect {
         return CGFloat(MKMapRectGetMaxY(self))
     }
 
-    public func containsCoordinate(c: BentoCoordinate) -> Bool {
-        let originCoordinate = MKMapPoint(x: Double(c.x), y: Double(c.y))
+    public func containsCoordinate(_ c: BentoCoordinate) -> Bool {
+        let originCoordinate = MKMapPoint(x: Double(c.coordX), y: Double(c.coordY))
         return MKMapRectContainsPoint(self, originCoordinate)
     }
 
-    public func divide(percent: CGFloat, edge: CGRectEdge) -> (MKMapRect, MKMapRect) {
+    public func divide(_ percent: CGFloat, edge: CGRectEdge) -> (MKMapRect, MKMapRect) {
         let amount: Double
         switch edge {
-        case .MaxXEdge, .MinXEdge:
+        case .maxXEdge, .minXEdge:
             amount = size.width / 2.0
-        case .MaxYEdge, .MinYEdge:
+        case .maxYEdge, .minYEdge:
             amount = size.height / 2.0
         }
 
-        let slice = UnsafeMutablePointer<MKMapRect>.alloc(1)
+        let slice = UnsafeMutablePointer<MKMapRect>.allocate(capacity: 1)
         defer {
-            slice.destroy()
+            slice.deinitialize()
         }
-        let remainder = UnsafeMutablePointer<MKMapRect>.alloc(1)
+        let remainder = UnsafeMutablePointer<MKMapRect>.allocate(capacity: 1)
         defer {
-            remainder.destroy()
+            remainder.deinitialize()
         }
         MKMapRectDivide(self, slice, remainder, amount, edge)
         return (slice: slice[0], remainder: remainder[0])
     }
 
-    public func unionWith(other: MKMapRect) -> MKMapRect {
+    public func unionWith(_ other: MKMapRect) -> MKMapRect {
         return MKMapRectUnion(self, other)
     }
 
     public init(originCoordinate origin: BentoCoordinate, size: CGSize) {
-        self.init(origin: MKMapPoint(x: Double(origin.x), y: Double(origin.y)), size: MKMapSize(width: Double(size.width), height: Double(size.height)))
+        self.init(origin: MKMapPoint(x: Double(origin.coordX), y: Double(origin.coordY)), size: MKMapSize(width: Double(size.width), height: Double(size.height)))
     }
 
 }

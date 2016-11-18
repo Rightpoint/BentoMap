@@ -18,7 +18,7 @@ class CoreGraphicsViewController: UIViewController {
         let map: BentoBox<CGRect, CGPoint> = BentoBox(root: view.frame)
         let mapView = UIView(frame: map.root)
         view.addSubview(mapView)
-        mapView.backgroundColor = .whiteColor()
+        mapView.backgroundColor = .white
 
         let clusterResults = gridData.clusteredDataWithinMapRect(map.root,
                                                                 zoomScale: 1.0,
@@ -26,17 +26,17 @@ class CoreGraphicsViewController: UIViewController {
 
         for result in clusterResults {
             switch result {
-            case .Single(let node):
+            case .single(let node):
                 let node = UIView(frame: CGRect(origin: node.originCoordinate, size: CGSize(width: 5.0, height: 5.0)))
-                node.backgroundColor = .blueColor()
+                node.backgroundColor = .blue
                 node.layer.cornerRadius = 2.5
                 view.addSubview(node)
-            case .Multiple(let nodes):
+            case .multiple(let nodes):
                 for node in nodes {
                     let node = UIView(frame: CGRect(origin: node.originCoordinate, size: CGSize(width: 5.0, height: 5.0)))
                     node.layer.cornerRadius = 2.5
                     view.addSubview(node)
-                    node.backgroundColor = .blueColor()
+                    node.backgroundColor = .blue
                 }
             }
         }

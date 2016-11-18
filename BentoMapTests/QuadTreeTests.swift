@@ -30,13 +30,13 @@ class QuadTreeTests: XCTestCase {
         XCTAssertTrue(quadTree.points.isEmpty, "The bucket of points should be empty")
     }
 
-    private func resultRectTester(result: QuadTreeResult<Int, MKMapRect, MKMapPoint>) {
+    fileprivate func resultRectTester(_ result: QuadTreeResult<Int, MKMapRect, MKMapPoint>) {
         let contentRect = result.contentRect
         switch result {
-        case let .Single(node: node):
+        case let .single(node: node):
             XCTAssert(MKMapPointEqualToPoint(contentRect.origin, node.originCoordinate), "Single nodes should have an origin equal to the node's point")
             XCTAssert(MKMapSizeEqualToSize(MKMapSize(), contentRect.size), "single nodes should have a zero-size content size")
-        case let .Multiple(nodes: nodes):
+        case let .multiple(nodes: nodes):
             for node in nodes {
                 XCTAssert(MKMapRectContainsPoint(contentRect, node.originCoordinate), "Every node should be contained in the map content rect")
             }
@@ -48,8 +48,8 @@ class QuadTreeTests: XCTestCase {
         let bentoBox = BentoBox<MKMapRect, MKMapPoint>(root: MKMapRect(origin: MKMapPoint(), size: MKMapSize(width: 5000, height: 5000)))
         var quadTree = QuadTree<Int, MKMapRect, MKMapPoint>(bentoBox: bentoBox, bucketCapacity: 5)
         var i = 0
-        for x in 0.stride(to: 5000, by: 50) {
-            for y in 0.stride(to: 5000, by: 50) {
+        for x in stride(from: 0, to: 5000, by: 50) {
+            for y in stride(from: 0, to: 5000, by: 50) {
                 let originCoordinate = MKMapPoint(x: Double(x), y: Double(y))
                 let node = QuadTreeNode(originCoordinate: originCoordinate, content: i)
                 quadTree.insertNode(node)
@@ -59,8 +59,8 @@ class QuadTreeTests: XCTestCase {
 
         let unclusteredNodes = quadTree.clusteredDataWithinMapRect(bentoBox.root, zoomScale: 1, cellSize: 50)
         for point in unclusteredNodes {
-            XCTAssert(Int(point.originCoordinate.x as CGFloat) % 50 == 0, "all map point coords should be divisible by 50")
-            XCTAssert(Int(point.originCoordinate.y as CGFloat) % 50 == 0, "all map point coords should be divisible by 50")
+            XCTAssert(Int(point.originCoordinate.coordX) % 50 == 0, "all map point coords should be divisible by 50")
+            XCTAssert(Int(point.originCoordinate.coordY) % 50 == 0, "all map point coords should be divisible by 50")
             resultRectTester(point)
         }
         XCTAssertTrue(unclusteredNodes.count == 10000, "This should return 10k clusters")
@@ -68,13 +68,13 @@ class QuadTreeTests: XCTestCase {
         XCTAssertTrue(clusteredNodes.count == 100, "This should return 100 clusters")
         var totalNodeCount = 0
         for cluster in clusteredNodes {
-            XCTAssert(Int(cluster.originCoordinate.x as CGFloat - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering/ point was \(cluster.originCoordinate.x)")
-            XCTAssert(Int(cluster.originCoordinate.y as CGFloat - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering. point was \(cluster.originCoordinate.y)")
+            XCTAssert(Int(cluster.originCoordinate.coordX - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering/ point was \(cluster.originCoordinate.coordX)")
+            XCTAssert(Int(cluster.originCoordinate.coordY - 225) % 500 == 0, "all map point coords should be divisible by 500 after centering. point was \(cluster.originCoordinate.coordY)")
             resultRectTester(cluster)
             switch cluster {
-            case .Single:
+            case .single:
                 totalNodeCount += 1
-            case let .Multiple(nodes: nodes):
+            case let .multiple(nodes: nodes):
                 XCTAssert(nodes.count == 100, "Each cluster contains 100 nodes")
                 totalNodeCount += nodes.count
             }
