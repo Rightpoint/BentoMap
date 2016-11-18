@@ -11,12 +11,12 @@ import Foundation
 public protocol BentoCoordinate {
 
     /// The horizontal location of the coordinate
-    var x: CGFloat { get set }
+    var coordX: CGFloat { get set }
 
     /// The vertical location of the coordinate
-    var y: CGFloat { get set }
+    var coordY: CGFloat { get set }
 
-    init(x: CGFloat, y: CGFloat)
+    init(coordX: CGFloat, coordY: CGFloat)
 }
 
 public protocol BentoRect {
@@ -41,7 +41,7 @@ public protocol BentoRect {
 
      - returns: a Bool indicating whether this rectangle contains the coordinate passed in.
      */
-    func containsCoordinate(c: BentoCoordinate) -> Bool
+    func containsCoordinate(_ c: BentoCoordinate) -> Bool
 
     /**
      Divides this rectangle at a given percentage
@@ -53,14 +53,14 @@ public protocol BentoRect {
      - returns: a tuple containing a rectangle that is the percentage requested,
      and a rectangle that is the remainder.
      */
-    func divide(percent: CGFloat, edge: CGRectEdge) -> (Self, Self)
+    func divide(_ percent: CGFloat, edge: CGRectEdge) -> (Self, Self)
 
     /**
      *  Computes the geometric union of this rectangle with the supplied rectangle.
      *
      * - parameter other: a rectangle.
      */
-    func unionWith(other: Self) -> Self
+    func unionWith(_ other: Self) -> Self
 
     init(originCoordinate: BentoCoordinate, size: CGSize)
 }

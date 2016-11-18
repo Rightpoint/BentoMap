@@ -11,26 +11,26 @@ import MapKit
 
 public enum QuadTreeResult<NodeData, Rect: BentoRect, Coordinate: BentoCoordinate> {
 
-    case Single(node: QuadTreeNode<NodeData, Coordinate>)
-    case Multiple(nodes: [QuadTreeNode<NodeData, Coordinate>])
+    case single(node: QuadTreeNode<NodeData, Coordinate>)
+    case multiple(nodes: [QuadTreeNode<NodeData, Coordinate>])
 
     /// The average of the origin points of all the nodes
     /// contained in the QuadTree.
     public var originCoordinate: Coordinate {
         let originCoordinate: Coordinate
         switch self {
-        case let .Single(node):
+        case let .single(node):
             originCoordinate = node.originCoordinate
-        case let .Multiple(nodes):
+        case let .multiple(nodes):
             var x: CGFloat = 0.0
             var y: CGFloat = 0.0
             for node in nodes {
-                x += node.originCoordinate.x
-                y += node.originCoordinate.y
+                x += node.originCoordinate.coordX
+                y += node.originCoordinate.coordY
             }
             x /= CGFloat(nodes.count)
             y /= CGFloat(nodes.count)
-            originCoordinate = Coordinate(x: x, y: y)
+            originCoordinate = Coordinate(coordX: x, coordY: y)
         }
         return originCoordinate
     }
@@ -40,19 +40,19 @@ public enum QuadTreeResult<NodeData, Rect: BentoRect, Coordinate: BentoCoordinat
         let origin: Coordinate
         let size: CGSize
         switch  self {
-        case let .Single(node: node):
+        case let .single(node: node):
             origin = node.originCoordinate
             size = CGSize()
-        case let .Multiple(nodes: nodes):
-            var minCoordinate = CGPoint(x: CGFloat.max, y: CGFloat.max)
-            var maxCoordinate = CGPoint(x: CGFloat.min, y: CGFloat.min)
+        case let .multiple(nodes: nodes):
+            var minCoordinate = CGPoint(x: CGFloat.greatestFiniteMagnitude, y: CGFloat.greatestFiniteMagnitude)
+            var maxCoordinate = CGPoint(x: CGFloat.leastNormalMagnitude, y: CGFloat.leastNormalMagnitude)
             for node in nodes {
-                minCoordinate.x = min(minCoordinate.x, node.originCoordinate.x)
-                minCoordinate.y = min(minCoordinate.y, node.originCoordinate.y)
-                maxCoordinate.x = max(maxCoordinate.x, node.originCoordinate.x)
-                maxCoordinate.y = max(maxCoordinate.y, node.originCoordinate.y)
+                minCoordinate.x = min(minCoordinate.coordX, node.originCoordinate.coordX)
+                minCoordinate.y = min(minCoordinate.coordY, node.originCoordinate.coordY)
+                maxCoordinate.x = max(maxCoordinate.coordX, node.originCoordinate.coordX)
+                maxCoordinate.y = max(maxCoordinate.coordX, node.originCoordinate.coordY)
             }
-            origin = Coordinate(x: minCoordinate.x, y: minCoordinate.y)
+            origin = Coordinate(coordX: minCoordinate.coordX, coordY: minCoordinate.coordY)
             // slightly pad the size to make sure all nodes are contained
             size = CGSize(width: abs(minCoordinate.x - maxCoordinate.x) + 0.001,
                              height: abs(minCoordinate.y - maxCoordinate.y) + 0.001)

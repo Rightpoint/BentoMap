@@ -8,7 +8,7 @@
 
 import Foundation
 
-infix operator ||? { associativity left precedence 140 }
+infix operator ||?: LogicalDisjunctionPrecedence
 
 func ||? (lhs: Optional<Bool>, rhs: Optional<Bool>) -> Bool {
     return (lhs ?? false) || (rhs ?? false)

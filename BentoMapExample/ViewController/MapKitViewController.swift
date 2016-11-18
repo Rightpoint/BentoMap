@@ -22,7 +22,7 @@ final class MapKitViewController: UIViewController {
         let mapView = MKMapView()
         mapView.delegate = self
         mapView.setVisibleMapRect(mapData.bentoBox.root,
-                                  edgePadding: self.dynamicType.mapInsets,
+                                  edgePadding: type(of: self).mapInsets,
                                   animated: false)
         view = mapView
     }
@@ -37,25 +37,25 @@ final class MapKitViewController: UIViewController {
 
 extension MapKitViewController: MKMapViewDelegate {
 
-    func mapView(mapView: MKMapView,
-                 viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView,
+                 viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let pin = mapView.dequeueAnnotationView(forAnnotation: annotation)
             as MKPinAnnotationView
         pin.configureWithAnnotation(annotation)
         return pin
     }
 
-    func mapView(mapView: MKMapView,
-                 didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView,
+                 didSelect view: MKAnnotationView) {
         guard let zoomRect = (view.annotation as? BaseAnnotation)?.root else {
             return
         }
         mapView.setVisibleMapRect(zoomRect,
-                                  edgePadding: self.dynamicType.mapInsets,
+                                  edgePadding: type(of: self).mapInsets,
                                   animated: true)
     }
 
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         updateAnnotations(inMapView: mapView,
                           forMapRect: mapView.visibleMapRect)
     }
@@ -102,7 +102,7 @@ private extension MKMapView {
     func dequeueAnnotationView<AnnotationView: MKAnnotationView>
         (forAnnotation annotation: MKAnnotation,
                        identifier: String) -> AnnotationView {
-        if let annotation = dequeueReusableAnnotationViewWithIdentifier(identifier)
+        if let annotation = dequeueReusableAnnotationView(withIdentifier: identifier)
             as? AnnotationView {
             return annotation
         }
@@ -125,13 +125,13 @@ private extension MKAnnotationView {
 }
 
 private extension MKPinAnnotationView {
-    func configureWithAnnotation(annotation: MKAnnotation) {
-        if annotation.isKindOfClass(ClusterAnnotation.self) {
-            pinTintColor = UIColor.blueColor()
+    func configureWithAnnotation(_ annotation: MKAnnotation) {
+        if annotation.isKind(of: ClusterAnnotation.self) {
+            pinTintColor = UIColor.blue
             animatesDrop = false
         }
         else {
-            pinTintColor = UIColor.redColor()
+            pinTintColor = UIColor.red
             animatesDrop = true
         }
     }

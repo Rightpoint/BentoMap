@@ -30,7 +30,7 @@ struct QuadrantWrapper<Quadrant> {
 
      - returns: a new QuadrantWrapper containing a new type.
      */
-    func map<NewQuadrant>(converter: (Quadrant) -> NewQuadrant) -> QuadrantWrapper<NewQuadrant> {
+    func map<NewQuadrant>(_ converter: (Quadrant) -> NewQuadrant) -> QuadrantWrapper<NewQuadrant> {
         return QuadrantWrapper<NewQuadrant>(northWest: converter(northWest),
                                             northEast: converter(northEast),
                                             southWest: converter(southWest),

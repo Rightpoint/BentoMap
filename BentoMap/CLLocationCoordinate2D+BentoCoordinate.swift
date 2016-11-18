@@ -11,18 +11,18 @@ import CoreLocation
 
 extension CLLocationCoordinate2D: BentoCoordinate {
 
-    public var x: CGFloat {
+    public var coordX: CGFloat {
         get { return CGFloat(latitude) }
         set { latitude = CLLocationDegrees(newValue) }
     }
 
-    public var y: CGFloat {
+    public var coordY: CGFloat {
         get { return CGFloat(longitude) }
         set { longitude = CLLocationDegrees(newValue) }
     }
 
-    public init(x: CGFloat, y: CGFloat) {
-        self.init(latitude: CLLocationDegrees(x), longitude: CLLocationDegrees(y))
+    public init(coordX: CGFloat, coordY: CGFloat) {
+        self.init(latitude: CLLocationDegrees(coordX), longitude: CLLocationDegrees(coordY))
     }
 
 }

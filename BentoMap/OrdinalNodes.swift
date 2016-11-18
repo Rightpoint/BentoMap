@@ -11,12 +11,12 @@ import Foundation
 public struct OrdinalNodes<NodeData, Rect: BentoRect, Coordinate: BentoCoordinate> {
 
     /// A type that exposes all 4 quadrants of a given QuadTree
-    private typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData, Rect, Coordinate>>
+    fileprivate typealias QuadTreeWrapper = QuadrantWrapper<QuadTree<NodeData, Rect, Coordinate>>
 
     // Recursive structs require a workaround class type
     // because it is impossible at runtime to calculate
     // how much memory must be allocated
-    private var quadrants: Box<QuadTreeWrapper>
+    fileprivate var quadrants: Box<QuadTreeWrapper>
 
     /// The NorthWest quadrant of the QuadTree's root.
     var northWest: QuadTree<NodeData, Rect, Coordinate> {
