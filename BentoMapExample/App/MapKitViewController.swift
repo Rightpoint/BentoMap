@@ -12,18 +12,19 @@ import BentoMap
 
 final class MapKitViewController: UIViewController {
 
+    static let cellSize: CGFloat = 64
     // Used to make sure the map is nicely padded on the edges, and visible annotations
     // aren't hidden under the navigation bar
-    static let mapInsets =  UIEdgeInsets(top: 100, left: 40, bottom: 40, right: 40)
+    static let mapInsets =  UIEdgeInsets(top: cellSize, left: (cellSize / 2), bottom: (cellSize / 2), right: (cellSize / 2))
 
     let mapData = QuadTree<Int, MKMapRect, CLLocationCoordinate2D>.sampleData
+    var mapView: MKMapView! {
+        return view as? MKMapView
+    }
 
     override func loadView() {
         let mapView = MKMapView()
         mapView.delegate = self
-        mapView.setVisibleMapRect(mapData.bentoBox.root,
-                                  edgePadding: type(of: self).mapInsets,
-                                  animated: false)
         view = mapView
     }
 
@@ -33,6 +34,13 @@ final class MapKitViewController: UIViewController {
                                                  comment: "BentoBox navbar title")
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let zoomRect = mapView.mapRectThatFits(mapData.bentoBox.root, edgePadding: type(of: self).mapInsets)
+        mapView.setVisibleMapRect(zoomRect,
+                                  edgePadding: type(of: self).mapInsets,
+                                  animated: false)
+    }
 }
 
 extension MapKitViewController: MKMapViewDelegate {
@@ -50,7 +58,8 @@ extension MapKitViewController: MKMapViewDelegate {
         guard let zoomRect = (view.annotation as? BaseAnnotation)?.root else {
             return
         }
-        mapView.setVisibleMapRect(zoomRect,
+        let adjustedZoom = mapView.mapRectThatFits(zoomRect, edgePadding: type(of: self).mapInsets)
+        mapView.setVisibleMapRect(adjustedZoom,
                                   edgePadding: type(of: self).mapInsets,
                                   animated: true)
     }
@@ -73,7 +82,7 @@ private extension MapKitViewController {
         let zoomScale = Double(mapView.frame.width) / root.size.width
         let clusterResults = mapData.clusteredDataWithinMapRect(root,
                                                                 zoomScale: zoomScale,
-                                                                cellSize: 64)
+                                                                cellSize: Double(MapKitViewController.cellSize))
         let newAnnotations = clusterResults.map(BaseAnnotation.makeAnnotation)
 
         let oldAnnotations = mapView.annotations.flatMap({ $0 as? BaseAnnotation })
