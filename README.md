@@ -31,6 +31,7 @@ github "Raizlabs/BentoMap"
 
 Michael Skiba, mike.skiba@raizlabs.com
 Rob Visentin, rob.visentin@raizlabs.com
+Matt Buckley, matt.buckley@raizlabs.com
 
 ## License
 
