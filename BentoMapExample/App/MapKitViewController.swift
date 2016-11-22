@@ -14,7 +14,7 @@ final class MapKitViewController: UIViewController {
 
     // Used to make sure the map is nicely padded on the edges, and visible annotations
     // aren't hidden under the navigation bar
-    static let mapInsets =  UIEdgeInsets(top: 80, left: 20, bottom: 20, right: 20)
+    static let mapInsets =  UIEdgeInsets(top: 100, left: 40, bottom: 40, right: 40)
 
     let mapData = QuadTree<Int, MKMapRect, CLLocationCoordinate2D>.sampleData
 
