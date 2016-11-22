@@ -233,7 +233,6 @@
 				7237533A1D2D9E75002A1BC2 /* MapKitViewController.swift */,
 				7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */,
 			);
-			name = App;
 			path = App;
 			sourceTree = "<group>";
 		};
@@ -255,7 +254,6 @@
 				B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */,
 				B50426B71D71FA21008BEF76 /* MKMapRect+BentoRect.swift */,
 			);
-			name = Extensions;
 			path = Extensions;
 			sourceTree = "<group>";
 		};
