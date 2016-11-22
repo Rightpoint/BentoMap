@@ -45,12 +45,12 @@ public enum QuadTreeResult<NodeData, Rect: BentoRect, Coordinate: BentoCoordinat
             size = CGSize()
         case let .multiple(nodes: nodes):
             var minCoordinate = CGPoint(x: CGFloat.greatestFiniteMagnitude, y: CGFloat.greatestFiniteMagnitude)
-            var maxCoordinate = CGPoint(x: CGFloat.leastNormalMagnitude, y: CGFloat.leastNormalMagnitude)
+            var maxCoordinate = CGPoint(x: -CGFloat.greatestFiniteMagnitude, y: -CGFloat.greatestFiniteMagnitude)
             for node in nodes {
                 minCoordinate.x = min(minCoordinate.coordX, node.originCoordinate.coordX)
                 minCoordinate.y = min(minCoordinate.coordY, node.originCoordinate.coordY)
                 maxCoordinate.x = max(maxCoordinate.coordX, node.originCoordinate.coordX)
-                maxCoordinate.y = max(maxCoordinate.coordX, node.originCoordinate.coordY)
+                maxCoordinate.y = max(maxCoordinate.coordY, node.originCoordinate.coordY)
             }
             origin = Coordinate(coordX: minCoordinate.coordX, coordY: minCoordinate.coordY)
             // slightly pad the size to make sure all nodes are contained
