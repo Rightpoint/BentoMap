@@ -90,4 +90,47 @@ class QuadTreeTests: XCTestCase {
         XCTAssertTrue(testZero.count == 1, "This should return 100 clusters")
     }
 
+    func testClustering() {
+        let bentoBox = BentoBox<MKMapRect, MKMapPoint>(root: MKMapRect(origin: MKMapPoint(), size: MKMapSize(width: 11, height: 11)))
+        var quadTree = QuadTree<Int, MKMapRect, MKMapPoint>(bentoBox: bentoBox, bucketCapacity: 5)
+        var i = 0
+        for x in 0...10 {
+            for y in 0...10 {
+                let originCoordinate = MKMapPoint(x: Double(x), y: Double(y))
+                let node = QuadTreeNode(originCoordinate: originCoordinate, content: i)
+                quadTree.insertNode(node)
+                i += 1
+            }
+        }
+
+        let rect = MKMapRect(origin: MKMapPoint(), size: MKMapSize(width: 9, height: 9))
+        let unclusteredNodes = quadTree.clusteredDataWithinMapRect(rect, zoomScale: 1, cellSize: 10)
+        XCTAssertEqual(unclusteredNodes.count, 4, "there should be four clusters in this data set")
+        guard let cluster = unclusteredNodes.first else {
+            XCTFail("First node should be non nil")
+            return
+        }
+        let nodeCenter: MKMapPoint
+        switch cluster {
+        case .multiple(nodes: let nodes):
+            XCTAssertEqual(nodes.count, 100, "there should be 100 nodes in the cluster")
+            let reducedNodeCenter = nodes.reduce(MKMapPoint()) { total, current in
+                return MKMapPoint(x: total.x + current.coordinate.x, y: total.y + current.coordinate.y)
+            }
+            nodeCenter = MKMapPoint(x: reducedNodeCenter.x / Double(nodes.count),
+                                    y: reducedNodeCenter.y / Double(nodes.count))
+        case .single(node: _):
+            XCTFail("node should be a multiple node")
+            return
+        }
+        XCTAssertEqualWithAccuracy(nodeCenter.x, 4.5, accuracy: 0.0001)
+        XCTAssertEqualWithAccuracy(nodeCenter.y, 4.5, accuracy: 0.0001)
+        XCTAssertEqualWithAccuracy(nodeCenter.x, cluster.originCoordinate.x, accuracy: 0.0001)
+        XCTAssertEqualWithAccuracy(nodeCenter.x, cluster.originCoordinate.y, accuracy: 0.0001)
+        XCTAssertEqualWithAccuracy(cluster.contentRect.minX, 0, accuracy: 0.001)
+        XCTAssertEqualWithAccuracy(cluster.contentRect.minY, 0, accuracy: 0.001)
+        XCTAssertEqualWithAccuracy(cluster.contentRect.maxX, 9, accuracy: 0.001)
+        XCTAssertEqualWithAccuracy(cluster.contentRect.maxY, 9, accuracy: 0.001)
+    }
+
 }
