@@ -7,7 +7,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/BentoMap.svg?style=flat)](http://cocoapods.org/pods/BentoMap)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-BentoMap is an implementation of [quadtrees][wiki] originally implemented for map annotation clustering and storage written in Swift. It expanded to allow other data that can be represented with 2D coordinates to conform to a protocol and be added into `BentoBox` containers.
+BentoMap is an Swift implementation of [quadtrees][wiki] for map annotation clustering, and storage. It can also allow other 2d coordinate data to conform to a protocol and be added into `BentoBox` containers.
 
 For more information, check out the [Raizlabs Developer Blog][rl]. The Android equivalent, known as "Marker Clustering," is [documented here][mk].
 
