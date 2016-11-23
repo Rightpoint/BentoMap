@@ -7,11 +7,13 @@
 [![Platform](https://img.shields.io/cocoapods/p/BentoMap.svg?style=flat)](http://cocoapods.org/pods/BentoMap)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-BentoMap is an implementation of [quadtrees](https://en.wikipedia.org/wiki/Quadtree) originally implemented for map annotation clustering and storage written in Swift.
-
-This includes a data structure with generics to store data used to generate annotations, the ability to query which annotations are included in a region with a bucket size used to generate clusters, and protocols that can be adopted by other data types to allow storage and retrieval from `BentoBox` containers.
+BentoMap is an implementation of [quadtrees][wiki] originally implemented for map annotation clustering and storage written in Swift. It expanded to allow other data that can be represented with 2D coordinates to conform to a protocol and be added into `BentoBox` containers.
 
 For more information, check out the [Raizlabs Developer Blog][rl]. The Android equivalent, known as "Marker Clustering," is [documented here][mk].
+
+[wiki]: https://en.wikipedia.org/wiki/Quadtree
+[rl]: https://www.raizlabs.com/dev/2016/08/introducing-bentomap/
+[mk]: https://developers.google.com/maps/documentation/android-api/utility/marker-clustering
 
 ![BentoMap](Resources/bento_animation3.gif)
 
@@ -29,7 +31,7 @@ For more information, check out the [Raizlabs Developer Blog][rl]. The Android e
 ## Installation
 
 #### CocoaPods
-You can use [CocoaPods](http://cocoapods.org/) to install `BentoMap` by adding it to your `Podfile`:
+You can use [CocoaPods][cp] to install `BentoMap` by adding it to your `Podfile`:
 
 ```ruby
 platform :ios, '9.0'
@@ -38,15 +40,19 @@ pod 'BentoMap'
 ```
 
 #### Carthage
-Create a `Cartfile` that lists the framework and run `carthage update`. Follow the [instructions](https://github.com/Carthage/Carthage#if-youre-building-for-ios) to add `$(SRCROOT)/Carthage/Build/iOS/BentoMap.framework` to an iOS project.
+Create a `Cartfile` that lists the framework and run `carthage update`. Follow the [instructions][carthage] to add `$(SRCROOT)/Carthage/Build/iOS/BentoMap.framework` to an iOS project.
 
-```
+```ogdl
 github "Raizlabs/BentoMap"
 ```
 
 #### Manually
 1. Download all of the `.swift` files in `BentoMap/` and `BentoMap/Extensions/` and drop them into your project.  
 2. Congratulations!  
+
+
+[cp]: http://cocoapods.org/
+[carthage]: https://github.com/Carthage/Carthage#if-youre-building-for-ios
 
 ## Usage example
 
@@ -105,11 +111,16 @@ func updateAnnotations(inMapView mapView: MKMapView,
 }
 ```
 
+[ex]: https://github.com/Raizlabs/BentoMap/blob/develop/BentoMapExample/App/MapKitViewController.swift
+
 ## Contributing
 
 Issues and pull requests are welcome! Please ensure that you have the latest [SwiftLint][sl] installed before committing and that there are no style warnings generated when building.
 
 Contributors are expected to abide by the [Contributor Covenant Code of Conduct][cc].
+
+[sl]: https://github.com/realm/SwiftLint
+[cc]: https://github.com/Raizlabs/BentoMap/blob/develop/CONTRIBUTING.md
 
 ## License
 
@@ -117,12 +128,9 @@ BentoMap is available under the MIT license. See the `LICENSE` file for more inf
 
 ## Authors
 
-- Michael Skiba, mike.skiba@raizlabs.com
-- Rob Visentin, rob.visentin@raizlabs.com  
-- Matt Buckley, matt.buckley@raizlabs.com
+- Michael Skiba: <mailto:mike.skiba@raizlabs.com>, [@atelierclkwrk][mstw]
+- Rob Visentin: <mailto:rob.visentin@raizlabs.com>
+- Matt Buckley: <mailto:matt.buckley@raizlabs.com>, [@mattthousand][mbtw]
 
-[mk]: https://developers.google.com/maps/documentation/android-api/utility/marker-clustering
-[rl]: https://www.raizlabs.com/dev/2016/08/introducing-bentomap/
-[sl]: https://github.com/realm/SwiftLint
-[cc]: https://github.com/Raizlabs/BentoMap/blob/deve/CONTRIBUTING.md
-[ex]: https://github.com/Raizlabs/BentoMap/blob/develop/BentoMapExample/App/MapKitViewController.swift
+[mstw]: https://twitter.com/atelierclkwrk
+[mbtw]: https://twitter.com/mattthousand
