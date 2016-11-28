@@ -275,6 +275,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 723753181D2D9D6D002A1BC2 /* Build configuration list for PBXNativeTarget "BentoMap" */;
 			buildPhases = (
+				72B69E881DE5EB7D00272BC1 /* SwiftLint */,
 				723752FF1D2D9D6D002A1BC2 /* Sources */,
 				723753001D2D9D6D002A1BC2 /* Frameworks */,
 				723753011D2D9D6D002A1BC2 /* Headers */,
@@ -316,7 +317,6 @@
 				723753331D2D9E75002A1BC2 /* Frameworks */,
 				723753341D2D9E75002A1BC2 /* Resources */,
 				7237534C1D2D9E80002A1BC2 /* Embed Frameworks */,
-				7228026F1D2EAFCF00C637A6 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -399,20 +399,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7228026F1D2EAFCF00C637A6 /* Swiftlint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Swiftlint;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
 		723753311D2D9E26002A1BC2 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -426,6 +412,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		72B69E881DE5EB7D00272BC1 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint || echo \"warning: SwiftLint failed with exit code $?. Is SwiftLint installed and up to date?\"\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
