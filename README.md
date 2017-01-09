@@ -34,7 +34,7 @@ For more information, check out the [Raizlabs Developer Blog][rl]. The Android e
 BentoMap is available through [CocoaPods][cp]. To install it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'RIGImageGallery'
+pod 'BentoMap'
 ```
 
 #### Carthage
