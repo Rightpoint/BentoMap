@@ -34,13 +34,14 @@ final class MapKitViewController: UIViewController {
                                                  comment: "BentoBox navbar title")
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         let zoomRect = mapView.mapRectThatFits(mapData.bentoBox.root, edgePadding: type(of: self).mapInsets)
         mapView.setVisibleMapRect(zoomRect,
                                   edgePadding: type(of: self).mapInsets,
                                   animated: false)
     }
+
 }
 
 extension MapKitViewController: MKMapViewDelegate {
