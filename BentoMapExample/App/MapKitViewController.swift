@@ -136,11 +136,21 @@ private extension MKAnnotationView {
 private extension MKPinAnnotationView {
     func configureWithAnnotation(_ annotation: MKAnnotation) {
         if annotation.isKind(of: ClusterAnnotation.self) {
-            pinTintColor = UIColor.blue
+            if #available(iOS 9.0, *) {
+                pinTintColor = UIColor.blue
+            }
+            else {
+                pinColor = .green
+            }
             animatesDrop = false
         }
         else {
-            pinTintColor = UIColor.red
+            if #available(iOS 9.0, *) {
+                pinTintColor = UIColor.red
+            }
+            else {
+                pinColor = .red
+            }
             animatesDrop = true
         }
     }
