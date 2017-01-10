@@ -34,13 +34,14 @@ final class MapKitViewController: UIViewController {
                                                  comment: "BentoBox navbar title")
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         let zoomRect = mapView.mapRectThatFits(mapData.bentoBox.root, edgePadding: type(of: self).mapInsets)
         mapView.setVisibleMapRect(zoomRect,
                                   edgePadding: type(of: self).mapInsets,
                                   animated: false)
     }
+
 }
 
 extension MapKitViewController: MKMapViewDelegate {
@@ -136,11 +137,21 @@ private extension MKAnnotationView {
 private extension MKPinAnnotationView {
     func configureWithAnnotation(_ annotation: MKAnnotation) {
         if annotation.isKind(of: ClusterAnnotation.self) {
-            pinTintColor = UIColor.blue
+            if #available(iOS 9.0, *) {
+                pinTintColor = UIColor.blue
+            }
+            else {
+                pinColor = .green
+            }
             animatesDrop = false
         }
         else {
-            pinTintColor = UIColor.red
+            if #available(iOS 9.0, *) {
+                pinTintColor = UIColor.red
+            }
+            else {
+                pinColor = .red
+            }
             animatesDrop = true
         }
     }

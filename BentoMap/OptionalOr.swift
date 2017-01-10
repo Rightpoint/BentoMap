@@ -10,15 +10,15 @@ import Foundation
 
 infix operator ||?: LogicalDisjunctionPrecedence
 
-func ||? (lhs: Optional<Bool>, rhs: Optional<Bool>) -> Bool {
+func ||? (lhs: Bool?, rhs: Bool?) -> Bool {
     return (lhs ?? false) || (rhs ?? false)
 }
 
-func ||? (lhs: Bool, rhs: Optional<Bool>) -> Bool {
+func ||? (lhs: Bool, rhs: Bool?) -> Bool {
     return lhs || (rhs ?? false)
 }
 
-func ||? (lhs: Optional<Bool>, rhs: Bool) -> Bool {
+func ||? (lhs: Bool?, rhs: Bool) -> Bool {
     return (lhs ?? false) || rhs
 }
 

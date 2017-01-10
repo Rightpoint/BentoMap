@@ -11,7 +11,7 @@ import XCTest
 
 class OptionalOrTests: XCTestCase {
     func testOptionalOr() {
-        let truePairs: [(Optional<Bool>, Optional<Bool>)] = [
+        let truePairs: [(Bool?, Bool?)] = [
             (true, true),
             (true, false),
             (false, true),
@@ -31,7 +31,7 @@ class OptionalOrTests: XCTestCase {
             }
         }
 
-        let falsePairs: [(Optional<Bool>, Optional<Bool>)] = [
+        let falsePairs: [(Bool?, Bool?)] = [
             (false, false),
             (nil, false),
             (false, nil),
