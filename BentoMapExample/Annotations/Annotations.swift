@@ -41,10 +41,12 @@ class BaseAnnotation: NSObject, MKAnnotation {
 final class SingleAnnotation: BaseAnnotation {
 
     let annotationNumber: Int
+    var title: String?
 
     init(originCoordinate: MKMapPoint, annotationNumber: Int, root: MKMapRect) {
         self.annotationNumber = annotationNumber
         super.init(originCoordinate: originCoordinate, root: root)
+        title = "Point #\(annotationNumber)"
     }
 
 }
