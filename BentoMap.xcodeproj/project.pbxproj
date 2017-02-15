@@ -28,6 +28,7 @@
 		7237534E1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */; };
 		72383AB51D2ECAD00071EDE2 /* OptionalOr.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */; };
 		72383AB71D2ECAF70071EDE2 /* OptionalOrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */; };
+		72D679441E252AD40032902B /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D679431E252AD40032902B /* AnnotationView.swift */; };
 		B50426AF1D71D710008BEF76 /* CGRect+BentoRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */; };
 		B50426B41D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */; };
 		B50426B61D71F775008BEF76 /* CGPoint+BentoCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */; };
@@ -94,6 +95,7 @@
 		7237534D1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "QuadTree+SampleData.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		72383AB41D2ECAD00071EDE2 /* OptionalOr.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OptionalOr.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		72383AB61D2ECAF70071EDE2 /* OptionalOrTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OptionalOrTests.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		72D679431E252AD40032902B /* AnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
 		B50426AE1D71D710008BEF76 /* CGRect+BentoRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CGRect+BentoRect.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		B50426B31D71F35C008BEF76 /* MKMapPoint+BentoCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "MKMapPoint+BentoCoordinate.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		B50426B51D71F775008BEF76 /* CGPoint+BentoCoordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = "CGPoint+BentoCoordinate.swift"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				7228026D1D2E9D9100C637A6 /* Annotations.swift */,
+				72D679431E252AD40032902B /* AnnotationView.swift */,
 			);
 			path = Annotations;
 			sourceTree = "<group>";
@@ -468,6 +471,7 @@
 				7237534E1D2DA0CF002A1BC2 /* QuadTree+SampleData.swift in Sources */,
 				B539B3401D7E35ED0089AFE6 /* MainMenuTableViewController.swift in Sources */,
 				7237533B1D2D9E75002A1BC2 /* MapKitViewController.swift in Sources */,
+				72D679441E252AD40032902B /* AnnotationView.swift in Sources */,
 				B539B33E1D7E35D60089AFE6 /* CoreGraphicsViewController.swift in Sources */,
 				7228026E1D2E9D9100C637A6 /* Annotations.swift in Sources */,
 				723753391D2D9E75002A1BC2 /* AppDelegate.swift in Sources */,

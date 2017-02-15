@@ -48,21 +48,29 @@ extension MapKitViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView,
                  viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let pin = mapView.dequeueAnnotationView(forAnnotation: annotation)
-            as MKPinAnnotationView
-        pin.configureWithAnnotation(annotation)
-        return pin
+        let annotationView: MKAnnotationView
+        if let single = annotation as? SingleAnnotation {
+            annotationView = mapView.dequeueAnnotationView(for: single) as SingleAnnotationView
+        }
+        else if let cluster = annotation as? ClusterAnnotation {
+            annotationView = mapView.dequeueAnnotationView(for: cluster) as ClusterAnnotationView
+        }
+        else {
+            fatalError("Unexpected annotation type found")
+        }
+        return annotationView
     }
 
-    func mapView(_ mapView: MKMapView,
-                 didSelect view: MKAnnotationView) {
-        guard let zoomRect = (view.annotation as? BaseAnnotation)?.root else {
-            return
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let cluster = view as? ClusterAnnotationView, let zoomRect = cluster.typedAnnotation?.root {
+            let adjustedZoom = mapView.mapRectThatFits(zoomRect, edgePadding: type(of: self).mapInsets)
+            mapView.setVisibleMapRect(adjustedZoom,
+                                      edgePadding: type(of: self).mapInsets,
+                                      animated: true)
         }
-        let adjustedZoom = mapView.mapRectThatFits(zoomRect, edgePadding: type(of: self).mapInsets)
-        mapView.setVisibleMapRect(adjustedZoom,
-                                  edgePadding: type(of: self).mapInsets,
-                                  animated: true)
+        else {
+            view.setSelected(true, animated: true)
+        }
     }
 
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -94,6 +102,29 @@ private extension MapKitViewController {
             }
         }
 
+        let snapshots: [UIView] = toRemove.flatMap { annotation in
+            guard let annotationView = mapView.view(for: annotation),
+                let snapshot = annotationView.snapshotView(afterScreenUpdates: false),
+                mapView.frame.intersects(annotationView.frame) == true else {
+                return nil
+            }
+            snapshot.frame = annotationView.frame
+            mapView.insertSubview(snapshot, aboveSubview: annotationView)
+            return snapshot
+        }
+
+        UIView.animate(withDuration: 0.2, animations: {
+            for snapshot in snapshots {
+                snapshot.transform = CGAffineTransform(scaleX: 0.01, y: 0.01)
+                snapshot.layer.opacity = 0
+            }
+        },
+                       completion: { _ in
+                        for snapshot in snapshots {
+                            snapshot.removeFromSuperview()
+                        }
+        })
+
         mapView.removeAnnotations(toRemove)
 
         let toAdd = newAnnotations.filter { annotation in
@@ -105,54 +136,4 @@ private extension MapKitViewController {
         mapView.addAnnotations(toAdd)
     }
 
-}
-
-private extension MKMapView {
-
-    func dequeueAnnotationView<AnnotationView: MKAnnotationView>
-        (forAnnotation annotation: MKAnnotation,
-                       identifier: String) -> AnnotationView {
-        if let annotation = dequeueReusableAnnotationView(withIdentifier: identifier)
-            as? AnnotationView {
-            return annotation
-        }
-        return AnnotationView(annotation: annotation, reuseIdentifier: identifier)
-    }
-
-    func dequeueAnnotationView<AnnotationView: MKAnnotationView>
-        (forAnnotation annotation: MKAnnotation) -> AnnotationView {
-        return dequeueAnnotationView(forAnnotation: annotation,
-                                     identifier: AnnotationView.reuseIdentifer)
-    }
-}
-
-private extension MKAnnotationView {
-
-    static var reuseIdentifer: String {
-        return NSStringFromClass(self)
-    }
-
-}
-
-private extension MKPinAnnotationView {
-    func configureWithAnnotation(_ annotation: MKAnnotation) {
-        if annotation.isKind(of: ClusterAnnotation.self) {
-            if #available(iOS 9.0, *) {
-                pinTintColor = UIColor.blue
-            }
-            else {
-                pinColor = .green
-            }
-            animatesDrop = false
-        }
-        else {
-            if #available(iOS 9.0, *) {
-                pinTintColor = UIColor.red
-            }
-            else {
-                pinColor = .red
-            }
-            animatesDrop = true
-        }
-    }
 }
